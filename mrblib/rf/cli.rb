@@ -99,7 +99,7 @@ module Rf
     end
 
     def all_print?(val)
-      val == true || val.instance_of?(Array) || val.instance_of?(Hash)
+      val == true
     end
   end
 end
