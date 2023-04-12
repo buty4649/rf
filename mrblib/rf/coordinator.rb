@@ -29,6 +29,10 @@ module Rf
         end
       end
 
+      def puts(str)
+        $stdout.puts decorate(str)
+      end
+
       def decorate(str)
         str.to_s
       end

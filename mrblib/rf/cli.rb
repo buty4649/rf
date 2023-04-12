@@ -44,11 +44,11 @@ module Rf
         ret = ret.match?(input) if ret.instance_of?(Regexp)
         next if quiet?(ret)
 
-        if all_print?(ret)
-          puts input
-        else
-          puts ret
-        end
+        coordinator.puts(if all_print?(ret)
+                           input
+                         else
+                           ret
+                         end)
       end
     end
 
