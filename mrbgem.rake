@@ -5,6 +5,8 @@ MRuby::Gem::Specification.new('rf') do |spec|
   spec.summary = 'rf is Ruby powered text/json/yaml filter'
   spec.version = '0.1.0'
 
+  spec.add_dependency 'mruby-binding', core: 'mruby-binding'
+
   %w[
     mruby-json
     mruby-onig-regexp
