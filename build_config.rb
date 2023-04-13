@@ -1,6 +1,7 @@
 require 'shellwords'
 
 def gem_config(conf)
+  conf.gembox 'default'
   conf.gem File.expand_path(__dir__)
 end
 
