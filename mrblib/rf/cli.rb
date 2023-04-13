@@ -98,6 +98,11 @@ module Rf
     def print_exception(exc)
       if debug?
         warn "Error: #{exc.inspect}"
+        warn
+        warn 'trace (most recent call last):'
+        exc.backtrace.each_with_index.reverse_each do |line, index|
+          warn "  [#{index + 1}] #{line}"
+        end
       else
         warn "Error: #{exc}"
       end
