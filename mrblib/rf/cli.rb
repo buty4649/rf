@@ -7,18 +7,12 @@ module Rf
       pre_action
       do_action
       post_action
+    rescue SyntaxError => e
+      warn e
     rescue StandardError => e
-      warn "Error: #{e.message}"
-
-      if debug?
-        warn
-        warn 'Backtrace:'
-        e.backtrace.each_with_index do |line, index|
-          warn "  [#{e.backtrace.size - index}] #{line}"
-        end
-
-        exit 1
-      end
+      warn "Error: #{e}"
+      print_backtrace(e)
+      exit 1
     end
 
     def setup(argv)
@@ -100,6 +94,16 @@ module Rf
 
     def all_print?(val)
       val == true
+    end
+
+    def print_backtrace(exc)
+      return unless debug?
+
+      warn
+      warn 'trace (most recent call last):'
+      exc.backtrace.each_with_index.reverse_each do |line, index|
+        warn "  [#{index + 1}] #{line}"
+      end
     end
   end
 end
