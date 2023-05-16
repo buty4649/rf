@@ -34,8 +34,6 @@ build_targets = ENV['MRUBY_BUILD_TARGETS']&.split(',') || []
 
 {
   'linux-x86_64' => 'x86_64-linux-musl',
-  'linux-i386' => 'i386-linux-musl',
-  'linux-armhf' => 'arm-linux-musleabihf',
   'linux-aarch64' => 'aarch64-linux-musl'
 }.each do |(arch, target)|
   next unless build_targets.include?(arch)

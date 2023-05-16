@@ -14,7 +14,7 @@ end
 
 def build_targets
   %w[
-    linux-x86_64 linux-i386 linux-armhf linux-aarch64
+    linux-x86_64 linux-aarch64
     darwin-x86_64 darwin-aarch64
   ]
 end
