@@ -33,8 +33,8 @@ end
 build_targets = ENV['MRUBY_BUILD_TARGETS']&.split(',') || []
 
 {
-  'linux-x86_64' => 'x86_64-linux-musl',
-  'linux-aarch64' => 'aarch64-linux-musl'
+  'linux-amd64' => 'x86_64-linux-musl',
+  'linux-arm64' => 'aarch64-linux-musl'
 }.each do |(arch, target)|
   next unless build_targets.include?(arch)
 
@@ -45,8 +45,8 @@ build_targets = ENV['MRUBY_BUILD_TARGETS']&.split(',') || []
   end
 end
 
-if build_targets.include?('darwin-x86_64')
-  MRuby::CrossBuild.new('darwin-x86_64') do |conf|
+if build_targets.include?('darwin-amd64')
+  MRuby::CrossBuild.new('darwin-amd64') do |conf|
     macos_sdk = ENV.fetch('MACOSX_SDK_PATH').shellescape
 
     command = ['zig', 'cc', '-target', 'x86_64-macos', '-Wno-overriding-t-option', '-mmacosx-version-min=10.14']
@@ -63,8 +63,8 @@ if build_targets.include?('darwin-x86_64')
   end
 end
 
-if build_targets.include?('darwin-aarch64')
-  MRuby::CrossBuild.new('darwin-aarch64') do |conf|
+if build_targets.include?('darwin-arm64')
+  MRuby::CrossBuild.new('darwin-arm64') do |conf|
     macos_sdk = ENV.fetch('MACOSX_SDK_PATH').shellescape
 
     command = ['zig', 'cc', '-target', 'aarch64-macos', '-Wno-overriding-t-option', '-mmacosx-version-min=11.1']

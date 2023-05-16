@@ -14,8 +14,8 @@ end
 
 def build_targets
   %w[
-    linux-x86_64 linux-aarch64
-    darwin-x86_64 darwin-aarch64
+    linux-amd64 linux-arm64
+    darwin-amd64 darwin-arm64
   ]
 end
 
@@ -45,11 +45,16 @@ task 'deep_clean' do
 end
 
 desc 'Release the project'
-task release: %w[build:all] do
+task release: %w[clean build:all] do
   FileUtils.mkdir_p 'release'
   build_targets.each do |target|
     src = File.expand_path("build/#{target}/bin/rf")
     dest = File.expand_path("release/rf-v#{Rf::VERSION}-#{target}")
-    FileUtils.copy(src, dest)
+
+    if target =~ /linux/
+      sh "fakeroot -- tar -cf #{dest}.tar.gz -C #{File.dirname(src)} #{File.basename(src)}"
+    else
+      sh "fakeroot -- zip -j #{dest}.zip #{src}"
+    end
   end
 end
