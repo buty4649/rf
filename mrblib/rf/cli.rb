@@ -7,11 +7,10 @@ module Rf
       pre_action
       do_action
       post_action
-    rescue SyntaxError, Files::NotFound => e
-      warn "Error: #{e}"
-    rescue StandardError => e
-      print_exception(e)
-      exit 1
+    rescue Files::NotFound => e
+      print_exception_and_exit(e, false)
+    rescue SyntaxError, StandardError => e
+      print_exception_and_exit(e)
     end
 
     def setup(argv)
@@ -95,18 +94,19 @@ module Rf
       val == true
     end
 
-    def print_exception(exc)
-      if debug?
+    def print_exception_and_exit(exc, backtrace = debug?)
+      if backtrace
         warn "Error: #{exc.inspect}"
         warn
         warn 'trace (most recent call last):'
-        warn exc.backtrace.join("\n")
-        exc.backtrace.each_with_index.reverse_each do |line, index|
-          warn "  [#{index + 1}] #{line}"
+        exc.backtrace.each_with_index do |line, index|
+          i = exc.backtrace.size - index
+          warn "  [#{i}] #{line}"
         end
       else
         warn "Error: #{exc}"
       end
+      exit 1
     end
   end
 end
