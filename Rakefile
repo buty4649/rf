@@ -1,4 +1,3 @@
-require 'rspec/core/rake_task'
 require 'shellwords'
 require_relative 'mrblib/rf/version'
 
@@ -60,4 +59,7 @@ task release: %w[clean build:all] do
   end
 end
 
-RSpec::Core::RakeTask.new(:spec)
+desc 'Run RSpec with parallel_rspec'
+task 'spec' do
+  sh 'parallel_rspec --first-is-1'
+end

@@ -44,6 +44,8 @@ GEM
     mime-types-data (3.2023.0218.1)
     multi_test (1.1.0)
     parallel (1.22.1)
+    parallel_tests (4.2.1)
+      parallel
     parser (3.2.2.0)
       ast (~> 2.4.1)
     rainbow (3.1.1)
@@ -86,6 +88,7 @@ PLATFORMS
 
 DEPENDENCIES
   aruba (~> 2.1.0)
+  parallel_tests
   rake
   rspec
   rubocop
