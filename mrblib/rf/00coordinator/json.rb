@@ -1,8 +1,7 @@
 module Rf
   module Coordinator
     class Json < Base
-      def initialize(config, io)
-        super
+      def initialize(io) # rubocop:disable Lint/MissingSuper
         json = JSON.parse(io.read)
         @data = if json.instance_of?(Array)
                   json

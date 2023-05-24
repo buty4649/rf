@@ -80,7 +80,7 @@ module Rf
     end
 
     def coordinator
-      @coordinator ||= Coordinator.load(@config, io)
+      @coordinator ||= @config.filter.new(io)
     end
 
     def io
@@ -100,6 +100,7 @@ module Rf
         warn "Error: #{exc.inspect}"
         warn
         warn 'trace (most recent call last):'
+        warn exc.backtrace.join("\n")
         exc.backtrace.each_with_index.reverse_each do |line, index|
           warn "  [#{index + 1}] #{line}"
         end

@@ -1,8 +1,7 @@
 module Rf
   module Coordinator
     class Yaml < Base
-      def initialize(config, io)
-        super
+      def initialize(io) # rubocop:disable Lint/MissingSuper
         yaml = YAML.load(io.read)
         @data = if yaml.instance_of?(Array)
                   yaml

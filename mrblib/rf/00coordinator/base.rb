@@ -1,11 +1,7 @@
 module Rf
   module Coordinator
     class Base
-      attr :config, :data
-
-      def initialize(config, *)
-        @config = config
-      end
+      attr :data
 
       def each
         index = 1

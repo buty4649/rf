@@ -1,18 +1,29 @@
 module Rf
   module Coordinator
-    def self.load(config, io)
-      type = config.type
-      case type
-      when 'text'
-        Coordinator::Text
-      when 'json'
-        Coordinator::Json
-      when 'yaml'
-        Coordinator::Yaml
-      else
-        $stderr.puts "Unknown parser: #{type}"
-        exit 1
-      end.new(config, io)
+    class InvalidType < StandardError
+      def initialize(type)
+        super(%("#{type}" is invalid type. possible values: #{Coordinator.types.join(',')}))
+      end
+    end
+
+    FILTERS = {
+      text: Text,
+      json: Json,
+      yaml: Yaml
+    }
+
+    def self.types
+      FILTERS.keys
+    end
+
+    def self.load(type)
+      raise InvalidType, type unless filter = FILTERS[type.to_sym]
+
+      filter
+    end
+
+    def self.all_filters
+      FILTERS.values
     end
   end
 end
