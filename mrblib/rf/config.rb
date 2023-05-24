@@ -40,10 +40,10 @@ module Rf
       end
 
       def parse(argv)
-        print_help_and_exit if argv.empty?
+        print_help_and_exit(1) if argv.empty?
 
         parameter = option.order(argv)
-        print_help_and_exit if parameter.empty?
+        print_help_and_exit(1) if parameter.empty?
 
         @config.filter = Coordinator.load(@config.type)
         @config.command = parameter.shift
@@ -52,13 +52,17 @@ module Rf
         @config
       end
 
-      def print_help_and_exit
-        warn option.help
-        exit 1
+      def print_help_and_exit(exit_status = 0)
+        if exit_status.zero?
+          puts option.help
+        else
+          warn option.help
+        end
+        exit exit_status
       end
 
       def print_version_and_exit
-        warn Rf::VERSION
+        puts Rf::VERSION
         exit
       end
     end
