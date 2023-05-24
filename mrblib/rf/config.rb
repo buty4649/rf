@@ -44,9 +44,9 @@ module Rf
         print_help_and_exit(1) if argv.empty?
 
         parameter = option.order(argv)
-        print_help_and_exit(1) if parameter.empty?
-
         @config.filter = Coordinator.load(@config.type)
+
+        print_help_and_exit(1) if parameter.empty?
         @config.command = parameter.shift
         @config.files = parameter unless parameter.empty?
 
