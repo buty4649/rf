@@ -29,8 +29,14 @@ int main(int argc, char *argv[])
         if (!MRB_EXC_EXIT_P(mrb->exc))
         {
             mrb_print_error(mrb);
+            return_value = EXIT_FAILURE;
         }
-        return_value = EXIT_FAILURE;
+        else
+        {
+            // call SystemExit#status
+            mrb_value exit_status = mrb_iv_get(mrb, mrb_obj_value(mrb->exc), mrb_intern_lit(mrb, "status"));
+            return_value = mrb_fixnum(exit_status);
+        }
     }
     mrb_close(mrb);
 
