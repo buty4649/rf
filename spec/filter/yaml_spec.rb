@@ -1,4 +1,15 @@
 describe 'YAML filter', type: :aruba do
+  context 'Use -t option' do
+    describe 'Output string' do
+      let(:input) { load_fixture('yaml/string.yml') }
+      let(:output) { 'test' }
+      before { run_rf('-t yaml true', input) }
+
+      it { expect(last_command_started).to be_successfully_executed }
+      it { expect(last_command_started).to have_output output_string_eq output }
+    end
+  end
+
   context 'Input from stdin' do
     describe 'Output string' do
       let(:input) { load_fixture('yaml/string.yml') }

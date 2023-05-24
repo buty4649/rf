@@ -8,6 +8,16 @@ describe 'Text filter', type: :aruba do
     INPUT
   end
 
+  context 'Use -t option' do
+    describe 'Output all lines' do
+      let(:output) { input }
+      before { run_rf('-t text true', input) }
+
+      it { expect(last_command_started).to be_successfully_executed }
+      it { expect(last_command_started).to have_output_on_stdout output_string_eq output }
+    end
+  end
+
   context 'Input from stdin' do
     describe 'Output all lines' do
       let(:output) { input }
