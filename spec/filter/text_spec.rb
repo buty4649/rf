@@ -8,9 +8,10 @@ describe 'Text filter', type: :aruba do
     INPUT
   end
 
-  context 'Use -t option' do
+  context 'when use -t option' do
     describe 'Output all lines' do
       let(:output) { input }
+
       before { run_rf('-t text true', input) }
 
       it { expect(last_command_started).to be_successfully_executed }
@@ -18,9 +19,10 @@ describe 'Text filter', type: :aruba do
     end
   end
 
-  context 'Input from stdin' do
+  context 'when input from stdin' do
     describe 'Output all lines' do
       let(:output) { input }
+
       before { run_rf('true', input) }
 
       it { expect(last_command_started).to be_successfully_executed }
@@ -36,6 +38,7 @@ describe 'Text filter', type: :aruba do
           foobar
         OUTPUT
       end
+
       before { run_rf('_2', input) }
 
       it { expect(last_command_started).to be_successfully_executed }
@@ -49,6 +52,7 @@ describe 'Text filter', type: :aruba do
           4 foobar
         OUTPUT
       end
+
       before { run_rf('/foo/', input) }
 
       it { expect(last_command_started).to be_successfully_executed }
@@ -61,6 +65,7 @@ describe 'Text filter', type: :aruba do
           10
         OUTPUT
       end
+
       before { run_rf('-q "s||=0; s+=_1; at_exit{ puts s }"', input) }
 
       it { expect(last_command_started).to be_successfully_executed }
@@ -76,6 +81,7 @@ describe 'Text filter', type: :aruba do
           4 FOOBAR
         OUTPUT
       end
+
       before { run_rf('_.upcase', input) }
 
       it { expect(last_command_started).to be_successfully_executed }
@@ -83,21 +89,25 @@ describe 'Text filter', type: :aruba do
     end
   end
 
-  context 'Input from file' do
+  context 'when input from file' do
     describe 'Output all lines' do
       let(:file) { 'test.txt' }
       let(:output) { input }
-      before { write_file file, input }
-      before { run_rf("true #{file}") }
+
+      before do
+        write_file file, input
+        run_rf("true #{file}")
+      end
 
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output_on_stdout output_string_eq output }
     end
   end
 
-  context 'Suppress automatic printing' do
+  context 'when suppress automatic printing' do
     describe 'Output all lines' do
       let(:output) { '' }
+
       before { run_rf('-q true', input) }
 
       it { expect(last_command_started).to be_successfully_executed }
@@ -105,7 +115,7 @@ describe 'Text filter', type: :aruba do
     end
   end
 
-  context 'Change th field separator' do
+  context 'when change the field separator' do
     describe 'Output only the second filed' do
       let(:input) do
         <<~INPUT
@@ -123,6 +133,7 @@ describe 'Text filter', type: :aruba do
           foobar
         OUTPUT
       end
+
       before { run_rf('-F, _2', input) }
 
       it { expect(last_command_started).to be_successfully_executed }

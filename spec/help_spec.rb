@@ -17,24 +17,28 @@ describe 'Show help text', type: :aruba do
 
   describe '--help' do
     before { run_rf('--help') }
+
     it { expect(last_command_started).to be_successfully_executed }
     it { expect(last_command_started).to have_output_on_stdout output_string_eq help_text }
   end
 
   describe '-h' do
     before { run_rf('-h') }
+
     it { expect(last_command_started).to be_successfully_executed }
     it { expect(last_command_started).to have_output_on_stdout output_string_eq help_text }
   end
 
-  context 'empty option' do
+  context 'when empty option' do
     before { run_rf('') }
+
     it { expect(last_command_started).not_to be_successfully_executed }
     it { expect(last_command_started).to have_output_on_stderr output_string_eq help_text }
   end
 
-  context 'not enough option' do
+  context 'when not enough option' do
     before { run_rf('-t text') }
+
     it { expect(last_command_started).not_to be_successfully_executed }
     it { expect(last_command_started).to have_output_on_stderr output_string_eq help_text }
   end

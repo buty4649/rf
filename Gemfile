@@ -7,4 +7,5 @@ group 'test' do
   gem 'parallel_tests'
   gem 'rspec'
   gem 'rubocop'
+  gem 'rubocop-rspec'
 end
