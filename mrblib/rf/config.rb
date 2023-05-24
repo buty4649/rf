@@ -18,6 +18,7 @@ module Rf
       def option # rubocop:disable Metrics/AbcSize
         @option ||= OptionParser.new do |opt|
           opt.banner = "Usage: rf [options] 'command' file ..."
+          opt.summary_indent = ' ' * 2
 
           opt.on_head('-y', '--yaml', 'equivalent to -tyaml') { @config.type = :yaml }
           opt.on_head('-j', '--json', 'equivalent to -tjson') { @config.type = :json }

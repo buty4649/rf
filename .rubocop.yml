@@ -35,6 +35,7 @@ Metrics/MethodLength:
 Metrics/BlockLength:
   Exclude:
     - mrbgem.rake
+    - spec/**/*_spec.rb
 
 Naming/MemoizedInstanceVariableName:
   Exclude:
