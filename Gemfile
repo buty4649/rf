@@ -1,3 +1,9 @@
 source 'https://rubygems.org/'
 
-gem 'rubocop'
+gem 'rake'
+
+group 'test' do
+  gem 'aruba', '~> 2.1.0'
+  gem 'rspec'
+  gem 'rubocop'
+end

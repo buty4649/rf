@@ -1,3 +1,4 @@
+require 'rspec/core/rake_task'
 require 'shellwords'
 require_relative 'mrblib/rf/version'
 
@@ -58,3 +59,5 @@ task release: %w[clean build:all] do
     end
   end
 end
+
+RSpec::Core::RakeTask.new(:spec)
