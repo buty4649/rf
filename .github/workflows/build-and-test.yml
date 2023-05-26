@@ -46,7 +46,9 @@ jobs:
     - name: Install dependencies
       run: bundle install
     - name: Run test
-      run: rake spec
+      run: |
+        chmod +x build/bin/rf
+        rake spec
 
   test-on-macos:
     needs: build
@@ -64,4 +66,6 @@ jobs:
     - name: Install dependencies
       run: bundle install
     - name: Run test
-      run: rake spec
+      run: |
+        chmod +x build/bin/rf
+        rake spec
