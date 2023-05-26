@@ -38,7 +38,7 @@ jobs:
     - uses: actions/download-artifact@v3
       with:
         name: rf-${{ github.sha }}-linux-amd64
-        path: build/bin
+        path: build/bin/rf
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
@@ -56,7 +56,7 @@ jobs:
     - uses: actions/download-artifact@v3
       with:
         name: rf-${{ github.sha }}-darwin-amd64
-        path: build/bin
+        path: build/bin/rf
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
