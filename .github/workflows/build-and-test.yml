@@ -46,10 +46,7 @@ jobs:
     - name: Install dependencies
       run: bundle install
     - name: Run test
-      run: |
-        mkdir -p build/bin
-        mv build/linux-amd64/bin/rf build/bin/rf
-        rake spec
+      run: rake spec
 
   test-on-macos:
     needs: build
@@ -67,7 +64,4 @@ jobs:
     - name: Install dependencies
       run: bundle install
     - name: Run test
-      run: |
-        mkdir -p build/bin
-        mv build/darwin-amd64/bin/rf build/bin/rf
-        rake spec
+      run: rake spec
