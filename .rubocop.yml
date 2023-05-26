@@ -42,3 +42,10 @@ Metrics/BlockLength:
 Naming/MemoizedInstanceVariableName:
   Exclude:
     - mrblib/rf/container.rb
+
+RSpec/ContextWording:
+  Prefixes:
+    - when
+    - with
+    - within
+    - for
