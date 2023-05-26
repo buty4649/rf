@@ -1,4 +1,4 @@
-describe 'Show error message', type: :aruba do
+describe 'Show error message' do
   context 'when invalid option' do
     before { run_rf('--invalid-option') }
 

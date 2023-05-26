@@ -1,4 +1,4 @@
-describe 'Text filter', type: :aruba do
+describe 'Text filter' do
   let(:input) do
     <<~INPUT
       1 foo

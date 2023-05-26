@@ -1,4 +1,4 @@
-describe 'Show help text', type: :aruba do
+describe 'Show help text' do
   let(:help_text) do
     <<~TEXT
       Usage: rf [options] 'command' file ...

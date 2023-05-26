@@ -49,3 +49,6 @@ RSpec/ContextWording:
     - with
     - within
     - for
+
+RSpec/DescribeClass:
+  Enabled: false

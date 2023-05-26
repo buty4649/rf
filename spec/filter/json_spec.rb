@@ -1,4 +1,4 @@
-describe 'JSON filter', type: :aruba do
+describe 'JSON filter' do
   context 'when -t option' do
     describe 'Output string' do
       let(:input) { load_fixture('json/string.json') }

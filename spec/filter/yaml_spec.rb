@@ -1,4 +1,4 @@
-describe 'YAML filter', type: :aruba do
+describe 'YAML filter' do
   context 'when use -t option' do
     describe 'Output string' do
       let(:input) { load_fixture('yaml/string.yml') }
