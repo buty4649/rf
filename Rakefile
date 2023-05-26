@@ -55,10 +55,6 @@ namespace :build do
   task 'ci' do
     env = ["MRUBY_BUILD_TARGETS=#{ci_build_targets.join(',')}"]
     docker_run(env:)
-
-    sha = ENV['GITHUB_SHA'] || `git rev-parse HEAD`.chomp
-    version = sha[0..6]
-    archive_binary_file(ci_build_targets, version)
   end
 end
 

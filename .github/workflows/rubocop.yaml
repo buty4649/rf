@@ -13,8 +13,6 @@ jobs:
       with:
         ruby-version: 3.2
     - name: Install dependencies
-      run: |
-        gem install bundler --no-document
-        bundle install
+      run: bundle install
     - name: Run rubocop
       run: bundle exec rubocop
