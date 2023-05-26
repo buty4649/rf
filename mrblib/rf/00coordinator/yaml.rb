@@ -11,7 +11,7 @@ module Rf
       end
 
       def decorate(str)
-        str.to_yaml
+        str.to_yaml.sub(/\A---[\s\n]/, '')
       end
     end
   end

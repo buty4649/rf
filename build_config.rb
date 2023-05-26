@@ -6,8 +6,8 @@ def gem_config(conf)
 end
 
 def debug_config(conf)
-  conf.enable_bintest
-  conf.enable_test
+  # conf.enable_bintest
+  # conf.enable_test
   conf.enable_debug
 end
 

@@ -1,6 +1,9 @@
+require: rubocop-rspec
+
 AllCops:
   NewCops: enable
   TargetRubyVersion: 3.2
+  SuggestExtensions: false
   Exclude:
     - build/**/*
 
@@ -34,7 +37,18 @@ Metrics/MethodLength:
 Metrics/BlockLength:
   Exclude:
     - mrbgem.rake
+    - spec/**/*_spec.rb
 
 Naming/MemoizedInstanceVariableName:
   Exclude:
     - mrblib/rf/container.rb
+
+RSpec/ContextWording:
+  Prefixes:
+    - when
+    - with
+    - within
+    - for
+
+RSpec/DescribeClass:
+  Enabled: false

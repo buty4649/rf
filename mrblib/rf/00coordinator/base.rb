@@ -1,7 +1,7 @@
 module Rf
   module Coordinator
     class Base
-      attr :data
+      attr_reader :data
 
       def each
         index = 1

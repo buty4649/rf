@@ -18,6 +18,7 @@ module Rf
       def option # rubocop:disable Metrics/AbcSize
         @option ||= OptionParser.new do |opt|
           opt.banner = "Usage: rf [options] 'command' file ..."
+          opt.summary_indent = ' ' * 2
 
           opt.on_head('-y', '--yaml', 'equivalent to -tyaml') { @config.type = :yaml }
           opt.on_head('-j', '--json', 'equivalent to -tjson') { @config.type = :json }
@@ -40,25 +41,29 @@ module Rf
       end
 
       def parse(argv)
-        print_help_and_exit if argv.empty?
+        print_help_and_exit(1) if argv.empty?
 
         parameter = option.order(argv)
-        print_help_and_exit if parameter.empty?
-
         @config.filter = Coordinator.load(@config.type)
+
+        print_help_and_exit(1) if parameter.empty?
         @config.command = parameter.shift
         @config.files = parameter unless parameter.empty?
 
         @config
       end
 
-      def print_help_and_exit
-        warn option.help
-        exit 1
+      def print_help_and_exit(exit_status = 0)
+        if exit_status.zero?
+          puts option.help
+        else
+          warn option.help
+        end
+        exit exit_status
       end
 
       def print_version_and_exit
-        warn Rf::VERSION
+        puts Rf::VERSION
         exit
       end
     end
