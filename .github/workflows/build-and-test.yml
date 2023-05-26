@@ -31,6 +31,7 @@ jobs:
         path: build/darwi-amd64/bin/rf
 
   test-on-linux:
+    needs: build
     runs-on: ubuntu-latest
     steps:
     - uses: actions/download-artifact@v3
@@ -49,6 +50,7 @@ jobs:
         rake spec
 
   test-on-macos:
+    needs: build
     runs-on: macos-latest
     steps:
     - uses: actions/download-artifact@v3
