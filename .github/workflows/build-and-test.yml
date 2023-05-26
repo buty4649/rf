@@ -39,6 +39,11 @@ jobs:
       with:
         name: rf-${{ github.sha }}-linux-amd64
         path: build/bin/rf
+    - name: debug
+      run: |
+        ls -lah build/bin
+        pwd
+        file build/bin/rf
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
