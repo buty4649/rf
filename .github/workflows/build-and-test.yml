@@ -20,4 +20,11 @@ jobs:
       with:
         ruby-version: 3.2
     - name: build
-      run: rake build
+      run: rake build:ci
+    - name: Upload test binary
+      uses: actions/upload-artifact@v3
+      with:
+        name: test-binary
+        path: |
+          release/*.tar.gz
+          release/*.zip

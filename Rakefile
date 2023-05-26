@@ -19,6 +19,24 @@ def build_targets
   ]
 end
 
+def ci_build_targets
+  %w[linux-amd64 darwin-amd64]
+end
+
+def archive_binary_file(targets, version)
+  FileUtils.mkdir_p 'release'
+  targets.each do |target|
+    src = File.expand_path("build/#{target}/bin/rf")
+    dest = File.expand_path("release/rf-#{version}-#{target}")
+
+    if target =~ /linux/
+      sh "tar -cf #{dest}.tar.gz -C #{File.dirname(src)} #{File.basename(src)}"
+    else
+      sh "zip -j #{dest}.zip #{src}"
+    end
+  end
+end
+
 task default: :build
 
 desc 'Build the project'
@@ -31,6 +49,16 @@ namespace :build do
   task 'all' do
     env = ["MRUBY_BUILD_TARGETS=#{build_targets.join(',')}"]
     docker_run(env:)
+  end
+
+  desc 'Build the project for CI'
+  task 'ci' do
+    env = ["MRUBY_BUILD_TARGETS=#{ci_build_targets.join(',')}"]
+    docker_run(env:)
+
+    sha = ENV['GITHUB_SHA'] || `git rev-parse HEAD`.chomp
+    version = sha[0..6]
+    archive_binary_file(ci_build_targets, version)
   end
 end
 
@@ -46,17 +74,7 @@ end
 
 desc 'Release the project'
 task release: %w[clean build:all] do
-  FileUtils.mkdir_p 'release'
-  build_targets.each do |target|
-    src = File.expand_path("build/#{target}/bin/rf")
-    dest = File.expand_path("release/rf-v#{Rf::VERSION}-#{target}")
-
-    if target =~ /linux/
-      sh "fakeroot -- tar -cf #{dest}.tar.gz -C #{File.dirname(src)} #{File.basename(src)}"
-    else
-      sh "fakeroot -- zip -j #{dest}.zip #{src}"
-    end
-  end
+  archive_binary_file(build_targets, "v#{RF::VERSION}")
 end
 
 desc 'Run RSpec with parallel_rspec'
