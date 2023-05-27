@@ -1,10 +1,10 @@
 name: rubocop
 
 on:
-    pull_request:
+  pull_request:
 
 jobs:
-  build:
+  lint:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master

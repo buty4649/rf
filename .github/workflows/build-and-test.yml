@@ -1,6 +1,7 @@
 name: build and test
 
 on:
+  workflow_dispatch:
   pull_request:
 
 jobs:
@@ -17,18 +18,37 @@ jobs:
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: 3.2
+    - name: Build cache
+      uses: actions/cache@v3
+      with:
+        path: build/
+        key: ${{ runner.os }}-ccache
     - name: build
-      run: rake build:ci
+      run: rake build:all release
+
     - name: Upload test binary (linux-amd64)
       uses: actions/upload-artifact@v3
       with:
         name: rf-${{ github.sha }}-linux-amd64
         path: build/linux-amd64/bin/rf
+    - name: Upload test binary (linux-arm64)
+      uses: actions/upload-artifact@v3
+      with:
+        name: rf-${{ github.sha }}-linux-arm64
+        path: build/linux-arm64/bin/rf
     - name: Upload test binary (darwin-amd64)
       uses: actions/upload-artifact@v3
       with:
         name: rf-${{ github.sha }}-darwin-amd64
         path: build/darwin-amd64/bin/rf
+    - name: Upload test binary (darwin-arm64)
+      uses: actions/upload-artifact@v3
+      with:
+        name: rf-${{ github.sha }}-darwin-arm64
+        path: build/darwin-arm64/bin/rf
+
+    - name: Cleanup build directory
+      run: rake clean
 
   test-on-linux:
     needs: build
