@@ -1,5 +1,5 @@
 module Rf
-  module Coordinator
+  module Filter
     class Json < Base
       def initialize(io) # rubocop:disable Lint/MissingSuper
         json = JSON.parse(io.read)

@@ -1,8 +1,8 @@
 module Rf
-  module Coordinator
+  module Filter
     class InvalidType < StandardError
       def initialize(type)
-        super(%("#{type}" is invalid type. possible values: #{Coordinator.types.join(',')}))
+        super(%("#{type}" is invalid type. possible values: #{Filter.types.join(',')}))
       end
     end
 

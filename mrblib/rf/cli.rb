@@ -29,18 +29,18 @@ module Rf
     end
 
     def do_action
-      coordinator.each do |input, _index|
+      filter.each do |input, _index|
         container.input = input
         ret = bind.eval(command)
 
         ret = ret.match?(input) if ret.instance_of?(Regexp)
         next if quiet?(ret)
 
-        coordinator.puts(if all_print?(ret)
-                           input
-                         else
-                           ret
-                         end)
+        filter.puts(if all_print?(ret)
+                      input
+                    else
+                      ret
+                    end)
       end
     end
 
@@ -78,8 +78,8 @@ module Rf
       Rf.add_features_to_hash
     end
 
-    def coordinator
-      @coordinator ||= @config.filter.new(io)
+    def filter
+      @filter ||= @config.filter.new(io)
     end
 
     def io
