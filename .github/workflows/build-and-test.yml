@@ -21,7 +21,7 @@ jobs:
     - name: Build cache
       uses: actions/cache@v3
       with:
-        path: build/
+        path: build/cache
         key: ${{ runner.os }}-ccache
     - name: build
       run: rake build:all release
@@ -46,9 +46,6 @@ jobs:
       with:
         name: rf-${{ github.sha }}-darwin-arm64
         path: build/darwin-arm64/bin/rf
-
-    - name: Cleanup build directory
-      run: rake clean
 
   test-on-linux:
     needs: build
