@@ -65,7 +65,8 @@ end
 
 desc 'Deep cleanup build cache'
 task 'deep_clean' do
-  docker_run(cmd: 'deep_clean')
+  env = ["MRUBY_BUILD_TARGETS=#{build_targets.join(',')}"]
+  docker_run(cmd: 'deep_clean', env:)
 end
 
 desc 'Release the project'
