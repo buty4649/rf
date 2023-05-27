@@ -11,20 +11,15 @@ def debug_config(conf)
   conf.enable_debug
 end
 
-def cc_command(target = nil)
-  # Only host build is enabled because otherwise the wrong cache may be used
-  if target || ENV['CCACHE_DISABLE']
-    'zig cc'
-  else
-    ENV['USE_CCACHE'] = '1'
-    ENV['CCACHE_DIR'] = File.expand_path('build/ccache')
-    'ccache zig cc'
-  end
+def cc_command
+  command = %w[zig cc]
+  command.unshift 'ccache' if ENV['USE_CCACHE']
+  command.join(' ')
 end
 
 def build_config(conf, target = nil, strip: false)
   [conf.cc, conf.linker].each do |cc|
-    cc.command = cc_command(target)
+    cc.command = cc_command
     cc.flags += ['-target', target] if target
   end
   conf.cc.flags << '-s' if strip

@@ -47,8 +47,11 @@ end
 namespace :build do
   desc 'Build the project for all targets'
   task 'all' do
-    env = ["MRUBY_BUILD_TARGETS=#{build_targets.join(',')}"]
-    docker_run(env:)
+    build_targets.each do |target|
+      env = ["MRUBY_BUILD_TARGETS=#{target}"]
+      env += ['USE_CCACHE=1', "CCACHE_DIR=build/ccache/#{target}"] unless ENV['CCACHE_DISABLE']
+      docker_run(env:)
+    end
   end
 
   desc 'Build the project for CI'
