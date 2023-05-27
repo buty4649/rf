@@ -53,13 +53,16 @@ jobs:
   test-on-linux:
     needs: build
     runs-on: ubuntu-latest
-    container: ruby:3.2
     steps:
     - uses: actions/checkout@v3
     - uses: actions/download-artifact@v3
       with:
         name: rf-${{ github.sha }}-linux-amd64
         path: build/bin
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 3.2
     - name: Install dependencies
       run: bundle install
     - name: Run test
@@ -70,13 +73,16 @@ jobs:
   test-on-macos:
     needs: build
     runs-on: macos-latest
-    container: ruby:3.2
     steps:
     - uses: actions/checkout@v3
     - uses: actions/download-artifact@v3
       with:
         name: rf-${{ github.sha }}-darwin-amd64
         path: build/bin
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 3.2
     - name: Install dependencies
       run: bundle install
     - name: Run test
