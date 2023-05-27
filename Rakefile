@@ -70,7 +70,7 @@ end
 
 desc 'Release the project'
 task release: %w[clean build:all] do
-  archive_binary_file(build_targets, "v#{RF::VERSION}")
+  archive_binary_file(build_targets, "v#{Rf::VERSION}")
 end
 
 desc 'Run RSpec with parallel_rspec'
