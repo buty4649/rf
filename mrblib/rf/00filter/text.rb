@@ -1,5 +1,5 @@
 module Rf
-  module Coordinator
+  module Filter
     class Text < Base
       Config = Struct.new(:fs)
 

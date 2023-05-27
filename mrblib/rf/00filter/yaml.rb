@@ -1,5 +1,5 @@
 module Rf
-  module Coordinator
+  module Filter
     class Yaml < Base
       def initialize(io) # rubocop:disable Lint/MissingSuper
         yaml = YAML.load(io.read)

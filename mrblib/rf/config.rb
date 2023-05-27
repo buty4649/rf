@@ -22,7 +22,7 @@ module Rf
 
           opt.on_head('-y', '--yaml', 'equivalent to -tyaml') { @config.type = :yaml }
           opt.on_head('-j', '--json', 'equivalent to -tjson') { @config.type = :json }
-          opt.on_head('-t', "--type={#{Coordinator.types.join('|')}}",
+          opt.on_head('-t', "--type={#{Filter.types.join('|')}}",
                       "set the type of input (default:#{@config.type})") do |v|
             @config.type = v.to_sym
           end
@@ -35,7 +35,7 @@ module Rf
           opt.separator ''
           opt.separator 'text options:'
           opt.on('-F VAL', '--filed-separator', 'set the field separator(regexp)') do |v|
-            Coordinator::Text.config.fs = v
+            Filter::Text.config.fs = v
           end
         end
       end
@@ -44,7 +44,7 @@ module Rf
         print_help_and_exit(1) if argv.empty?
 
         parameter = option.order(argv)
-        @config.filter = Coordinator.load(@config.type)
+        @config.filter = Filter.load(@config.type)
 
         print_help_and_exit(1) if parameter.empty?
         @config.command = parameter.shift
