@@ -19,10 +19,6 @@ def build_targets
   ]
 end
 
-def ci_build_targets
-  %w[linux-amd64 darwin-amd64]
-end
-
 def archive_binary_file(targets, version)
   FileUtils.mkdir_p 'release'
   targets.each do |target|
@@ -48,16 +44,17 @@ namespace :build do
   desc 'Build the project for all targets'
   task 'all' do
     build_targets.each do |target|
+      Rake::Task["build:#{target}"].invoke
+    end
+  end
+
+  build_targets.each do |target|
+    desc "Build the project for #{target}"
+    task target do
       env = ["MRUBY_BUILD_TARGETS=#{target}"]
       env += ['USE_CCACHE=1', "CCACHE_DIR=build/ccache/#{target}"] unless ENV['CCACHE_DISABLE']
       docker_run(env:)
     end
-  end
-
-  desc 'Build the project for CI'
-  task 'ci' do
-    env = ["MRUBY_BUILD_TARGETS=#{ci_build_targets.join(',')}"]
-    docker_run(env:)
   end
 end
 
