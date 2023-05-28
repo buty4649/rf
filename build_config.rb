@@ -11,15 +11,13 @@ def debug_config(conf)
   conf.enable_debug
 end
 
-def cc_command
-  command = %w[zig cc]
-  command.unshift 'ccache' if ENV['USE_CCACHE']
-  command.join(' ')
+def ccache
+  'ccache ' if ENV['USE_CCACHE']
 end
 
 def build_config(conf, target = nil, strip: false)
   [conf.cc, conf.linker].each do |cc|
-    cc.command = cc_command
+    cc.command = "#{ccache}zig cc"
     cc.flags += ['-target', target] if target
   end
   conf.cc.flags << '-s' if strip
@@ -83,6 +81,31 @@ if build_targets.include?('darwin-arm64')
     conf.archiver.command = 'zig ar'
     ENV['RANLIB'] ||= 'zig ranlib'
     conf.host_target = 'aarch64-darwin'
+
+    debug_config(conf)
+    gem_config(conf)
+  end
+end
+
+if build_targets.include?('windows-amd64')
+  MRuby::CrossBuild.new('windows-amd64') do |conf|
+    toolchain :gcc
+
+    conf.build_target     = 'x86_64-pc-linux-gnu'
+    conf.host_target      = 'x86_64-w64-mingw32'
+
+    [conf.cc, conf.linker].each do |cc|
+      cc.command = "#{ccache}#{conf.host_target}-gcc-posix"
+      cc.flags << '-static'
+    end
+    conf.cxx.command      = "#{ccache}#{conf.host_target}-g++"
+    conf.archiver.command = "#{ccache}#{conf.host_target}-gcc-ar"
+
+    conf.exts do |exts|
+      exts.object = '.obj'
+      exts.executable = '.exe'
+      exts.library = '.lib'
+    end
 
     debug_config(conf)
     gem_config(conf)

@@ -46,6 +46,11 @@ jobs:
       with:
         name: rf-${{ github.sha }}-darwin-arm64
         path: build/darwin-arm64/bin/rf
+    - name: Upload test binary (windows-amd64)
+      uses: actions/upload-artifact@v3
+      with:
+        name: rf-${{ github.sha }}-windows-amd64
+        path: build/darwin-arm64/bin/rf
 
   test-on-linux:
     needs: build
@@ -75,6 +80,26 @@ jobs:
     - uses: actions/download-artifact@v3
       with:
         name: rf-${{ github.sha }}-darwin-amd64
+        path: build/bin
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 3.2
+    - name: Install dependencies
+      run: bundle install
+    - name: Run test
+      run: |
+        chmod +x build/bin/rf
+        rake spec
+
+  test-on-windows:
+    needs: build
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/download-artifact@v3
+      with:
+        name: rf-${{ github.sha }}-windows-amd64
         path: build/bin
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
