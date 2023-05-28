@@ -50,7 +50,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: rf-${{ github.sha }}-windows-amd64
-        path: build/darwin-arm64/bin/rf.exe
+        path: build/windows-amd64/bin/rf.exe
 
   test-on-linux:
     needs: build
