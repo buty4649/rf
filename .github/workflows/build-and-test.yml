@@ -24,7 +24,7 @@ jobs:
         path: build/cache
         key: ${{ runner.os }}-ccache
     - name: build
-      run: rake build:all release
+      run: rake build:all
 
     - name: Upload test binary (linux-amd64)
       uses: actions/upload-artifact@v3
