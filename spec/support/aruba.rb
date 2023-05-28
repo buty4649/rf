@@ -6,8 +6,15 @@ Aruba.configure do |config|
   config.working_directory = working_directory
 end
 
-def run_rf(args, input = nil)
+def rf_path
   rf_path = File.expand_path('../../build/bin/rf', __dir__)
+  return rf_path if File.exist?(rf_path)
+
+  "#{rf_path}.exe"
+end
+
+def run_rf(args, input = nil)
+  @rf_path ||= rf_path
   command = run_command("#{rf_path} #{args}")
 
   if input
