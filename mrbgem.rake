@@ -11,10 +11,10 @@ MRuby::Gem::Specification.new('rf') do |spec|
 
   %w[
     mruby-json
-    mruby-onig-regexp
     mruby-optparse
     mruby-yaml
   ].each do |mgem|
     spec.add_dependency mgem, mgem:
   end
+  spec.add_dependency 'mruby-onig-regexp', github: 'buty4649/mruby-onig-regexp', branch: 'fix-build-error-with-mingw'
 end

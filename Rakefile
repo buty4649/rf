@@ -16,14 +16,16 @@ def build_targets
   %w[
     linux-amd64 linux-arm64
     darwin-amd64 darwin-arm64
+    windows-amd64
   ]
 end
 
 def archive_binary_file(targets, version)
   FileUtils.mkdir_p 'release'
   targets.each do |target|
-    src = File.expand_path("build/#{target}/bin/rf")
-    dest = File.expand_path("release/rf-#{version}-#{target}")
+    ext = '.exe' if target =~ /windows/
+    src = File.expand_path("build/#{target}/bin/rf#{ext}")
+    dest = File.expand_path("release/rf-#{version}-#{target}#{ext}")
 
     if target =~ /linux/
       sh "tar -cf #{dest}.tar.gz -C #{File.dirname(src)} #{File.basename(src)}"
