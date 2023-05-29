@@ -91,4 +91,14 @@ describe 'Show error message' do
     it { expect(last_command_started).not_to be_successfully_executed }
     it { expect(last_command_started).to have_output_on_stderr include_output_string error_message }
   end
+
+  context 'when method missing' do
+    let(:input) { "test\n" }
+    let(:error_message) { "Error: undefined method 'unknown_method'" }
+
+    before { run_rf('unknown_method', input) }
+
+    it { expect(last_command_started).not_to be_successfully_executed }
+    it { expect(last_command_started).to have_output_on_stderr include_output_string error_message }
+  end
 end

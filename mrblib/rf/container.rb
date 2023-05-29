@@ -27,10 +27,19 @@ module Rf
       end
     end
 
-    def method_missing(sym, *)
-      return unless string? && (m = /\A_([1-9]\d*)\z/.match(sym.to_s))
+    def respond_to_missing?(sym, *)
+      # check for _1, _2, _3, ...
+      (string? && sym.to_s =~ /\A_[1-9]\d*\z/) || super
+    end
 
-      _.split[m[1].to_i - 1]
+    def method_missing(sym, *)
+      s = sym.to_s
+      # check for _1, _2, _3, ...
+      if string? && s =~ /\A_[1-9]\d*\z/
+        _.split[s[1..].to_i - 1]
+      else
+        super
+      end
     end
 
     def at_exit(&block)
