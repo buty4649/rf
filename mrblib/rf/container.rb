@@ -5,7 +5,8 @@ module Rf
     end
 
     def _=(data)
-      $F = $_ = data
+      $F = data.split
+      $_ = data
     end
 
     def string?
