@@ -30,7 +30,7 @@ module Rf
 
     def do_action
       filter.each do |chunk, _index|
-        container.input = chunk
+        container._ = chunk
         ret = bind.eval(command)
 
         ret = ret.match?(chunk) if ret.instance_of?(Regexp)

@@ -1,10 +1,11 @@
 module Rf
   class Container
-    attr_reader :input
-    alias _ input
+    def _
+      $_
+    end
 
-    def input=(data)
-      @input = $F = $_ = data # rubocop:disable Style/GlobalVars
+    def _=(data)
+      $F = $_ = data
     end
 
     def string?
