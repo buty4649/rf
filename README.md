@@ -1,48 +1,52 @@
 # rf
 
-**rf** is a CLI tool written in Ruby that allows you to filter text/JSON/YAML files using code. While tools like **awk**, **jq**, and **yq** can be used to process these files, they require learning their respective usage and syntax. **rf** allows you to accomplish similar tasks using Ruby code, making it a familiar tool for Rubyists.
+rf is a CLI tool that filters text/JSON/YAML with Ruby code.
+These files are processed using tools such as [awk](https://www.gnu.org/software/gawk/manual/gawk.html), [jq](https://jqlang.github.io/jq/), and [yq](https://github.com/mikefarah/yq), each of which requires you to learn how to use them and their syntax.
+With rf, you can write equivalent processing in Ruby code, making it a tool that Rubyists can easily use.
 
-**rf** is built using [mruby](https://github.com/mruby/mruby) and consists of a standalone binary file. There is no need to install Ruby separately to use **rf**. You can start using it immediately by downloading the binary file, making it a convenient feature.
+rf is built using [mruby](https://github.com/mruby/mruby) and consists of a single binary file.
+You don't need to install Ruby separately to use rf.
+One of the features of rf is that you can start using it immediately by downloading the binary file.
 
 ## Quick Start Guide
 
-Replace a part of the text:
+Replace part of the text
 
 ```sh
 rf 'gsub(/hello/, "world")' example.txt
 ```
 
-Read from standard input:
+Read from standard input
 
 ```sh
 rf 'gsub(/hello/, "world")' < example.txt
 ```
 
-Display only the lines that contain a specific pattern:
+Display only lines that contain specific patterns
 
 ```sh
 rf '/hello/' example.txt
 ```
 
-You can use UTF-8 patterns:
+UTF-8 can also be used for specified patterns
 
 ```sh
 rf '/🍣/' example.txt
 ```
 
-Add the second column of a comma-separated file:
+Add the second column of comma-separated files
 
 ```sh
 rf -F, 's||=0;s+=_2; at_exit{putts s}' example.csv
 ```
 
-Output a specific key from a JSON file:
+Output a specific key in a JSON file
 
 ```sh
 rf -j '.a.b' example.json
 ```
 
-Output a specific key from a YAML file:
+Output a specific key in a YAML file
 
 ```sh
 rf -y '.a.b' example.json
@@ -50,15 +54,17 @@ rf -y '.a.b' example.json
 
 ## Installation
 
-You can download **rf** from the [Release page](https://github.com/buty4649/rf/releases). Binary files are provided for various platforms and architectures. Please refer to the following table for compatibility:
+You can download rf from the [Release page](https://github.com/buty4649/rf/releases).
+Binary files are provided for each platform and architecture.
+Please refer to the following table for each corresponding status.
 
-|     | amd64 | arm64 |
-|-----|-------|-------|
-|Linux|✅    |✅     |
-|MacOS|✅    |✅     |
-|Windows|✅  |-      |
+|     | amd64 | arm64|
+|-----|-------|------|
+|Linux|✅    |✅    |
+|MacOS|✅    |✅    |
+|Windows|✅  |-     |
 
-Alternatively, you can install it using various package managers.
+You can also install it using each package manager as another method.
 
 ### [asdf](https://asdf-vm.com/)
 
@@ -99,34 +105,38 @@ Usage: rf [options] 'command' file ...
   -j, --json                       equivalent to -tjson
   -y, --yaml                       equivalent to -tyaml
       --debug                      enable debug mode
-  -n, --quiet                      suppress automatic printing
+  -n, --quiet                      suppress automatic priting
   -h, --help                       show this message
-
-
- -v, --version                    show version
+  -v, --version                    show version
 
 text options:
-  -F, --filed-separator VAL        set the field separator (regexp)
+  -F, --filed-separator VAL        set the field separator(regexp)
 ```
 
-If no *file* is specified, it will read from standard input.
+If you don't specify *file*, it will be read from standard input.
 
 ## Command
 
-The *command* in rf is where you write Ruby code. In rf, this Ruby code is referred to as the **command**. rf uses [mruby](https://github.com/mruby/mruby) as the Ruby interpreter. mruby is a lightweight Ruby implementation designed for embedded systems. It is mostly compatible with CRuby and supports most of its features, with some limitations. For more details, please refer to the [mruby documentation](https://github.com/mruby/mruby/blob/master/doc/limitations.md).
+Write Ruby code in *command*.
+In rf, this Ruby code is called **command**.
+rf uses [mruby](https://github.com/mruby/mruby) as a Ruby processing system.
+mruby is a lightweight Ruby processing system designed for embedded systems.
+It is compatible with CRuby and can use almost all functions, but there are some function restrictions.
+For more information, please refer to [mruby documentation](https://github.com/mruby/mruby/blob/master/doc/limitations.md).
 
-## Filters
+## Filter
 
-In rf, the processing is done following these steps:
+In rf, processing is performed in the following way.
 
 1. Read data from *file* or standard input.
-2. Convert the read data into a format that is easy to handle in Ruby.
-3. Split the converted data into chunks.
-4. Execute the *command* and evaluate the result.
-5. Process and output the evaluation result.
-6. Repeat steps 3 to 5 until there is no more data.
+2. Convert the read data into a format that is easy to handle with Ruby.
+3. Divide the converted data.
+4. Execute *command* and evaluate the result.
+5. Process the evaluation result and output it.
+6. Repeat steps 3 through 5 until there is no more data.
 
-The functionalities responsible for steps 2, 3, and 5 are referred to as **filters** in rf. This processing flow can be represented in pseudo Ruby code as follows:
+The functions that perform steps 2, 3 and 5 are called **filters** in rf.
+If you express this process flow in pseudo-code of Ruby, it will be as follows.
 
 ```ruby
 Filter.read(input).each do |chunk|
@@ -134,69 +144,73 @@ Filter.read(input).each do |chunk|
 end
 ```
 
-### Chunks
+### Chunk
 
-Filters split the input data according to certain rules. These divided units are called **chunks** in rf. The splitting rules vary depending on the filter.
+Filters divide input data according to certain rules.
+In rf, this divided unit is called **chunk**.
+The rules for dividing vary depending on the filter.
 
-In the text filter, the chunks are split by the newline character (`\n`). For JSON and YAML filters, the chunks are split on an object level. For example, if the input data is an array, it will be split into chunks based on the elements of the array. In Ruby code, it can be represented as follows:
+In text filters, they are divided by newline codes (`\n`).
+In JSON filters/YAML filters, they are divided by object units. For example, if the input data is an array, it will be divided into each element of the array.
+If expressed in Ruby code, it will be processed as follows.
 
 ```ruby
-# For the YAML filter, it would be YAML.load
+# In case of YAML filter it will be YAML.load
 [JSON.load(input)].flatten(1).each do |chunk|
   puts eval(command)
 end
 ```
 
-### Fields
+### Field
 
-Fields are further subdivisions of chunks in rf. Using special variables like `_1`, `_2`, `_3`, and so on, you can access the first field, second field, third field, and so on. Field splitting is done automatically, but you can access the chunk that has not been split into fields using the `_` variable.
+In rf, the part that is further divided from the chunk is called **field**. By using the special variable `_1`, `_2`, `_3`, etc., you can access the first field, second field, third field, etc. The field division is done automatically, but you can access chunks that are not divided into fields by using the `_` variable.
 
-The rules for field splitting vary depending on the filter. In the text filter, fields are separated by whitespace characters. It behaves the same as calling `String#split` without any arguments. You can change the field separator by using the `-F` option, and it is also possible to use a regular expression as the separator. For JSON and YAML filters, fields are only split if the chunk is an array. If the chunk is of any other data type, only `_1` will be populated, and `_2` onwards will be `nil`.
+The field division rule varies depending on the filter. In the case of a text filter, it is separated by whitespace characters. It behaves the same as when String#split is called without arguments. By specifying the `-F` option, you can change the delimiter. It is also possible to use regular expressions as delimiters. JSON filters/YAML filters only divide into fields if the chunk is an array. If it is another data type, only `_1` will be stored and `_2` and later will be nil.
 
-## Special Variables
+## Special variables
 
-In rf, you can use the [special variables](https://docs.ruby-lang.org/en/latest/class/Kernel.html) defined in Ruby. However, some variables have been redefined in rf for its own purposes.
+In rf, you can use [special variables](https://docs.ruby-lang.org/ja/latest/class/Kernel.html) defined in Ruby. However, some variables have been changed to rf's own definitions.
 
-| Variable | Description |
-|----------|-------------|
-| \_       | The input chunk |
-| $\_      | Alias for \_ |
-| $F       | Alias for \_ |
-| \_1, \_2, \_3, ... | The first, second, third field, and so on |
+| Variable name | Description |
+|-------|------|
+| \_  | The input chunk |
+| $\_ | Alias for \_ |
+| $F | Alias for \_ |
+| \_1, \_2, \_3, ... | First field, second field, third field... |
 
-## Built-in Methods
+## Built-in methods
 
-For convenience, rf provides several methods as built-in methods.
+Several methods are built-in for convenience.
 
-| Method | Description |
-|--------|-------------|
-| gsub   | Equivalent to `_.gsub` |
-| gsub!  | Equivalent to `_.gsub
-
-!` |
-| match  | Equivalent to `_.match` |
+| Method name | Description |
+|-----------|------|
+| gsub | Equivalent to `_.gsub` |
+| gsub! | Equivalent to `_.gsub!` |
+| match | Equivalent to `_.match` |
 | match? | Equivalent to `_.match?` |
-| sub    | Equivalent to `_.sub` |
-| sub!   | Equivalent to `_.sub!` |
-| tr     | Equivalent to `_.tr` |
-| tr!    | Equivalent to `_.tr!` |
+| sub | Equivalent to `_.sub` |
+| sub! | Equivalent to `_.sub!` |
+| tr | Equivalent to `_.tr` |
+| tr! | Equivalent to `_.tr!` |
 
 ## Extensions
 
-rf extends the Ruby language with its own additional features.
+rf extends Ruby's language features.
 
 ### Automatic conversion of to_i/to_f
 
-In standard Ruby, you cannot directly perform calculations between a String and an Integer/Float. You need to call String#to_i or String#to_f. However, rf automatically performs these conversions for you.
+In standard Ruby, String and Integer/Float cannot be calculated directly.
+You need to call String#to_i or String#to_f.
+rf automatically performs these calls.
 
 ```ruby
 1 + "1"
 #=> 2
 ```
 
-### Accessing Hash keys as methods
+### Hash key can be specified as a method
 
-In rf, you can call Hash keys as methods.
+You can call a key in a Hash as a method.
 
 ```ruby
 h = {"a": 1}
@@ -204,14 +218,14 @@ h.a
 #=> 1
 ```
 
-If you call a method that doesn't exist as a key, it will result in an undefined method error.
+If you call an undefined key as a method, it will become undefined method.
 
 ```ruby
 h.b
 #=> Error: undefined method 'b'
 ```
 
-You cannot use this method to call keys that contain whitespace, symbols, or multibyte characters. In those cases, use `Hash#[]`.
+You cannot call keys that contain whitespace characters, symbols or multibyte characters in this way. Use `Hash#[]`.
 
 ## License
 
