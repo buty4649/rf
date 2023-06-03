@@ -7,6 +7,13 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [linux, darwin, windows]
+        arch: [amd64, arm64]
+        exclude:
+          - os: windows
+            arch: arm64
     steps:
     - uses: actions/checkout@v3
     - name: Login to Docker Hub
@@ -22,84 +29,34 @@ jobs:
       uses: actions/cache@v3
       with:
         path: build/cache
-        key: ${{ runner.os }}-ccache
+        key: ${{ matrix.os }}-${{ matrix.arch }}-ccache
     - name: build
-      run: rake build:all
+      run: rake build:${{ matrix.os }}-${{ matrix.arch }}
 
-    - name: Upload test binary (linux-amd64)
+    - name: Upload test binary (${{ matrix.os }}-${{ matrix.arch }}})
       uses: actions/upload-artifact@v3
       with:
-        name: rf-${{ github.sha }}-linux-amd64
-        path: build/linux-amd64/bin/rf
-    - name: Upload test binary (linux-arm64)
-      uses: actions/upload-artifact@v3
-      with:
-        name: rf-${{ github.sha }}-linux-arm64
-        path: build/linux-arm64/bin/rf
-    - name: Upload test binary (darwin-amd64)
-      uses: actions/upload-artifact@v3
-      with:
-        name: rf-${{ github.sha }}-darwin-amd64
-        path: build/darwin-amd64/bin/rf
-    - name: Upload test binary (darwin-arm64)
-      uses: actions/upload-artifact@v3
-      with:
-        name: rf-${{ github.sha }}-darwin-arm64
-        path: build/darwin-arm64/bin/rf
-    - name: Upload test binary (windows-amd64)
-      uses: actions/upload-artifact@v3
-      with:
-        name: rf-${{ github.sha }}-windows-amd64
-        path: build/windows-amd64/bin/rf.exe
+        name: rf-${{ github.sha }}-${{ matrix.os }}-${{ matrix.arch }}
+        path: build/${{ matrix.os }}-${{ matrix.arch }}/bin/rf
 
-  test-on-linux:
+  test:
     needs: build
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        runs-on: [ubuntu-latest, macos-latest, windows-latest]
+        include:
+          - runs-on: ubuntu-latest
+            os-arch: linux-amd64
+          - runs-on: macos-latest
+            os-arch: darwin-amd64
+          - runs-on: windows-latest
+            os-arch: windows-amd64
+    runs-on: ${{ matrix.runs-on }}
     steps:
     - uses: actions/checkout@v3
     - uses: actions/download-artifact@v3
       with:
-        name: rf-${{ github.sha }}-linux-amd64
-        path: build/bin
-    - name: Set up Ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 3.2
-    - name: Install dependencies
-      run: bundle install
-    - name: Run test
-      run: |
-        chmod +x build/bin/rf
-        rake spec
-
-  test-on-macos:
-    needs: build
-    runs-on: macos-latest
-    steps:
-    - uses: actions/checkout@v3
-    - uses: actions/download-artifact@v3
-      with:
-        name: rf-${{ github.sha }}-darwin-amd64
-        path: build/bin
-    - name: Set up Ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 3.2
-    - name: Install dependencies
-      run: bundle install
-    - name: Run test
-      run: |
-        chmod +x build/bin/rf
-        rake spec
-
-  test-on-windows:
-    needs: build
-    runs-on: windows-latest
-    steps:
-    - uses: actions/checkout@v3
-    - uses: actions/download-artifact@v3
-      with:
-        name: rf-${{ github.sha }}-windows-amd64
+        name: rf-${{ github.sha }}-${{ matrix.os-arch }}
         path: build/bin
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
