@@ -118,7 +118,7 @@ GEM
       parser (>= 3.2.0)
 
 PLATFORMS
-  x86-mingw-ucrt
+  x64-mingw-ucrt
   x86_64-darwin-20
   x86_64-linux
 
