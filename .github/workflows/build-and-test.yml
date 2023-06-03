@@ -67,5 +67,8 @@ jobs:
         ruby-version: 3.2
     - name: Install dependencies
       run: bundle install
+    - name: Grant execute permission
+      if: ${{ ! contains(matrix.runs-on, 'windows') }}
+      run: chmod +x build/bin/rf
     - name: Run test
       run: rake spec
