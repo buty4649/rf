@@ -11,6 +11,9 @@ jobs:
       matrix:
         os: [linux, darwin, windows]
         arch: [amd64, arm64]
+        include:
+          - os: windows
+            suffix: .exe
         exclude:
           - os: windows
             arch: arm64
@@ -37,7 +40,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: rf-${{ github.sha }}-${{ matrix.os }}-${{ matrix.arch }}
-        path: build/${{ matrix.os }}-${{ matrix.arch }}/bin/rf
+        path: build/${{ matrix.os }}-${{ matrix.arch }}/bin/rf${{ matrix.suffix }}
 
   test:
     needs: build
