@@ -119,6 +119,7 @@ GEM
 
 PLATFORMS
   x86-mingw-ucrt
+  x86_64-darwin-20
   x86_64-linux
 
 DEPENDENCIES
