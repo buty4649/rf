@@ -28,6 +28,7 @@ jobs:
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: 3.2
+        bundler-cache: true
     - name: Build cache
       uses: actions/cache@v3
       with:
@@ -65,6 +66,7 @@ jobs:
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: 3.2
+        bundler-cache: true
     - name: Install dependencies
       run: bundle install
     - name: Grant execute permission
