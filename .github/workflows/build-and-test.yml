@@ -73,4 +73,4 @@ jobs:
       if: ${{ ! contains(matrix.runs-on, 'windows') }}
       run: chmod +x build/bin/rf
     - name: Run test
-      run: rake spec
+      run: bundle exec rake spec
