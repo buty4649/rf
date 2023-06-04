@@ -23,6 +23,8 @@ jobs:
     - name: Build
       run: rake release
     - name: Create release tag
+      env:
+        GH_TOKEN: ${{ github.token }}
       run: |
         VERSION=$(echo ${{ github.ref }} | sed -e "s#refs/tags/##g")
         echo "VERSION: ${VERSION}"
