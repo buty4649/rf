@@ -5,7 +5,15 @@ module Rf
     end
 
     def _=(data)
-      $F = data.split
+      $F = case data
+           when String
+             data.split
+           when Hash
+             data.to_a
+           else
+             [data.dup]
+           end
+
       $_ = data
     end
 
