@@ -29,15 +29,15 @@ module Rf
     end
 
     def do_action
-      filter.each do |input, _index|
-        container.input = input
+      filter.each do |chunk, _index|
+        container._ = chunk
         ret = bind.eval(command)
 
-        ret = ret.match?(input) if ret.instance_of?(Regexp)
+        ret = ret.match?(chunk) if ret.instance_of?(Regexp)
         next if quiet?(ret)
 
         filter.puts(if all_print?(ret)
-                      input
+                      chunk
                     else
                       ret
                     end)
