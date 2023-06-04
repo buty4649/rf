@@ -1,3 +1,6 @@
+[English](./README.md) | [日本語(Japanese)](./README_ja.md)
+---
+
 # rf
 
 rf is a CLI tool that filters text/JSON/YAML with Ruby code.
