@@ -19,8 +19,8 @@ def build_config(conf, target = nil, strip: false)
   [conf.cc, conf.linker].each do |cc|
     cc.command = "#{ccache}zig cc"
     cc.flags += ['-target', target] if target
+    cc.flags << '-s' if strip
   end
-  conf.cc.flags << '-s' if strip
 
   conf.archiver.command = 'zig ar'
   conf.cc.defines += %w[MRB_STR_LENGTH_MAX=0 MRB_UTF8_STRING]
