@@ -3,10 +3,11 @@ module Rf
     class Base
       attr_reader :data
 
-      def each
-        index = 1
-        data.each do |input|
-          yield input, index
+      def each_with_index
+        index = 0
+        data.each do |record|
+          yield record, index
+          index += 1
         end
       end
 

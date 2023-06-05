@@ -29,15 +29,16 @@ module Rf
     end
 
     def do_action
-      filter.each do |chunk, _index|
-        container._ = chunk
-        ret = bind.eval(command)
+      filter.each_with_index do |record, index|
+        container._ = record
+        container.NR = $. = index + 1
 
-        ret = ret.match?(chunk) if ret.instance_of?(Regexp)
+        ret = bind.eval(command)
+        ret = ret.match?(record) if ret.instance_of?(Regexp)
         next if quiet?(ret)
 
-        filter.puts(if all_print?(ret)
-                      chunk
+        filter.puts(if ret == true
+                      record
                     else
                       ret
                     end)
@@ -88,10 +89,6 @@ module Rf
       else
         $stdin
       end
-    end
-
-    def all_print?(val)
-      val == true
     end
 
     def print_exception_and_exit(exc, backtrace = debug?)

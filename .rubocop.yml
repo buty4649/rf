@@ -1,3 +1,5 @@
+inherit_from: .rubocop_todo.yml
+
 require: rubocop-rspec
 
 AllCops:
@@ -16,10 +18,6 @@ Style/Documentation:
 Style/FrozenStringLiteralComment:
   Enabled: false
 
-Style/GlobalVars:
-  Exclude:
-    - mrblib/rf/container.rb
-
 Style/MissingRespondToMissing:
   Enabled: false
 
@@ -31,10 +29,6 @@ Style/SingleLineMethods:
 
 Style/StderrPuts:
   Enabled: false
-
-Style/SpecialGlobalVars:
-  Exclude:
-    - mrblib/rf/container.rb
 
 Security/YAMLLoad:
   Enabled: false
