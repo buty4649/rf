@@ -1,11 +1,11 @@
 module Rf
   class Container
     def _
-      $_
+      $_ # rubocop:disable Style/SpecialGlobalVars
     end
 
     def _=(data)
-      $F = case data
+      $F = case data # rubocop: disable Style/GlobalVars
            when String
              data.split
            when Hash
@@ -16,6 +16,8 @@ module Rf
 
       $_ = data
     end
+
+    attr_accessor :NR # rubocop:disable Naming/MethodName
 
     def string?
       _.instance_of?(String)

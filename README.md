@@ -181,6 +181,8 @@ In rf, you can use [special variables](https://docs.ruby-lang.org/ja/latest/clas
 | $\_ | Alias for \_ |
 | $F | It is an array that stores fields(`$F=_.split`) |
 | \_1, \_2, \_3, ... | First field, second field, third field... |
+| $. | The number of chunks loaded(1-indexed) |
+| @NR | Same as $. |
 
 ## Built-in methods
 
