@@ -5,8 +5,8 @@ module Rf
 
       def each_with_index
         index = 0
-        data.each do |chunk|
-          yield chunk, index
+        data.each do |record|
+          yield record, index
           index += 1
         end
       end

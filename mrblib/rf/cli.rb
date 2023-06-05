@@ -29,16 +29,16 @@ module Rf
     end
 
     def do_action
-      filter.each_with_index do |chunk, index|
-        container._ = chunk
+      filter.each_with_index do |record, index|
+        container._ = record
         container.NR = $. = index + 1
 
         ret = bind.eval(command)
-        ret = ret.match?(chunk) if ret.instance_of?(Regexp)
+        ret = ret.match?(record) if ret.instance_of?(Regexp)
         next if quiet?(ret)
 
         filter.puts(if ret == true
-                      chunk
+                      record
                     else
                       ret
                     end)

@@ -20,7 +20,7 @@ describe 'Special Variables' do
   end
 
   describe '$F' do
-    context 'when chunk is String' do
+    context 'when record is String' do
       let(:input) { 'foo bar baz' }
       let(:output) do
         <<~OUTPUT
@@ -36,7 +36,7 @@ describe 'Special Variables' do
       it { expect(last_command_started).to have_output output_string_eq output }
     end
 
-    context 'when chunk is Hash' do
+    context 'when record is Hash' do
       let(:input) do
         <<~JSON
           {
@@ -60,7 +60,7 @@ describe 'Special Variables' do
       it { expect(last_command_started).to have_output output_string_eq output }
     end
 
-    context 'when chunk is Other class' do
+    context 'when record is Other class' do
       let(:input) { '1' }
       let(:output) do
         <<~OUTPUT

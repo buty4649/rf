@@ -143,15 +143,15 @@ The functions that perform steps 2, 3 and 5 are called **filters** in rf.
 If you express this process flow in pseudo-code of Ruby, it will be as follows.
 
 ```ruby
-Filter.read(input).each do |chunk|
+Filter.read(input).each do |record|
   puts eval(command)
 end
 ```
 
-### Chunk
+### Record
 
 Filters divide input data according to certain rules.
-In rf, this divided unit is called **chunk**.
+In rf, this divided unit is called **record**.
 The rules for dividing vary depending on the filter.
 
 In text filters, they are divided by newline codes (`\n`).
@@ -160,16 +160,16 @@ If expressed in Ruby code, it will be processed as follows.
 
 ```ruby
 # In case of YAML filter it will be YAML.load
-[JSON.load(input)].flatten(1).each do |chunk|
+[JSON.load(input)].flatten(1).each do |record|
   puts eval(command)
 end
 ```
 
 ### Field
 
-In rf, the part that is further divided from the chunk is called **field**. By using the special variable `_1`, `_2`, `_3`, etc., you can access the first field, second field, third field, etc. The field division is done automatically, but you can access chunks that are not divided into fields by using the `_` variable.
+In rf, the part that is further divided from the record is called **field**. By using the special variable `_1`, `_2`, `_3`, etc., you can access the first field, second field, third field, etc. The field division is done automatically, but you can access records that are not divided into fields by using the `_` variable.
 
-The field division rule varies depending on the filter. In the case of a text filter, it is separated by whitespace characters. It behaves the same as when String#split is called without arguments. By specifying the `-F` option, you can change the delimiter. It is also possible to use regular expressions as delimiters. JSON filters/YAML filters only divide into fields if the chunk is an array. If it is another data type, only `_1` will be stored and `_2` and later will be nil.
+The field division rule varies depending on the filter. In the case of a text filter, it is separated by whitespace characters. It behaves the same as when String#split is called without arguments. By specifying the `-F` option, you can change the delimiter. It is also possible to use regular expressions as delimiters. JSON filters/YAML filters only divide into fields if the record is an array. If it is another data type, only `_1` will be stored and `_2` and later will be nil.
 
 ## Special variables
 
@@ -177,11 +177,11 @@ In rf, you can use [special variables](https://docs.ruby-lang.org/ja/latest/clas
 
 | Variable name | Description |
 |-------|------|
-| \_  | The input chunk |
+| \_  | The input record |
 | $\_ | Alias for \_ |
 | $F | It is an array that stores fields(`$F=_.split`) |
 | \_1, \_2, \_3, ... | First field, second field, third field... |
-| $. | The number of chunks loaded(1-indexed) |
+| $. | The number of records loaded(1-indexed) |
 | @NR | Same as $. |
 
 ## Built-in methods
