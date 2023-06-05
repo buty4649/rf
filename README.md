@@ -190,14 +190,14 @@ Several methods are built-in for convenience.
 
 | Method name | Description |
 |-----------|------|
-| gsub | Equivalent to `_.gsub` |
-| gsub! | Equivalent to `_.gsub!` |
-| match | Equivalent to `_.match` |
-| match? | Equivalent to `_.match?` |
-| sub | Equivalent to `_.sub` |
-| sub! | Equivalent to `_.sub!` |
-| tr | Equivalent to `_.tr` |
-| tr! | Equivalent to `_.tr!` |
+| gsub | Same as `_.gsub` |
+| gsub! | Same as `_.gsub!` |
+| match | Same as `_.match` |
+| match? | Same as `_.match?` |
+| sub | Same as `_.sub` |
+| sub! | Same as `_.sub!` |
+| tr | Same as `_.tr` |
+| tr! | Same as `_.tr!` |
 
 ## Extensions
 

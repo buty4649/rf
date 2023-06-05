@@ -197,14 +197,14 @@ rfではRubyで定義されている[特殊変数](https://docs.ruby-lang.org/ja
 
 | メソッド名 | 説明 |
 |-----------|------|
-| gsub | `_.gusb`と同等です |
-| gsub! | `_.gusb!`と同等です |
-| match | `_.match`と同等です |
-| match? | `_.match?`と同等です |
-| sub | `_.sub`と同等です |
-| sub! | `_.sub!`と同等です |
-| tr | `_.tr`と同等です |
-| tr! | `_.tr!`と同等です |
+| gsub | `_.gusb`と等価です |
+| gsub! | `_.gusb!`と等価です |
+| match | `_.match`と等価です |
+| match? | `_.match?`と等価です |
+| sub | `_.sub`と等価です |
+| sub! | `_.sub!`と等価です |
+| tr | `_.tr`と等価です |
+| tr! | `_.tr!`と等価です |
 
 ## 拡張機能
 
