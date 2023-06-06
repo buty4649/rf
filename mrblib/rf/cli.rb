@@ -34,7 +34,7 @@ module Rf
         container.NR = $. = index + 1
 
         ret = bind.eval(command)
-        next if @config.quiet
+        next if config.quiet
 
         filter.output(ret)
       end
@@ -51,7 +51,7 @@ module Rf
     end
 
     def command
-      @config.command
+      config.command
     end
 
     def add_features
@@ -61,11 +61,11 @@ module Rf
     end
 
     def filter
-      @filter ||= @config.filter.new(io)
+      @filter ||= config.filter.new(io)
     end
 
     def io
-      if files = @config.files
+      if files = config.files
         Files.new(files)
       else
         $stdin

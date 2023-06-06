@@ -18,7 +18,7 @@ module Rf
 
         puts(case val
              when true, Regexp
-               @record
+               record
              else
                val
              end)
@@ -37,7 +37,7 @@ module Rf
         when true, String, Integer, Float, Array, Hash, MatchData
           false
         when Regexp
-          !val.match?(@record)
+          !val.match?(record)
         else
           true
         end
