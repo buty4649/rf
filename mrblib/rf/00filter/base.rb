@@ -3,9 +3,13 @@ module Rf
     class Base
       attr_reader :data, :record, :index
 
+      def each(&)
+        data.each(&)
+      end
+
       def each_with_index
         index = 0
-        data.each do |record|
+        each do |record|
           @record = record
           @index = index
           yield @record, @index
@@ -24,8 +28,10 @@ module Rf
              end)
       end
 
-      def puts(val)
-        $stdout.puts decorate(val)
+      def puts(*args)
+        args.each do |arg|
+          $stdout.puts decorate(arg)
+        end
       end
 
       def decorate(str)

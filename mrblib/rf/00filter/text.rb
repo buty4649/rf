@@ -12,6 +12,12 @@ module Rf
         fs = self.class.config.fs
         $; = Regexp.new(fs) if fs
       end
+
+      def each(&)
+        data.each do |line|
+          yield line.chomp
+        end
+      end
     end
   end
 end
