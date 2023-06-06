@@ -34,14 +34,9 @@ module Rf
         container.NR = $. = index + 1
 
         ret = bind.eval(command)
-        ret = ret.match?(record) if ret.instance_of?(Regexp)
-        next if quiet?(ret)
+        next if config.quiet
 
-        filter.puts(if ret == true
-                      record
-                    else
-                      ret
-                    end)
+        filter.output(ret)
       end
     end
 
@@ -56,21 +51,7 @@ module Rf
     end
 
     def command
-      @config.command
-    end
-
-    def quiet?(val)
-      @config.quiet || val.nil? || val == false || !valid_instance_of?(val)
-    end
-
-    def valid_instance_of?(val)
-      val.instance_of?(TrueClass) ||
-        val.instance_of?(String) ||
-        val.instance_of?(Integer) ||
-        val.instance_of?(Float) ||
-        val.instance_of?(Array) ||
-        val.instance_of?(Hash) ||
-        val.instance_of?(MatchData)
+      config.command
     end
 
     def add_features
@@ -80,11 +61,11 @@ module Rf
     end
 
     def filter
-      @filter ||= @config.filter.new(io)
+      @filter ||= config.filter.new(io)
     end
 
     def io
-      if files = @config.files
+      if files = config.files
         Files.new(files)
       else
         $stdin
