@@ -31,14 +31,16 @@ module Rf
     end
 
     def respond_to_missing?(sym, *)
-      # check for _1, _2, _3, ...
-      sym.to_s =~ /\A_[1-9]\d*\z/ || super
+      # check for _0, _1, _2, _3, ...
+      sym.to_s =~ /\A_(0|[1-9]\d*)\z/ || super
     end
 
     def method_missing(sym, *)
       s = sym.to_s
-      # check for _1, _2, _3, ...
-      if s =~ /\A_[1-9]\d*\z/
+      # check for _0, _1, _2, _3, ...
+      if sym == :_0
+        _
+      elsif s =~ /\A_[1-9]\d*\z/
         $F[s[1..].to_i - 1] # rubocop:disable Style/GlobalVars
       else
         super

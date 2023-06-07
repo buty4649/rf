@@ -19,6 +19,16 @@ describe 'Special Variables' do
     it { expect(last_command_started).to have_output output_string_eq output }
   end
 
+  describe '_0' do
+    let(:input) { 'foo' }
+    let(:output) { input }
+
+    before { run_rf('-q "puts _0"', input) }
+
+    it { expect(last_command_started).to be_successfully_executed }
+    it { expect(last_command_started).to have_output output_string_eq output }
+  end
+
   describe '$F' do
     context 'when record is String' do
       let(:input) { 'foo bar baz' }
