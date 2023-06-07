@@ -1,19 +1,33 @@
 module Rf
   module Filter
     class Base
-      attr_reader :data, :record, :index
+      attr_reader :data, :record, :index, :fields
 
-      def each(&)
-        data.each(&)
+      def each_record
+        index = 0
+        data.each do |record|
+          @record = preprocess(record)
+          @index = index
+          @fields = split(@record)
+          yield @record, @index, @fields
+          index += 1
+        end
       end
 
-      def each_with_index
-        index = 0
-        each do |record|
-          @record = record
-          @index = index
-          yield @record, @index
-          index += 1
+      def preprocess(record)
+        record
+      end
+
+      def split(record)
+        case record
+        when Array
+          record
+        when Hash
+          record.to_a
+        when String
+          record.split
+        else
+          [record]
         end
       end
 

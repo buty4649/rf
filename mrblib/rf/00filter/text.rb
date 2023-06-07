@@ -13,10 +13,8 @@ module Rf
         $; = Regexp.new(fs) if fs
       end
 
-      def each(&)
-        data.each do |line|
-          yield line.chomp
-        end
+      def preprocess(record)
+        record.chomp
       end
     end
   end

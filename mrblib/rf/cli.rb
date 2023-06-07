@@ -29,9 +29,10 @@ module Rf
     end
 
     def do_action
-      filter.each_with_index do |record, index|
+      filter.each_record do |record, index, fields|
         container._ = record
         container.NR = $. = index + 1
+        $F = fields # rubocop:disable Style/GlobalVars
 
         ret = bind.eval(command)
         next if config.quiet

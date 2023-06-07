@@ -5,15 +5,6 @@ module Rf
     end
 
     def _=(data)
-      $F = case data # rubocop: disable Style/GlobalVars
-           when String
-             data.split
-           when Hash
-             data.to_a
-           else
-             [data.dup]
-           end
-
       $_ = data
     end
 
@@ -40,15 +31,17 @@ module Rf
     end
 
     def respond_to_missing?(sym, *)
-      # check for _1, _2, _3, ...
-      (string? && sym.to_s =~ /\A_[1-9]\d*\z/) || super
+      # check for _0, _1, _2, _3, ...
+      sym.to_s =~ /\A_(0|[1-9]\d*)\z/ || super
     end
 
     def method_missing(sym, *)
       s = sym.to_s
-      # check for _1, _2, _3, ...
-      if string? && s =~ /\A_[1-9]\d*\z/
-        _.split[s[1..].to_i - 1]
+      # check for _0, _1, _2, _3, ...
+      if sym == :_0
+        _
+      elsif s =~ /\A_[1-9]\d*\z/
+        $F[s[1..].to_i - 1] # rubocop:disable Style/GlobalVars
       else
         super
       end
