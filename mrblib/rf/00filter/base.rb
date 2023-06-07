@@ -3,18 +3,18 @@ module Rf
     class Base
       attr_reader :data, :record, :index
 
-      def each(&)
-        data.each(&)
-      end
-
       def each_with_index
         index = 0
-        each do |record|
-          @record = record
+        data.each do |record|
+          @record = preprocess(record)
           @index = index
           yield @record, @index
           index += 1
         end
+      end
+
+      def preprocess(record)
+        record
       end
 
       def output(val)
