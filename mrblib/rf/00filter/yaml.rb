@@ -10,8 +10,8 @@ module Rf
                 end
       end
 
-      def decorate(str)
-        str.to_yaml.sub(/\A---[\s\n]/, '')
+      def decorate(val)
+        val.to_yaml.sub(/\A---[\s\n]/, '')
       end
     end
   end

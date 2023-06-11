@@ -12,6 +12,9 @@ describe 'Show help text' do
 
       text options:
         -F, --filed-separator VAL        set the field separator(regexp)
+
+      json options:
+        -r, --raw-string                 output raw strings
     TEXT
   end
 

@@ -1,5 +1,5 @@
 describe 'YAML filter' do
-  context 'when use -t option' do
+  context 'with -t option' do
     describe 'Output string' do
       let(:input) { load_fixture('yaml/string.yml') }
       let(:output) { 'test' }

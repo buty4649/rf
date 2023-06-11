@@ -37,6 +37,12 @@ module Rf
           opt.on('-F VAL', '--filed-separator', 'set the field separator(regexp)') do |v|
             Filter::Text.config.fs = v
           end
+
+          opt.separator ''
+          opt.separator 'json options:'
+          opt.on('-r', '--raw-string', 'output raw strings') do
+            Filter::Json.config.raw = true
+          end
         end
       end
 

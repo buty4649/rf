@@ -78,5 +78,5 @@ end
 
 desc 'Run RSpec with parallel_rspec'
 task 'spec' do
-  sh 'parallel_rspec --first-is-1'
+  sh 'parallel_rspec --first-is-1 --serialize-stdout'
 end

@@ -47,8 +47,8 @@ module Rf
         end
       end
 
-      def decorate(str)
-        str.to_s
+      def decorate(val)
+        val.to_s
       end
 
       def quiet?(val)
