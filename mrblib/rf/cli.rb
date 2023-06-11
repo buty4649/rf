@@ -1,66 +1,26 @@
 module Rf
   class Cli
-    attr_reader :config, :container, :bind
+    attr_reader :config
 
     def run(argv)
-      setup(argv)
-      pre_action
-      do_action
-      post_action
+      @config = Config.parse(argv)
+      Runner.run({
+                   command: config.command,
+                   filter:,
+                   quiet: config.quiet
+                 })
     rescue Files::NotFound => e
       print_exception_and_exit(e, false)
     rescue SyntaxError, StandardError => e
       print_exception_and_exit(e)
     end
 
-    def setup(argv)
-      @config = Config.parse(argv)
-      setup_container
-    end
-
-    # enclose the scope of binding
-    def setup_container
-      @container = Container.new
-      @bind = container.instance_eval { binding }
-    end
-
-    def pre_action
-      add_features
-    end
-
-    def do_action
-      filter.each_record do |record, index, fields|
-        container.record = record
-        container.NR = index
-        container.fields = fields
-
-        ret = bind.eval(command)
-        filter.output(ret) unless config.quiet
-      end
-    end
-
-    def post_action
-      container.instance_eval do
-        @__at_exit__&.call
-      end
-    end
-
     def debug?
       config&.debug
     end
 
-    def command
-      config.command
-    end
-
-    def add_features
-      Rf.add_features_to_integer
-      Rf.add_features_to_float
-      Rf.add_features_to_hash
-    end
-
     def filter
-      @filter ||= config.filter.new(io)
+      config.filter.new(io)
     end
 
     def io
