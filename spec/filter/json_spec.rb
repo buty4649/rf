@@ -1,10 +1,22 @@
 describe 'JSON filter' do
-  context 'when -t option' do
+  context 'with -t option' do
     describe 'Output string' do
       let(:input) { load_fixture('json/string.json') }
       let(:output) { '"test"' }
 
       before { run_rf('-t json true', input) }
+
+      it { expect(last_command_started).to be_successfully_executed }
+      it { expect(last_command_started).to have_output output_string_eq output }
+    end
+  end
+
+  context 'with -r option' do
+    describe 'Output string' do
+      let(:input) { load_fixture('json/string.json') }
+      let(:output) { 'test' }
+
+      before { run_rf('-jr true', input) }
 
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output output_string_eq output }
