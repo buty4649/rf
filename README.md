@@ -177,13 +177,10 @@ In rf, you can use [special variables](https://docs.ruby-lang.org/ja/latest/clas
 
 | Variable name | Description |
 |-------|------|
-| \_  | The input record |
-| $\_ | Same as \_ |
-| $F | It is an array that stores fields(`$F=_.split`) |
-| \_0 | Same as \_ |
+| record, \_, $\_, \_0  | The input record |
+| fields, $F | It is an array that stores fields(`$F=_.split`) |
 | \_1, \_2, \_3, ... | First field, second field, third field... |
-| $. | The number of records loaded(1-indexed) |
-| @NR | Same as $. |
+| $., @NR | The number of records loaded(1-indexed) |
 
 ## Built-in methods
 
