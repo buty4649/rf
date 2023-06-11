@@ -4,10 +4,20 @@ module Rf
       new(...).run
     end
 
-    attr_reader :config, :container, :bind
+    attr_reader :container, :bind,
+                :quiet, :command,
+                :filter
+    alias quiet? quiet
 
-    def initialize(config)
-      @config = config
+    # @param [Hash<String>] opts
+    #   :command => String
+    #   :filter => Rf::Filter
+    #   :quiet => Boolean
+    def initialize(opts)
+      @command = opts[:command]
+      @filter = opts[:filter]
+      @quiet = opts[:quiet]
+
       setup_container
     end
 
@@ -43,26 +53,6 @@ module Rf
     def post_action
       container.instance_eval do
         @__at_exit__&.call
-      end
-    end
-
-    def quiet?
-      config.quiet
-    end
-
-    def command
-      config.command
-    end
-
-    def filter
-      @filter ||= config.filter.new(io)
-    end
-
-    def io
-      if files = config.files
-        Files.new(files)
-      else
-        $stdin
       end
     end
   end

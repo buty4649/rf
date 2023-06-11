@@ -4,7 +4,11 @@ module Rf
 
     def run(argv)
       @config = Config.parse(argv)
-      Runner.run(config)
+      Runner.run({
+                   command: config.command,
+                   filter:,
+                   quiet: config.quiet
+                 })
     rescue Files::NotFound => e
       print_exception_and_exit(e, false)
     rescue SyntaxError, StandardError => e
@@ -13,6 +17,18 @@ module Rf
 
     def debug?
       config&.debug
+    end
+
+    def filter
+      config.filter.new(io)
+    end
+
+    def io
+      if files = config.files
+        Files.new(files)
+      else
+        $stdin
+      end
     end
 
     def print_exception_and_exit(exc, backtrace = debug?)
