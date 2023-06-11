@@ -1,15 +1,14 @@
 module Rf
   module Filter
     class Base
-      attr_reader :data, :record, :index, :fields
+      attr_reader :data, :record
 
       def each_record
         index = 1
         data.each do |record|
           @record = preprocess(record)
-          @index = index
-          @fields = split(@record)
-          yield @record, @index, @fields
+          fields = split(@record)
+          yield @record, index, fields
           index += 1
         end
       end

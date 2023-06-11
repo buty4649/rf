@@ -42,8 +42,8 @@ module Rf
     def do_action
       filter.each_record do |record, index, fields|
         container.record = record
-        container.NR = index
         container.fields = fields
+        bind.eval("NR = $. = #{index}") # index is Integer
 
         ret = bind.eval(command)
         filter.output(ret) unless quiet?
