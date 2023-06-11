@@ -20,11 +20,11 @@ module Rf
                 end
       end
 
-      def decorate(str)
-        if raw? && str.instance_of?(String)
-          str
+      def decorate(val)
+        if raw? && val.instance_of?(String)
+          val
         else
-          JSON.pretty_generate(str)
+          JSON.pretty_generate(val)
         end
       end
     end
