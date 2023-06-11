@@ -28,6 +28,14 @@ Style/SingleLineMethods:
 Style/StderrPuts:
   Enabled: false
 
+Style/GlobalVars:
+  Exclude:
+    - mrblib/rf/container.rb
+
+Style/SpecialGlobalVars:
+  Exclude:
+    - mrblib/rf/container.rb
+
 Security/YAMLLoad:
   Enabled: false
 
@@ -40,6 +48,14 @@ Metrics/BlockLength:
     - spec/**/*_spec.rb
 
 Naming/MemoizedInstanceVariableName:
+  Exclude:
+    - mrblib/rf/container.rb
+
+Naming/MethodName:
+  Exclude:
+    - mrblib/rf/container.rb
+
+Naming/VariableName:
   Exclude:
     - mrblib/rf/container.rb
 

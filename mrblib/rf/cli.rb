@@ -30,14 +30,12 @@ module Rf
 
     def do_action
       filter.each_record do |record, index, fields|
-        container._ = record
-        container.NR = $. = index + 1
-        $F = fields # rubocop:disable Style/GlobalVars
+        container.record = record
+        container.NR = index
+        container.fields = fields
 
         ret = bind.eval(command)
-        next if config.quiet
-
-        filter.output(ret)
+        filter.output(ret) unless config.quiet
       end
     end
 
