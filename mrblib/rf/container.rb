@@ -1,14 +1,31 @@
 module Rf
   class Container
     def _
-      $_ # rubocop:disable Style/SpecialGlobalVars
+      $_
     end
 
     def _=(data)
       $_ = data
     end
 
-    attr_accessor :NR # rubocop:disable Naming/MethodName
+    alias record _
+    alias record= _=
+
+    def fields
+      $F
+    end
+
+    def fields=(data)
+      $F = data
+    end
+
+    def NR
+      @NR ||= 1
+    end
+
+    def NR=(num)
+      @NR = $. = num
+    end
 
     def string?
       _.instance_of?(String)
@@ -41,7 +58,7 @@ module Rf
       if sym == :_0
         _
       elsif s =~ /\A_[1-9]\d*\z/
-        $F[s[1..].to_i - 1] # rubocop:disable Style/GlobalVars
+        $F[s[1..].to_i - 1]
       else
         super
       end

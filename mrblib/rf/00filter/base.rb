@@ -4,7 +4,7 @@ module Rf
       attr_reader :data, :record, :index, :fields
 
       def each_record
-        index = 0
+        index = 1
         data.each do |record|
           @record = preprocess(record)
           @index = index
