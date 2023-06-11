@@ -19,14 +19,6 @@ module Rf
       $F = data
     end
 
-    def NR
-      @NR ||= 1
-    end
-
-    def NR=(num)
-      @NR = $. = num
-    end
-
     def string?
       _.instance_of?(String)
     end

@@ -100,7 +100,7 @@ describe 'Special Variables' do
         OUTPUT
       end
 
-      before { run_rf(%q/'[$.,_].join(" ")'/, input) }
+      before { run_rf(%/'[#{name}, _].join(" ")'/, input) }
 
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output output_string_eq output }
