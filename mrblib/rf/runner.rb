@@ -28,16 +28,8 @@ module Rf
     end
 
     def run
-      add_features
       do_action
       post_action
-    end
-
-    def add_features
-      Rf.add_features_to_integer
-      Rf.add_features_to_float
-      Rf.add_features_to_hash
-      Rf.add_features_to_json
     end
 
     def do_action

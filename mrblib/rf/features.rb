@@ -14,6 +14,13 @@ end
 
 module Rf
   class << self
+    def add_features
+      add_features_to_integer
+      add_features_to_float
+      add_features_to_hash
+      add_features_to_json
+    end
+
     def add_features_to_integer
       extend_op(Integer, :to_i)
     end
