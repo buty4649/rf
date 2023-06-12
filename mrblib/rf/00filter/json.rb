@@ -24,7 +24,7 @@ module Rf
         if raw? && val.instance_of?(String)
           val
         else
-          JSON.pretty_generate(val)
+          val.to_json
         end
       end
     end
