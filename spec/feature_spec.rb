@@ -96,4 +96,14 @@ describe 'Feature' do
       it { expect(last_command_started).to have_output output_string_eq output }
     end
   end
+
+  describe 'to_json' do
+    let(:input) { load_fixture('json/hash.json') }
+    let(:output) do
+      before { run_rf("-j -q 'puts _.to_json'", input) }
+
+      it { expect(last_command_started).to be_successfully_executed }
+      it { expect(last_command_started).to have_output output_string_eq output }
+    end
+  end
 end

@@ -49,5 +49,11 @@ module Rf
         key?(sym.to_s) || super
       end
     end
+
+    def add_features_to_json
+      Object.define_method(:to_json) do
+        JSON.pretty_generate(self)
+      end
+    end
   end
 end
