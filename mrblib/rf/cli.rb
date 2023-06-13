@@ -4,6 +4,7 @@ module Rf
 
     def run(argv)
       @config = Config.parse(argv)
+      Rf.add_features
       Runner.run({
                    command: config.command,
                    filter:,
