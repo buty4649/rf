@@ -7,8 +7,8 @@ describe 'Show help text' do
         -y, --yaml                       equivalent to -tyaml
             --debug                      enable debug mode
         -n, --quiet                      suppress automatic priting
-        -h, --help                       show this message
-        -v, --version                    show version
+            --help                       show this message
+            --version                    show version
 
       text options:
         -F, --filed-separator VAL        set the field separator(regexp)
@@ -20,13 +20,6 @@ describe 'Show help text' do
 
   describe '--help' do
     before { run_rf('--help') }
-
-    it { expect(last_command_started).to be_successfully_executed }
-    it { expect(last_command_started).to have_output_on_stdout output_string_eq help_text }
-  end
-
-  describe '-h' do
-    before { run_rf('-h') }
 
     it { expect(last_command_started).to be_successfully_executed }
     it { expect(last_command_started).to have_output_on_stdout output_string_eq help_text }
