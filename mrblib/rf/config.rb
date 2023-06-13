@@ -69,7 +69,7 @@ module Rf
       end
 
       def print_version_and_exit
-        puts Rf::VERSION
+        puts "rf #{Rf::VERSION} (mruby #{MRUBY_VERSION})"
         exit
       end
     end
