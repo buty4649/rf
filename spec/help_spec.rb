@@ -5,8 +5,8 @@ describe 'Show help text' do
         -t, --type={text|json|yaml}      set the type of input (default:text)
         -j, --json                       equivalent to -tjson
         -y, --yaml                       equivalent to -tyaml
-            --debug                      enable debug mode
         -n, --quiet                      suppress automatic priting
+            --debug                      enable debug mode
             --help                       show this message
             --version                    show version
 

@@ -27,8 +27,8 @@ module Rf
             @config.type = v.to_sym
           end
 
-          opt.on('--debug', 'enable debug mode') { @config.debug = true }
           opt.on('-n', '--quiet', 'suppress automatic priting') { @config.quiet = true }
+          opt.on('--debug', 'enable debug mode') { @config.debug = true }
           opt.on('--help', 'show this message') { print_help_and_exit }
           opt.on('--version', 'show version') { print_version_and_exit }
 
