@@ -27,10 +27,10 @@ module Rf
             @config.type = v.to_sym
           end
 
-          opt.on('--debug', 'enable debug mode') { @config.debug = true }
           opt.on('-n', '--quiet', 'suppress automatic priting') { @config.quiet = true }
-          opt.on('-h', '--help', 'show this message') { print_help_and_exit }
-          opt.on('-v', '--version', 'show version') { print_version_and_exit }
+          opt.on('--debug', 'enable debug mode') { @config.debug = true }
+          opt.on('--help', 'show this message') { print_help_and_exit }
+          opt.on('--version', 'show version') { print_version_and_exit }
 
           opt.separator ''
           opt.separator 'text options:'
@@ -69,7 +69,7 @@ module Rf
       end
 
       def print_version_and_exit
-        puts Rf::VERSION
+        puts "rf #{Rf::VERSION} (mruby #{MRUBY_VERSION})"
         exit
       end
     end
