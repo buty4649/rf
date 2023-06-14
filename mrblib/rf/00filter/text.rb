@@ -7,14 +7,16 @@ module Rf
         @config ||= Config.new
       end
 
-      def initialize(io) # rubocop:disable Lint/MissingSuper
+      def initialize(io)
+        super()
+
         @data = io
         fs = self.class.config.fs
         $; = Regexp.new(fs) if fs
       end
 
-      def preprocess(record)
-        record.chomp
+      def gets
+        @data.gets&.chomp
       end
     end
   end
