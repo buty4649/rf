@@ -11,13 +11,19 @@ module Rf
         self.class.config.raw
       end
 
-      def initialize(io) # rubocop:disable Lint/MissingSuper
+      def initialize(io)
+        super()
+
         json = JSON.parse(io.read)
         @data = if json.instance_of?(Array)
                   json
                 else
                   [json]
                 end
+      end
+
+      def gets
+        @data.shift
       end
 
       def decorate(val)

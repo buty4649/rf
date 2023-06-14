@@ -1,20 +1,41 @@
 module Rf
   module Filter
     class Base
-      attr_reader :data, :record
+      attr_reader :record, :index
 
-      def each_record
-        index = 1
-        data.each do |record|
-          @record = preprocess(record)
-          fields = split(@record)
-          yield @record, index, fields
-          index += 1
-        end
+      def initialize
+        @index = 0
       end
 
-      def preprocess(record)
-        record
+      def gets
+        NotImplementedError
+      end
+
+      # Increment index when gets is called
+      def self.inherited(klass)
+        klass.define_singleton_method(:method_added) do |name|
+          if name == :gets && !method_defined?(:gets_without_increment)
+            alias_method :gets_without_increment, :gets
+
+            define_method(:gets) do
+              return unless v = gets_without_increment
+
+              @index += 1
+              v
+            end
+          end
+
+          super
+        end
+
+        super
+      end
+
+      def each_record
+        while @record = gets
+          fields = split(record)
+          yield record, index, fields
+        end
       end
 
       def split(record)
