@@ -7,8 +7,12 @@ module Rf
         @index = 0
       end
 
+      def decorate(val)
+        raise NotImplementedError
+      end
+
       def gets
-        NotImplementedError
+        raise NotImplementedError
       end
 
       # Increment index when gets is called
@@ -32,54 +36,19 @@ module Rf
       end
 
       def each_record
-        while @record = gets
-          fields = split(record)
-          yield record, index, fields
-        end
+        yield record, index, split(record) while @record = gets
       end
 
-      def split(record)
-        case record
-        when Array
-          record
-        when Hash
-          record.to_a
-        when String
-          record.split
-        else
-          [record]
-        end
-      end
-
-      def output(val)
-        return if quiet?(val)
-
-        puts(case val
-             when true, Regexp
-               record
-             else
-               val
-             end)
-      end
-
-      def puts(*args)
-        args.each do |arg|
-          $stdout.puts decorate(arg)
-        end
-      end
-
-      def decorate(val)
-        val.to_s
-      end
-
-      def quiet?(val)
+      def split(val)
         case val
-        when true, String, Integer, Float, Array, Hash, MatchData
-          false
-        when Regexp
-          !val.match?(record)
+        when Array
+          val
+        when Hash
+          val.to_a
+        when String
+          val.split
         else
-          true
+          [val]
         end
       end
     end

@@ -18,6 +18,19 @@ module Rf
       def gets
         @data.gets&.chomp
       end
+
+      def decorate(val)
+        case val
+        when MatchData, true
+          record
+        when Regexp
+          decorate(val.match(record))
+        when false, nil
+          nil
+        else
+          val.to_s
+        end
+      end
     end
   end
 end
