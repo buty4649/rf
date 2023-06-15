@@ -38,9 +38,15 @@ module Rf
         container.fields = fields
         bind.eval("NR = $. = #{index}") # index is Integer
 
-        ret = bind.eval(command)
-        filter.output(ret) unless quiet?
+        render bind.eval(command)
       end
+    end
+
+    def render(val)
+      return if quiet?(val)
+      return unless s = filter.decorate(val)
+
+      puts s
     end
 
     def post_action

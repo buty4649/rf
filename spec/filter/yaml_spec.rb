@@ -102,4 +102,36 @@ describe 'YAML filter' do
       it { expect(last_command_started).to have_output output_string_eq output }
     end
   end
+
+  context 'when use regexp' do
+    describe 'Input as String' do
+      let(:input) { load_fixture('yaml/string.yml') }
+      let(:output) { 'test' }
+
+      before { run_rf('-y /test/', input) }
+
+      it { expect(last_command_started).to be_successfully_executed }
+      it { expect(last_command_started).to have_output output_string_eq output }
+    end
+
+    describe 'Input as Number' do
+      let(:input) { load_fixture('yaml/number.yml') }
+      let(:output) { '123456789' }
+
+      before { run_rf('-y /123456789/', input) }
+
+      it { expect(last_command_started).to be_successfully_executed }
+      it { expect(last_command_started).to have_output output_string_eq output }
+    end
+
+    describe 'Input as Hash' do
+      let(:input) { load_fixture('yaml/hash.yml') }
+      let(:output) { 'Error: Regexp supports only String and Number records' }
+
+      before { run_rf('-y /foo/', input) }
+
+      it { expect(last_command_started).not_to be_successfully_executed }
+      it { expect(last_command_started).to have_output_on_stderr output_string_eq output }
+    end
+  end
 end
