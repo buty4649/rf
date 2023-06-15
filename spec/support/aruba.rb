@@ -4,6 +4,7 @@ Aruba.configure do |config|
   # need custom working directory to avoia conflict with parallel tests
   working_directory = File.join('tmp/aruba', ENV['TEST_ENV_NUMBER'] || '1')
   config.working_directory = working_directory
+  config.remove_ansi_escape_sequences = false
 end
 
 def rf_path
