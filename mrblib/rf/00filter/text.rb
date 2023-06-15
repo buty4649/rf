@@ -21,10 +21,16 @@ module Rf
 
       def decorate(val)
         case val
-        when MatchData, true
+        when true
           record
         when Regexp
-          decorate(val.match(record))
+          return unless m = val.match(record)
+
+          [
+            m.pre_match,
+            m.to_s.red,
+            m.post_match
+          ].join
         when false, nil
           nil
         else

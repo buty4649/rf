@@ -48,12 +48,26 @@ describe 'Text filter' do
     describe 'Output only the lines that match the regexp' do
       let(:output) do
         <<~OUTPUT
-          1 foo
-          4 foobar
+          1 \e[31mfoo\e[0m
+          4 \e[31mfoo\e[0mbar
         OUTPUT
       end
 
       before { run_rf('/foo/', input) }
+
+      it { expect(last_command_started).to be_successfully_executed }
+      it { expect(last_command_started).to have_output_on_stdout output_string_eq output }
+    end
+
+    describe 'Output only the substring that matches the regexp' do
+      let(:output) do
+        <<~OUTPUT
+          foo
+          foo
+        OUTPUT
+      end
+
+      before { run_rf('match(/foo/)', input) }
 
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output_on_stdout output_string_eq output }
