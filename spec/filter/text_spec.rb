@@ -19,6 +19,20 @@ describe 'Text filter' do
     end
   end
 
+  context 'when use -f option' do
+    describe 'Output all lines' do
+      let(:output) { input }
+
+      before do
+        write_file 'program.rf', 'true'
+        run_rf('-f program.rf', input)
+      end
+
+      it { expect(last_command_started).to be_successfully_executed }
+      it { expect(last_command_started).to have_output_on_stdout output_string_eq output }
+    end
+  end
+
   context 'when input from stdin' do
     describe 'Output all lines' do
       let(:output) { input }

@@ -1,37 +1,44 @@
 module Rf
   class Config
-    attr_accessor :command, :debug, :files, :filter, :read_all, :type, :quiet
-
-    def initialize
-      @type = :text
-    end
+    attr_accessor :command, :debug, :files, :filter, :read_all, :script_file, :quiet
 
     def self.parse(argv)
       Parser.new.parse(argv)
     end
 
     class Parser
+      DEFAULT_FILTER_TYPE = :text
+
       def initialize
         @config = Config.new
       end
 
       def option # rubocop:disable Metrics/AbcSize
         @option ||= OptionParser.new do |opt|
-          opt.banner = "Usage: rf [options] 'command' file ..."
+          opt.program_name = 'rf'
+          opt.version = VERSION
+          opt.release = "mruby #{MRUBY_VERSION}"
           opt.summary_indent = ' ' * 2
 
-          opt.on_head('-y', '--yaml', 'equivalent to -tyaml') { @config.type = :yaml }
-          opt.on_head('-j', '--json', 'equivalent to -tjson') { @config.type = :json }
-          opt.on_head('-t', "--type={#{Filter.types.join('|')}}",
-                      "set the type of input (default:#{@config.type})") do |v|
-            @config.type = v.to_sym
+          opt.banner = <<~BANNER
+            Usage: rf [options] 'command' file ...
+                   rf [options] -f program_file file ...
+          BANNER
+
+          opt.separator 'global options:'
+          opt.on('-t', "--type={#{Filter.types.join('|')}}",
+                 "set the type of input (default: #{DEFAULT_FILTER_TYPE})") do |v|
+            load_filter(v.to_sym)
           end
+          opt.on('-j', '--json', 'same as -tjson') { load_filter(:json) }
+          opt.on('-y', '--yaml', 'same as -tyaml') { load_filter(:yaml) }
 
           opt.on('-A', '--read-all', 'read all reacords at once') { @config.read_all = true }
+          opt.on('-f', '--file=program_file', 'executed the contents of program_file') { |f| @config.script_file = f }
           opt.on('-n', '--quiet', 'suppress automatic priting') { @config.quiet = true }
           opt.on('--debug', 'enable debug mode') { @config.debug = true }
           opt.on('--help', 'show this message') { print_help_and_exit }
-          opt.on('--version', 'show version') { print_version_and_exit }
+          opt.on('--version', 'show version') { print_version_and_exit(opt) }
 
           add_text_options(opt)
           add_json_options(opt)
@@ -64,16 +71,26 @@ module Rf
       end
 
       def parse(argv)
-        print_help_and_exit(1) if argv.empty?
+        parameter = parse_options(argv)
+        load_filter(DEFAULT_FILTER_TYPE) unless @config.filter
 
-        parameter = option.order(argv)
-        @config.filter = Filter.load(@config.type)
-
-        print_help_and_exit(1) if parameter.empty?
-        @config.command = parameter.shift
+        if @config.script_file
+          @config.command = File.read(@config.script_file)
+        else
+          print_help_and_exit(1) if parameter.empty?
+          @config.command = parameter.shift
+        end
         @config.files = parameter unless parameter.empty?
-
         @config
+      end
+
+      def parse_options(argv)
+        print_help_and_exit(1) if argv.empty?
+        option.order(argv)
+      end
+
+      def load_filter(type)
+        @config.filter = Filter.load(type)
       end
 
       def print_help_and_exit(exit_status = 0)
@@ -85,8 +102,8 @@ module Rf
         exit exit_status
       end
 
-      def print_version_and_exit
-        puts "rf #{Rf::VERSION} (mruby #{MRUBY_VERSION})"
+      def print_version_and_exit(opt)
+        puts opt.ver
         exit
       end
     end
