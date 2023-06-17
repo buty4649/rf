@@ -23,8 +23,8 @@ jobs:
       with:
         ruby-version: 3.2
         bundler-cache: true
-    - name: Build
-      run: rake release
+    - name: Build assets
+      run: rake build:assets
     - name: Create release tag
       env:
         GH_TOKEN: ${{ github.token }}

@@ -58,6 +58,11 @@ namespace :build do
       docker_run(env:)
     end
   end
+
+  desc 'Build assets files for all targets'
+  task assets: %w[clean build:all] do
+    archive_binary_file(build_targets, "v#{Rf::VERSION}")
+  end
 end
 
 desc 'Cleanup build cache'
@@ -71,9 +76,19 @@ task 'deep_clean' do
   docker_run(cmd: 'deep_clean', env:)
 end
 
-desc 'Release the project'
+desc 'Bumpup minor version and release'
 task release: %w[clean build:all] do
-  archive_binary_file(build_targets, "v#{Rf::VERSION}")
+  version = Rf::VERSION.split('.')
+  version[1].succ! # increment minor version
+  File.write('mrblib/rf/version.rb', <<~VERSION)
+    module Rf
+      VERSION = '#{version.join('.').inspect}'
+    end
+  VERSION
+  sh 'git add mrblib/rf/version.rb'
+  sh "git commit -m '#{version.join('.')}'"
+  sh "git tag v#{version.join('.')}"
+  sh "git push origin v#{version.join('.')}"
 end
 
 desc 'Run RSpec with parallel_rspec'
