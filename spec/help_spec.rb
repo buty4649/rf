@@ -2,10 +2,13 @@ describe 'Show help text' do
   let(:help_text) do
     <<~TEXT
       Usage: rf [options] 'command' file ...
+             rf [options] -f program_file file ...
+      global options:
         -t, --type={text|json|yaml}      set the type of input (default:text)
-        -j, --json                       equivalent to -tjson
-        -y, --yaml                       equivalent to -tyaml
+        -j, --json                       same as -tjson
+        -y, --yaml                       same as -tyaml
         -A, --read-all                   read all reacords at once
+        -f, --file=program_file          executed the contents of program_file
         -n, --quiet                      suppress automatic priting
             --debug                      enable debug mode
             --help                       show this message
