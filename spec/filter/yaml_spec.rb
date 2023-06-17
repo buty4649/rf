@@ -146,4 +146,37 @@ describe 'YAML filter' do
       it { expect(last_command_started).to have_output_on_stderr output_string_eq output }
     end
   end
+
+  context 'with --doc option' do
+    describe 'Output string' do
+      let(:input) { load_fixture('yaml/string.yml') }
+      let(:output) { '--- test' }
+
+      before { run_rf('-y --doc true', input) }
+
+      it { expect(last_command_started).to be_successfully_executed }
+      it { expect(last_command_started).to have_output output_string_eq output }
+    end
+
+    describe 'Output hash' do
+      let(:input) { load_fixture('yaml/hash.yml') }
+      let(:output) do
+        <<~OUTPUT
+          ---
+          foo: 1
+          bar:
+            baz:
+            - a
+            - b
+            - c
+          foo bar: foo bar
+        OUTPUT
+      end
+
+      before { run_rf('-y --doc true', input) }
+
+      it { expect(last_command_started).to be_successfully_executed }
+      it { expect(last_command_started).to have_output output_string_eq output }
+    end
+  end
 end

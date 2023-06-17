@@ -86,7 +86,7 @@ describe 'Show error message' do
       OUTPUT
     end
 
-    before { run_rf('-d if', input) }
+    before { run_rf('--debug if', input) }
 
     it { expect(last_command_started).not_to be_successfully_executed }
     it { expect(last_command_started).to have_output_on_stderr include_output_string error_message }

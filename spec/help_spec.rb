@@ -16,6 +16,9 @@ describe 'Show help text' do
 
       json options:
         -r, --raw-string                 output raw strings
+
+      yaml options:
+            --[no-]doc                   [no] output document sperator(---) (default:--no-doc)
     TEXT
   end
 
