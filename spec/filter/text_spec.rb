@@ -154,4 +154,14 @@ describe 'Text filter' do
       it { expect(last_command_started).to have_output_on_stdout output_string_eq output }
     end
   end
+
+  describe 'Output the array is automatically joined with the spaces' do
+    let(:input) { 'foo,bar,baz' }
+    let(:output) { 'foo bar baz' }
+
+    before { run_rf('-F, $F', input) }
+
+    it { expect(last_command_started).to be_successfully_executed }
+    it { expect(last_command_started).to have_output_on_stdout output_string_eq output }
+  end
 end

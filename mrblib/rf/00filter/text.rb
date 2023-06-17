@@ -31,6 +31,8 @@ module Rf
             m.to_s.red,
             m.post_match
           ].join
+        when Array
+          val.map(&method(:decorate)).join(' ')
         when false, nil
           nil
         else
