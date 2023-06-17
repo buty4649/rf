@@ -77,7 +77,7 @@ task 'deep_clean' do
 end
 
 desc 'Bumpup minor version and release'
-task release: %w[clean build:all] do
+task 'release' do
   version = Rf::VERSION.split('.')
   version[1].succ! # increment minor version
   File.write('mrblib/rf/version.rb', <<~VERSION)
