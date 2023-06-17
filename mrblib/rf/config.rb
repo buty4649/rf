@@ -1,16 +1,14 @@
 module Rf
   class Config
-    attr_accessor :command, :debug, :files, :filter, :read_all, :script_file, :type, :quiet
-
-    def initialize
-      @type = :text
-    end
+    attr_accessor :command, :debug, :files, :filter, :read_all, :script_file, :quiet
 
     def self.parse(argv)
       Parser.new.parse(argv)
     end
 
     class Parser
+      DEFAULT_FILTER_TYPE = :text
+
       def initialize
         @config = Config.new
       end
@@ -29,11 +27,11 @@ module Rf
 
           opt.separator 'global options:'
           opt.on('-t', "--type={#{Filter.types.join('|')}}",
-                 "set the type of input (default:#{@config.type})") do |v|
-            @config.type = v.to_sym
+                 "set the type of input (default: #{DEFAULT_FILTER_TYPE})") do |v|
+            load_filter(v.to_sym)
           end
-          opt.on('-j', '--json', 'same as -tjson') { @config.type = :json }
-          opt.on('-y', '--yaml', 'same as -tyaml') { @config.type = :yaml }
+          opt.on('-j', '--json', 'same as -tjson') { load_filter(:json) }
+          opt.on('-y', '--yaml', 'same as -tyaml') { load_filter(:yaml) }
 
           opt.on('-A', '--read-all', 'read all reacords at once') { @config.read_all = true }
           opt.on('-f', '--file=program_file', 'executed the contents of program_file') { |f| @config.script_file = f }
@@ -74,7 +72,7 @@ module Rf
 
       def parse(argv)
         parameter = parse_options(argv)
-        @config.filter = Filter.load(@config.type)
+        load_filter(DEFAULT_FILTER_TYPE) unless @config.filter
 
         if @config.script_file
           @config.command = File.read(@config.script_file)
@@ -89,6 +87,10 @@ module Rf
       def parse_options(argv)
         print_help_and_exit(1) if argv.empty?
         option.order(argv)
+      end
+
+      def load_filter(type)
+        @config.filter = Filter.load(type)
       end
 
       def print_help_and_exit(exit_status = 0)

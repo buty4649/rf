@@ -4,7 +4,7 @@ describe 'Show help text' do
       Usage: rf [options] 'command' file ...
              rf [options] -f program_file file ...
       global options:
-        -t, --type={text|json|yaml}      set the type of input (default:text)
+        -t, --type={text|json|yaml}      set the type of input (default: text)
         -j, --json                       same as -tjson
         -y, --yaml                       same as -tyaml
         -A, --read-all                   read all reacords at once
