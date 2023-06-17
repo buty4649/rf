@@ -1,6 +1,16 @@
 module Rf
   module Filter
     class Yaml < Base
+      Config = Struct.new(:no_doc)
+
+      def self.config
+        @config ||= Config.new(no_doc: true)
+      end
+
+      def no_doc?
+        self.class.config.no_doc
+      end
+
       def initialize(io)
         super()
 
@@ -29,7 +39,8 @@ module Rf
         when Regexp
           decorate_regexp(val)
         else
-          val.to_yaml.sub(/\A---[\s\n]/, '')
+          v = val.to_yaml
+          no_doc? ? v.sub(/\A---[\s\n]/, '') : v
         end
       end
 

@@ -33,17 +33,33 @@ module Rf
           opt.on('--help', 'show this message') { print_help_and_exit }
           opt.on('--version', 'show version') { print_version_and_exit }
 
-          opt.separator ''
-          opt.separator 'text options:'
-          opt.on('-F VAL', '--filed-separator', 'set the field separator(regexp)') do |v|
-            Filter::Text.config.fs = v
-          end
+          add_text_options(opt)
+          add_json_options(opt)
+          add_yaml_options(opt)
+        end
+      end
 
-          opt.separator ''
-          opt.separator 'json options:'
-          opt.on('-r', '--raw-string', 'output raw strings') do
-            Filter::Json.config.raw = true
-          end
+      def add_text_options(opt)
+        opt.separator ''
+        opt.separator 'text options:'
+        opt.on('-F VAL', '--filed-separator', 'set the field separator(regexp)') do |v|
+          Filter::Text.config.fs = v
+        end
+      end
+
+      def add_json_options(opt)
+        opt.separator ''
+        opt.separator 'json options:'
+        opt.on('-r', '--raw-string', 'output raw strings') do
+          Filter::Json.config.raw = true
+        end
+      end
+
+      def add_yaml_options(opt)
+        opt.separator ''
+        opt.separator 'yaml options:'
+        opt.on('--[no-]doc', '[no] output document sperator(---) (default:--no-doc)') do |v|
+          Filter::Yaml.config.no_doc = !v
         end
       end
 
