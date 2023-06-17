@@ -101,6 +101,15 @@ describe 'Text filter' do
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output_on_stdout output_string_eq output }
     end
+
+    describe 'Read all at once' do
+      let(:output) { %("#{input.gsub("\n", '\n')}") }
+
+      before { run_rf('-qA "p _"', input) }
+
+      it { expect(last_command_started).to be_successfully_executed }
+      it { expect(last_command_started).to have_output_on_stdout output_string_eq output }
+    end
   end
 
   context 'when input from file' do

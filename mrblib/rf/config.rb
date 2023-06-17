@@ -1,6 +1,6 @@
 module Rf
   class Config
-    attr_accessor :command, :debug, :files, :filter, :type, :quiet
+    attr_accessor :command, :debug, :files, :filter, :read_all, :type, :quiet
 
     def initialize
       @type = :text
@@ -27,6 +27,7 @@ module Rf
             @config.type = v.to_sym
           end
 
+          opt.on('-A', '--read-all', 'read all reacords at once') { @config.read_all = true }
           opt.on('-n', '--quiet', 'suppress automatic priting') { @config.quiet = true }
           opt.on('--debug', 'enable debug mode') { @config.debug = true }
           opt.on('--help', 'show this message') { print_help_and_exit }

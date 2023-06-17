@@ -11,6 +11,10 @@ module Rf
         raise NotImplementedError
       end
 
+      def read
+        raise NotImplementedError
+      end
+
       def gets
         raise NotImplementedError
       end
@@ -25,7 +29,7 @@ module Rf
               return unless v = gets_without_increment
 
               @index += 1
-              v
+              @record = v
             end
           end
 
@@ -33,10 +37,6 @@ module Rf
         end
 
         super
-      end
-
-      def each_record
-        yield record, index, split(record) while @record = gets
       end
 
       def split(val)

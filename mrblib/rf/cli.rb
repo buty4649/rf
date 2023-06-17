@@ -7,7 +7,8 @@ module Rf
       Rf.add_features
       Runner.run({
                    command: config.command,
-                   filter:,
+                   filter: config.filter.new(io),
+                   read_all: config.read_all,
                    quiet: config.quiet
                  })
     rescue Files::NotFound => e
@@ -18,10 +19,6 @@ module Rf
 
     def debug?
       config&.debug
-    end
-
-    def filter
-      config.filter.new(io)
     end
 
     def io

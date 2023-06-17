@@ -87,6 +87,18 @@ describe 'JSON filter' do
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output output_string_eq output }
     end
+
+    describe 'Read all at once' do
+      let(:input) { load_fixture('json/hash.json') }
+      let(:output) do
+        '[{"foo"=>1, "bar"=>{"baz"=>["a", "b", "c"]}, "foo bar"=>"foo bar"}]'
+      end
+
+      before { run_rf("-jAq 'p _'", input) }
+
+      it { expect(last_command_started).to be_successfully_executed }
+      it { expect(last_command_started).to have_output output_string_eq output }
+    end
   end
 
   context 'when input from file' do
