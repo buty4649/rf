@@ -15,6 +15,10 @@ module Rf
         $; = Regexp.new(fs) if fs
       end
 
+      def read
+        @data.read
+      end
+
       def gets
         @data.gets&.chomp
       end
