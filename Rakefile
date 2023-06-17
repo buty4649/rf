@@ -82,7 +82,7 @@ task 'release' do
   version[1].succ! # increment minor version
   File.write('mrblib/rf/version.rb', <<~VERSION)
     module Rf
-      VERSION = '#{version.join('.').inspect}'
+      VERSION = '#{version.join('.')}'
     end
   VERSION
   sh 'git add mrblib/rf/version.rb'
