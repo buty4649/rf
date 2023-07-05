@@ -51,11 +51,43 @@ describe 'Method' do
     end
   end
 
+  describe '#m' do
+    context 'without block' do
+      let(:input) { 'foo' }
+      let(:output) { 'foo' }
+
+      before { run_rf("'m /foo/'", input) }
+
+      it { expect(last_command_started).to be_successfully_executed }
+      it { expect(last_command_started).to have_output output_string_eq output }
+    end
+
+    context 'with block' do
+      let(:input) { 'foo' }
+      let(:output) { 'bar' }
+
+      before { run_rf(%('m /foo/ { "bar" }'), input) }
+
+      it { expect(last_command_started).to be_successfully_executed }
+      it { expect(last_command_started).to have_output output_string_eq output }
+    end
+  end
+
   describe '#match?' do
     let(:input) { 'foo' }
     let(:output) { 'foo' }
 
     before { run_rf("'match?(/foo/)'", input) }
+
+    it { expect(last_command_started).to be_successfully_executed }
+    it { expect(last_command_started).to have_output output_string_eq output }
+  end
+
+  describe '#m?' do
+    let(:input) { 'foo' }
+    let(:output) { 'foo' }
+
+    before { run_rf("'m? /foo/'", input) }
 
     it { expect(last_command_started).to be_successfully_executed }
     it { expect(last_command_started).to have_output output_string_eq output }

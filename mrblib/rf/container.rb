@@ -33,6 +33,9 @@ module Rf
       end
     end
 
+    alias m match
+    alias m? match?
+
     %i[dig].each do |sym|
       define_method(sym) do |*args|
         _.__send__(sym, *args) if hash?
