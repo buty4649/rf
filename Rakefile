@@ -78,17 +78,9 @@ end
 
 desc 'Bumpup minor version and release'
 task 'release' do
-  version = Rf::VERSION.split('.')
-  version[1].succ! # increment minor version
-  File.write('mrblib/rf/version.rb', <<~VERSION)
-    module Rf
-      VERSION = '#{version.join('.')}'
-    end
-  VERSION
-  sh 'git add mrblib/rf/version.rb'
-  sh "git commit -m '#{version.join('.')}'"
-  sh "git tag v#{version.join('.')}"
-  sh "git push origin v#{version.join('.')}"
+  version = Rf::VERSION
+  sh "git tag v#{version}"
+  sh "git push origin v#{version}"
 end
 
 desc 'Run RSpec with parallel_rspec'
