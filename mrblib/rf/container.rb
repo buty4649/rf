@@ -28,8 +28,8 @@ module Rf
     end
 
     %i[gsub gsub! match match? sub sub! tr tr!].each do |sym|
-      define_method(sym) do |*args|
-        _.__send__(sym, *args) if string?
+      define_method(sym) do |*args, &block|
+        _.__send__(sym, *args, &block) if string?
       end
     end
 

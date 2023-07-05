@@ -63,6 +63,7 @@ RSpec/ContextWording:
   Prefixes:
     - when
     - with
+    - without
     - for
 
 RSpec/DescribeClass:
