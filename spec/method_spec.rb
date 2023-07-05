@@ -30,13 +30,25 @@ describe 'Method' do
   end
 
   describe '#match' do
-    let(:input) { 'foo' }
-    let(:output) { 'foo' }
+    context 'without block' do
+      let(:input) { 'foo' }
+      let(:output) { 'foo' }
 
-    before { run_rf("'match(/foo/)'", input) }
+      before { run_rf("'match(/foo/)'", input) }
 
-    it { expect(last_command_started).to be_successfully_executed }
-    it { expect(last_command_started).to have_output output_string_eq output }
+      it { expect(last_command_started).to be_successfully_executed }
+      it { expect(last_command_started).to have_output output_string_eq output }
+    end
+
+    context 'with block' do
+      let(:input) { 'foo' }
+      let(:output) { 'bar' }
+
+      before { run_rf(%('match(/foo/) { "bar" }'), input) }
+
+      it { expect(last_command_started).to be_successfully_executed }
+      it { expect(last_command_started).to have_output output_string_eq output }
+    end
   end
 
   describe '#match?' do
