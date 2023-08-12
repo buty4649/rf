@@ -1,5 +1,5 @@
 module Kernel
-  def warn(*args)
-    $stderr.puts(*args)
+  def warn(*)
+    $stderr.puts(*)
   end
 end
