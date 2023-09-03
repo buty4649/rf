@@ -41,10 +41,10 @@ describe 'Method' do
     end
 
     context 'with block' do
-      let(:input) { 'foo' }
+      let(:input) { 'foo bar' }
       let(:output) { 'bar' }
 
-      before { run_rf(%('match(/foo/) { "bar" }'), input) }
+      before { run_rf(%('match(/foo/) { _2 }'), input) }
 
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output output_string_eq output }
@@ -63,10 +63,10 @@ describe 'Method' do
     end
 
     context 'with block' do
-      let(:input) { 'foo' }
+      let(:input) { 'foo bar' }
       let(:output) { 'bar' }
 
-      before { run_rf(%('m /foo/ { "bar" }'), input) }
+      before { run_rf(%('m /foo/ { _2 }'), input) }
 
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output output_string_eq output }
