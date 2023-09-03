@@ -80,7 +80,7 @@ describe 'YAML filter' do
         '[{"foo"=>1, "bar"=>{"baz"=>["a", "b", "c"]}, "foo bar"=>"foo bar"}]'
       end
 
-      before { run_rf("-ysq 'p _'", input) }
+      before { run_rf("-y -s -q 'p _'", input) }
 
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output output_string_eq output }
