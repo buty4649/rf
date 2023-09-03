@@ -12,6 +12,7 @@ module Rf
     # @param [Hash<String>] opts
     #   :command => String
     #   :filter => Rf::Filter
+    #   :slurp => Boolean
     #   :quiet => Boolean
     def initialize(opts)
       @command = opts[:command]

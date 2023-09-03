@@ -27,14 +27,23 @@ module Rf
       _.instance_of?(Hash)
     end
 
-    %i[gsub gsub! match match? sub sub! tr tr!].each do |sym|
+    %i[gsub gsub! match? sub sub! tr tr!].each do |sym|
       define_method(sym) do |*args, &block|
         _.__send__(sym, *args, &block) if string?
       end
     end
 
-    alias m match
     alias m? match?
+
+    def match(pattern)
+      regexp = pattern.is_a?(Regexp) ? pattern : Regexp.new(pattern)
+      return unless string? && m = regexp.match(_)
+
+      return m unless block_given?
+
+      yield(*fields)
+    end
+    alias m match
 
     %i[dig].each do |sym|
       define_method(sym) do |*args|
