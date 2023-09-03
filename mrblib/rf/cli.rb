@@ -8,7 +8,7 @@ module Rf
       Runner.run({
                    command: config.command,
                    filter: config.filter.new(io),
-                   read_all: config.read_all,
+                   slurp: config.slurp,
                    quiet: config.quiet
                  })
     rescue Files::NotFound => e

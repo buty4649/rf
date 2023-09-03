@@ -6,7 +6,7 @@ module Rf
 
     attr_reader :container, :bind,
                 :quiet, :command,
-                :filter, :read_all
+                :filter, :slurp
     alias quiet? quiet
 
     # @param [Hash<String>] opts
@@ -16,7 +16,7 @@ module Rf
     def initialize(opts)
       @command = opts[:command]
       @filter = opts[:filter]
-      @read_all = opts[:read_all]
+      @slurp = opts[:slurp]
       @quiet = opts[:quiet]
 
       setup_container
@@ -29,7 +29,7 @@ module Rf
     end
 
     def run
-      if read_all
+      if slurp
         r = filter.read
         do_action(r, 1, [r])
       else

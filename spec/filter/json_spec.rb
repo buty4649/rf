@@ -94,7 +94,7 @@ describe 'JSON filter' do
         '[{"foo"=>1, "bar"=>{"baz"=>["a", "b", "c"]}, "foo bar"=>"foo bar"}]'
       end
 
-      before { run_rf("-jAq 'p _'", input) }
+      before { run_rf("-jsq 'p _'", input) }
 
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output output_string_eq output }
