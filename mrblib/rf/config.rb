@@ -1,6 +1,6 @@
 module Rf
   class Config
-    attr_accessor :command, :debug, :files, :filter, :read_all, :script_file, :quiet
+    attr_accessor :command, :debug, :files, :filter, :slurp, :script_file, :quiet
 
     def self.parse(argv)
       Parser.new.parse(argv)
@@ -33,9 +33,9 @@ module Rf
           opt.on('-j', '--json', 'same as -tjson') { load_filter(:json) }
           opt.on('-y', '--yaml', 'same as -tyaml') { load_filter(:yaml) }
 
-          opt.on('-A', '--read-all', 'read all reacords at once') { @config.read_all = true }
           opt.on('-f', '--file=program_file', 'executed the contents of program_file') { |f| @config.script_file = f }
           opt.on('-n', '--quiet', 'suppress automatic priting') { @config.quiet = true }
+          opt.on('-s', '--slurp', 'read all reacords into an array') { @config.slurp = true }
           opt.on('--debug', 'enable debug mode') { @config.debug = true }
           opt.on('--help', 'show this message') { print_help_and_exit }
           opt.on('--version', 'show version') { print_version_and_exit(opt) }

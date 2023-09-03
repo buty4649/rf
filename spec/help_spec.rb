@@ -7,9 +7,9 @@ describe 'Show help text' do
         -t, --type={text|json|yaml}      set the type of input (default: text)
         -j, --json                       same as -tjson
         -y, --yaml                       same as -tyaml
-        -A, --read-all                   read all reacords at once
         -f, --file=program_file          executed the contents of program_file
         -n, --quiet                      suppress automatic priting
+        -s, --slurp                      read all reacords into an array
             --debug                      enable debug mode
             --help                       show this message
             --version                    show version
