@@ -82,6 +82,10 @@ module Rf
           raise TypeError, "no implicit conversion of nil into #{other.class}"
         end
       end
+
+      NilClass.define_method(:<<) do |other|
+        [other]
+      end
     end
   end
 end
