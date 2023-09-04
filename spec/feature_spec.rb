@@ -106,4 +106,32 @@ describe 'Feature' do
       it { expect(last_command_started).to have_output output_string_eq output }
     end
   end
+
+  context 'for NilClass' do
+    where do
+      {
+        '+ Integer' => {
+          input: %w[1 2 3].join("\n"),
+          output: '6'
+        },
+        '+ Float' => {
+          input: %w[1.1 2.2 3.3].join("\n"),
+          output: '6.6'
+        },
+        '+ String' => {
+          input: %w[foo bar baz].join("\n"),
+          output: 'foobarbaz'
+        }
+      }
+    end
+
+    with_them do
+      describe 'should do additions' do
+        before { run_rf("-q 's+=_1; at_exit { puts s }'", input) }
+
+        it { expect(last_command_started).to be_successfully_executed }
+        it { expect(last_command_started).to have_output output_string_eq output }
+      end
+    end
+  end
 end

@@ -19,6 +19,7 @@ module Rf
       add_features_to_float
       add_features_to_hash
       add_features_to_json
+      add_features_to_nil_class
     end
 
     def add_features_to_integer
@@ -60,6 +61,26 @@ module Rf
     def add_features_to_json
       Object.define_method(:to_json) do
         JSON.pretty_generate(self)
+      end
+    end
+
+    def add_features_to_nil_class
+      NilClass.define_method(:+) do |other|
+        if other.is_a?(Integer) || other.is_a?(Float)
+          other
+        elsif other.is_a?(String)
+          begin
+            lambda do
+              Integer(other)
+            rescue ArgumentError
+              Float(other)
+            end.call
+          rescue ArgumentError
+            other
+          end
+        else
+          raise TypeError, "no implicit conversion of nil into #{other.class}"
+        end
       end
     end
   end
