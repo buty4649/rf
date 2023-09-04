@@ -69,15 +69,7 @@ module Rf
         if other.is_a?(Integer) || other.is_a?(Float)
           other
         elsif other.is_a?(String)
-          begin
-            lambda do
-              Integer(other)
-            rescue ArgumentError
-              Float(other)
-            end.call
-          rescue ArgumentError
-            other
-          end
+          other.try_to_i || other.try_to_f || other
         else
           raise TypeError, "no implicit conversion of nil into #{other.class}"
         end
