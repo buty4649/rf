@@ -33,6 +33,11 @@ def archive_binary_file(targets, version)
       sh "zip -j #{dest}.zip #{src}"
     end
   end
+  Dir.chdir('release') do
+    Dir.glob('*.{zip,tar.gz}').each do |f|
+      sh "sha256sum #{f} > #{f}.sha256"
+    end
+  end
 end
 
 task default: :build
