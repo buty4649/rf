@@ -31,4 +31,4 @@ jobs:
       run: |
         VERSION=$(echo ${{ github.ref }} | sed -e "s#refs/tags/##g")
         echo "VERSION: ${VERSION}"
-        gh release create $VERSION --generate-notes release/*.tar.gz release/*.zip
+        gh release create $VERSION --generate-notes release/*.tar.gz release/*.zip release/*.sha256
