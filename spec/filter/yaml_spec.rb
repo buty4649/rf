@@ -22,6 +22,16 @@ describe 'YAML filter' do
       it { expect(last_command_started).to have_output output_string_eq output }
     end
 
+    describe 'Output UTF-8 string' do
+      let(:input) { 'あいうえお🍣' }
+      let(:output) { '"あいうえお🍣"' }
+
+      before { run_rf('-y _', input) }
+
+      it { expect(last_command_started).to be_successfully_executed }
+      it { expect(last_command_started).to have_output output_string_eq output }
+    end
+
     describe 'Output each object of the array one by one' do
       let(:input) { load_fixture('yaml/array.yml') }
       let(:output) do
