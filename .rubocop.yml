@@ -68,3 +68,6 @@ RSpec/ContextWording:
 
 RSpec/DescribeClass:
   Enabled: false
+
+Style/PerlBackrefs:
+  Enabled: false

@@ -40,6 +40,8 @@ module Rf
           decorate_regexp(val)
         else
           v = val.to_yaml
+                 .gsub(/\\u([0-9a-fA-F]{4})/) { [$1.to_i(16)].pack('U') }
+                 .gsub(/\\U([0-9a-fA-F]{8})/) { [$1.to_i(16)].pack('U') }
           no_doc? ? v.sub(/\A---[\s\n]/, '') : v
         end
       end
