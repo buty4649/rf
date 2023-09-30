@@ -128,7 +128,8 @@ describe 'Method' do
             condition: '"2 foo baz"',
             output: {
               without_block: '2 foo baz',
-              with_block: '2 foo baz'
+              with_block: '2 foo baz',
+              return_value: %w[false true false].join("\n")
             }
           },
           'Regexp' => {
@@ -139,25 +140,28 @@ describe 'Method' do
                 2 foo baz
                 3 foo qux
               OUTPUT
-              with_block: <<~OUTPUT
+              with_block: <<~OUTPUT,
                 1 foo bar
                 2 foo baz
                 3 foo qux
               OUTPUT
+              return_value: %w[true true true].join("\n")
             }
           },
           'TrueClass' => {
             condition: '_1 == "3"',
             output: {
               without_block: '3 foo qux',
-              with_block: '3 foo qux'
+              with_block: '3 foo qux',
+              return_value: %w[false false true].join("\n")
             }
           },
           'FalseClass' => {
             condition: '_1 == "4"',
             output: {
               without_block: '',
-              with_block: ''
+              with_block: '',
+              return_value: %w[false false false].join("\n")
             }
           },
           'Integer' => {
@@ -168,18 +172,20 @@ describe 'Method' do
                 2 foo baz
                 3 foo qux
               OUTPUT
-              with_block: <<~OUTPUT
+              with_block: <<~OUTPUT,
                 1 foo bar
                 2 foo baz
                 3 foo qux
               OUTPUT
+              return_value: %w[true true true].join("\n")
             }
           },
           'NilClass' => {
             condition: '_2 =~ /hoge/',
             output: {
               without_block: '',
-              with_block: ''
+              with_block: '',
+              return_value: %w[false false false].join("\n")
             }
           }
         }
@@ -198,6 +204,13 @@ describe 'Method' do
 
           it { expect(last_command_started).to be_successfully_executed }
           it { expect(last_command_started).to have_output output_string_eq output[:with_block] }
+        end
+
+        describe 'return value' do
+          before { run_rf("-q 'p #{method} #{condition} { _1 }'", input) }
+
+          it { expect(last_command_started).to be_successfully_executed }
+          it { expect(last_command_started).to have_output output_string_eq output[:return_value] }
         end
       end
     end

@@ -50,7 +50,7 @@ module Rf
     alias m match
 
     def match?(condition)
-      match(condition) { true }
+      match(condition) ? true : false
     end
     alias m? match?
 
