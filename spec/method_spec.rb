@@ -112,24 +112,95 @@ describe 'Method' do
     end
   end
 
-  describe '#match?' do
-    let(:input) { 'foo' }
-    let(:output) { 'foo' }
+  %w[match? m?].each do |method|
+    describe "##{method}" do
+      let(:input) do
+        <<~INPUT
+          1 foo bar
+          2 foo baz
+          3 foo qux
+        INPUT
+      end
 
-    before { run_rf("'match?(/foo/)'", input) }
+      where do
+        {
+          'String' => {
+            condition: '"2 foo baz"',
+            output: {
+              without_block: '2 foo baz',
+              with_block: '2 foo baz'
+            }
+          },
+          'Regexp' => {
+            condition: '/.*foo.*/',
+            output: {
+              without_block: <<~OUTPUT,
+                1 foo bar
+                2 foo baz
+                3 foo qux
+              OUTPUT
+              with_block: <<~OUTPUT
+                1 foo bar
+                2 foo baz
+                3 foo qux
+              OUTPUT
+            }
+          },
+          'TrueClass' => {
+            condition: '_1 == "3"',
+            output: {
+              without_block: '3 foo qux',
+              with_block: '3 foo qux'
+            }
+          },
+          'FalseClass' => {
+            condition: '_1 == "4"',
+            output: {
+              without_block: '',
+              with_block: ''
+            }
+          },
+          'Integer' => {
+            condition: '_2 =~ /foo/',
+            output: {
+              without_block: <<~OUTPUT,
+                1 foo bar
+                2 foo baz
+                3 foo qux
+              OUTPUT
+              with_block: <<~OUTPUT
+                1 foo bar
+                2 foo baz
+                3 foo qux
+              OUTPUT
+            }
+          },
+          'NilClass' => {
+            condition: '_2 =~ /hoge/',
+            output: {
+              without_block: '',
+              with_block: ''
+            }
+          }
+        }
+      end
 
-    it { expect(last_command_started).to be_successfully_executed }
-    it { expect(last_command_started).to have_output output_string_eq output }
-  end
+      with_them do
+        context 'without block' do
+          before { run_rf("'#{method} #{condition}'", input) }
 
-  describe '#m?' do
-    let(:input) { 'foo' }
-    let(:output) { 'foo' }
+          it { expect(last_command_started).to be_successfully_executed }
+          it { expect(last_command_started).to have_output output_string_eq output[:without_block] }
+        end
 
-    before { run_rf("'m? /foo/'", input) }
+        context 'with block' do
+          before { run_rf("'#{method} #{condition} { _1 }'", input) }
 
-    it { expect(last_command_started).to be_successfully_executed }
-    it { expect(last_command_started).to have_output output_string_eq output }
+          it { expect(last_command_started).to be_successfully_executed }
+          it { expect(last_command_started).to have_output output_string_eq output[:with_block] }
+        end
+      end
+    end
   end
 
   describe '#sub' do
