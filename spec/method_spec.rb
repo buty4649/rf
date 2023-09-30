@@ -112,24 +112,108 @@ describe 'Method' do
     end
   end
 
-  describe '#match?' do
-    let(:input) { 'foo' }
-    let(:output) { 'foo' }
+  %w[match? m?].each do |method|
+    describe "##{method}" do
+      let(:input) do
+        <<~INPUT
+          1 foo bar
+          2 foo baz
+          3 foo qux
+        INPUT
+      end
 
-    before { run_rf("'match?(/foo/)'", input) }
+      where do
+        {
+          'String' => {
+            condition: '"2 foo baz"',
+            output: {
+              without_block: '2 foo baz',
+              with_block: '2 foo baz',
+              return_value: %w[false true false].join("\n")
+            }
+          },
+          'Regexp' => {
+            condition: '/.*foo.*/',
+            output: {
+              without_block: <<~OUTPUT,
+                1 foo bar
+                2 foo baz
+                3 foo qux
+              OUTPUT
+              with_block: <<~OUTPUT,
+                1 foo bar
+                2 foo baz
+                3 foo qux
+              OUTPUT
+              return_value: %w[true true true].join("\n")
+            }
+          },
+          'TrueClass' => {
+            condition: '_1 == "3"',
+            output: {
+              without_block: '3 foo qux',
+              with_block: '3 foo qux',
+              return_value: %w[false false true].join("\n")
+            }
+          },
+          'FalseClass' => {
+            condition: '_1 == "4"',
+            output: {
+              without_block: '',
+              with_block: '',
+              return_value: %w[false false false].join("\n")
+            }
+          },
+          'Integer' => {
+            condition: '_2 =~ /foo/',
+            output: {
+              without_block: <<~OUTPUT,
+                1 foo bar
+                2 foo baz
+                3 foo qux
+              OUTPUT
+              with_block: <<~OUTPUT,
+                1 foo bar
+                2 foo baz
+                3 foo qux
+              OUTPUT
+              return_value: %w[true true true].join("\n")
+            }
+          },
+          'NilClass' => {
+            condition: '_2 =~ /hoge/',
+            output: {
+              without_block: '',
+              with_block: '',
+              return_value: %w[false false false].join("\n")
+            }
+          }
+        }
+      end
 
-    it { expect(last_command_started).to be_successfully_executed }
-    it { expect(last_command_started).to have_output output_string_eq output }
-  end
+      with_them do
+        context 'without block' do
+          before { run_rf("'#{method} #{condition}'", input) }
 
-  describe '#m?' do
-    let(:input) { 'foo' }
-    let(:output) { 'foo' }
+          it { expect(last_command_started).to be_successfully_executed }
+          it { expect(last_command_started).to have_output output_string_eq output[:without_block] }
+        end
 
-    before { run_rf("'m? /foo/'", input) }
+        context 'with block' do
+          before { run_rf("'#{method} #{condition} { _1 }'", input) }
 
-    it { expect(last_command_started).to be_successfully_executed }
-    it { expect(last_command_started).to have_output output_string_eq output }
+          it { expect(last_command_started).to be_successfully_executed }
+          it { expect(last_command_started).to have_output output_string_eq output[:with_block] }
+        end
+
+        describe 'return value' do
+          before { run_rf("-q 'p #{method} #{condition} { _1 }'", input) }
+
+          it { expect(last_command_started).to be_successfully_executed }
+          it { expect(last_command_started).to have_output output_string_eq output[:return_value] }
+        end
+      end
+    end
   end
 
   describe '#sub' do
