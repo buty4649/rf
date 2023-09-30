@@ -81,7 +81,7 @@ describe 'Text filter' do
         OUTPUT
       end
 
-      before { run_rf('match(/foo/)', input) }
+      before { run_rf('_.match(/foo/)', input) }
 
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output_on_stdout output_string_eq output }

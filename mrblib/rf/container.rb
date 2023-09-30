@@ -35,11 +35,17 @@ module Rf
 
     alias m? match?
 
-    def match(pattern)
-      regexp = pattern.is_a?(Regexp) ? pattern : Regexp.new(pattern)
-      return unless string? && m = regexp.match(_)
+    def match(condition)
+      regexp = if condition.is_a?(Regexp)
+                 condition
+               elsif condition.is_a?(String)
+                 Regexp.new(condition)
+               elsif true & condition
+                 /^.*$/
+               end
+      ret = regexp&.match(_.to_s)
 
-      return m unless block_given?
+      return ret unless ret && block_given?
 
       yield(*fields)
     end
