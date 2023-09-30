@@ -34,7 +34,7 @@ def archive_binary_file(targets, version)
     end
   end
   Dir.chdir('release') do
-    sh "sha256sum *.tar.gz *.zip > checksums.txt"
+    sh 'sha256sum *.tar.gz *.zip > checksums.txt'
   end
 end
 
