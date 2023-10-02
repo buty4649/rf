@@ -88,12 +88,26 @@ describe 'Feature' do
   context 'for Hash' do
     describe 'auto accessor' do
       let(:input) { '{"foo": "bar"}' }
-      let(:output) { '"bar"' }
 
-      before { run_rf("-j '_.foo'", input) }
+      where do
+        {
+          'key is exist' => {
+            command: '_.foo',
+            output: '"bar"'
+          },
+          'key is not exist' => {
+            command: '_.piyo',
+            output: ''
+          }
+        }
+      end
 
-      it { expect(last_command_started).to be_successfully_executed }
-      it { expect(last_command_started).to have_output output_string_eq output }
+      with_them do
+        before { run_rf("-j '#{command}'", input) }
+
+        it { expect(last_command_started).to be_successfully_executed }
+        it { expect(last_command_started).to have_output output_string_eq output }
+      end
     end
   end
 

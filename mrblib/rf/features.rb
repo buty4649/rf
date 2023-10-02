@@ -49,12 +49,12 @@ module Rf
     end
 
     def add_features_to_hash
-      Hash.define_method(:method_missing) do |sym, *args|
-        fetch(sym.to_s) { super(sym, *args) }
+      Hash.define_method(:method_missing) do |sym, *|
+        fetch(sym.to_s, nil)
       end
 
-      Hash.define_method(:respond_to_missing?) do |sym, *|
-        key?(sym.to_s) || super
+      Hash.define_method(:respond_to_missing?) do
+        true
       end
     end
 
