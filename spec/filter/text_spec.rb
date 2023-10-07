@@ -117,7 +117,7 @@ describe 'Text filter' do
     end
 
     describe 'Read all at once' do
-      let(:output) { input.chomp.gsub("\n", ' ') }
+      let(:output) { input }
 
       before { run_rf('-s "_"', input) }
 
@@ -180,7 +180,7 @@ describe 'Text filter' do
 
   describe 'Output the array is automatically joined with the spaces' do
     let(:input) { 'foo,bar,baz' }
-    let(:output) { 'foo bar baz' }
+    let(:output) { %w[foo bar baz].join("\n") }
 
     before { run_rf('-F, $F', input) }
 
