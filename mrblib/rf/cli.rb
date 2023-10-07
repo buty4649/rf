@@ -18,7 +18,7 @@ module Rf
     end
 
     def debug?
-      config&.debug
+      ENV.fetch('RF_DEBUG', nil)
     end
 
     def io
