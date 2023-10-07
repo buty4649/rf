@@ -22,10 +22,6 @@ module Rf
                 end
       end
 
-      def read
-        @data
-      end
-
       def gets
         @data.shift
       end
