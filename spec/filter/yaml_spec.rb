@@ -4,7 +4,7 @@ describe 'YAML filter' do
       let(:input) { load_fixture('yaml/string.yml') }
       let(:output) { 'test' }
 
-      before { run_rf('-t yaml true', input) }
+      before { run_rf('-t yaml _', input) }
 
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output output_string_eq output }
@@ -16,7 +16,7 @@ describe 'YAML filter' do
       let(:input) { load_fixture('yaml/string.yml') }
       let(:output) { 'test' }
 
-      before { run_rf('-y true', input) }
+      before { run_rf('-y _', input) }
 
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output output_string_eq output }
@@ -42,7 +42,7 @@ describe 'YAML filter' do
         OUTPUT
       end
 
-      before { run_rf('-y true', input) }
+      before { run_rf('-y _', input) }
 
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output output_string_eq output }
@@ -105,7 +105,7 @@ describe 'YAML filter' do
 
       before do
         write_file file, input
-        run_rf("-y true #{file}")
+        run_rf("-y _ #{file}")
       end
 
       it { expect(last_command_started).to be_successfully_executed }
@@ -118,7 +118,7 @@ describe 'YAML filter' do
       let(:input) { load_fixture('yaml/string.yml') }
       let(:output) { '' }
 
-      before { run_rf('-q -y true', input) }
+      before { run_rf('-q -y _', input) }
 
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output output_string_eq output }
@@ -147,13 +147,13 @@ describe 'YAML filter' do
     end
 
     describe 'Input as Hash' do
-      let(:input) { load_fixture('yaml/hash.yml') }
-      let(:output) { 'Error: Regexp supports only String and Number records' }
+      let(:input) { 'foo: bar' }
+      let(:output) { input }
 
       before { run_rf('-y /foo/', input) }
 
-      it { expect(last_command_started).not_to be_successfully_executed }
-      it { expect(last_command_started).to have_output_on_stderr output_string_eq output }
+      it { expect(last_command_started).to be_successfully_executed }
+      it { expect(last_command_started).to have_output output_string_eq output }
     end
   end
 
@@ -162,7 +162,7 @@ describe 'YAML filter' do
       let(:input) { load_fixture('yaml/string.yml') }
       let(:output) { '--- test' }
 
-      before { run_rf('-y --doc true', input) }
+      before { run_rf('-y --doc _', input) }
 
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output output_string_eq output }
@@ -183,7 +183,7 @@ describe 'YAML filter' do
         OUTPUT
       end
 
-      before { run_rf('-y --doc true', input) }
+      before { run_rf('-y --doc _', input) }
 
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output output_string_eq output }

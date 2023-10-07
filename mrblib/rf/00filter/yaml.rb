@@ -30,45 +30,32 @@ module Rf
         @data.shift
       end
 
-      def decorate(val)
-        return if quiet?(val)
+      def format(val, record)
+        return unless result = obj_to_yaml(val, record)
 
+        unpack_unicode_escape(
+          no_doc? ? remove_doc_header(result) : result
+        )
+      end
+
+      def obj_to_yaml(val, record)
         case val
-        when MatchData, true
-          decorate(record)
+        when MatchData
+          record.to_yaml
         when Regexp
-          decorate_regexp(val)
+          record.to_yaml if val.match?(record.to_s)
         else
-          v = val.to_yaml
-                 .gsub(/\\u([0-9a-fA-F]{4})/) { [$1.to_i(16)].pack('U') }
-                 .gsub(/\\U([0-9a-fA-F]{8})/) { [$1.to_i(16)].pack('U') }
-          no_doc? ? v.sub(/\A---[\s\n]/, '') : v
+          val.to_yaml
         end
       end
 
-      class RegexpUnsupportType < StandardError
-        def initialize
-          super('Regexp supports only String and Number records')
-        end
+      def unpack_unicode_escape(str)
+        str.gsub(/\\u([0-9a-fA-F]{4})/) { [$1.to_i(16)].pack('U') }
+           .gsub(/\\U([0-9a-fA-F]{8})/) { [$1.to_i(16)].pack('U') }
       end
 
-      def decorate_regexp(regexp)
-        raise RegexpUnsupportType unless regexp_support_type?
-        return unless regexp.match?(record.to_s)
-
-        decorate(record)
-      end
-
-      def regexp_support_type?
-        record.instance_of?(String) ||
-          record.instance_of?(Integer) ||
-          record.instance_of?(Float)
-      end
-
-      def quiet?(val)
-        # false and nil is special character in YAML
-        (val == false && record != false) ||
-          (val.nil? && !record.nil?)
+      def remove_doc_header(str)
+        str.sub(/\A---[\s\n]/, '')
       end
     end
   end

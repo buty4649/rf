@@ -1,14 +1,10 @@
 module Rf
   module Filter
     class Base
-      attr_reader :record, :index
+      attr_reader :index
 
       def initialize
         @index = 0
-      end
-
-      def decorate(val)
-        raise NotImplementedError
       end
 
       def read
@@ -16,6 +12,10 @@ module Rf
       end
 
       def gets
+        raise NotImplementedError
+      end
+
+      def format(val, record)
         raise NotImplementedError
       end
 
@@ -29,7 +29,7 @@ module Rf
               return unless v = gets_without_increment
 
               @index += 1
-              @record = v
+              v
             end
           end
 
