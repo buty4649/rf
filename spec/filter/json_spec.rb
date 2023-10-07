@@ -4,7 +4,7 @@ describe 'JSON filter' do
       let(:input) { load_fixture('json/string.json') }
       let(:output) { '"test"' }
 
-      before { run_rf('-t json true', input) }
+      before { run_rf('-t json _', input) }
 
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output output_string_eq output }
@@ -16,7 +16,7 @@ describe 'JSON filter' do
       let(:input) { load_fixture('json/string.json') }
       let(:output) { 'test' }
 
-      before { run_rf('-j -r true', input) }
+      before { run_rf('-j -r _', input) }
 
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output output_string_eq output }
@@ -28,7 +28,7 @@ describe 'JSON filter' do
       let(:input) { load_fixture('json/string.json') }
       let(:output) { '"test"' }
 
-      before { run_rf('-j true', input) }
+      before { run_rf('-j _', input) }
 
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output output_string_eq output }
@@ -44,7 +44,7 @@ describe 'JSON filter' do
         OUTPUT
       end
 
-      before { run_rf('-j true', input) }
+      before { run_rf('-j _', input) }
 
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output output_string_eq output }
@@ -109,7 +109,7 @@ describe 'JSON filter' do
 
       before do
         write_file file, input
-        run_rf("-j true #{file}")
+        run_rf("-j _ #{file}")
       end
 
       it { expect(last_command_started).to be_successfully_executed }
@@ -122,7 +122,7 @@ describe 'JSON filter' do
       let(:input) { load_fixture('json/string.json') }
       let(:output) { '' }
 
-      before { run_rf('-q -j true', input) }
+      before { run_rf('-q -j _', input) }
 
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output output_string_eq output }
@@ -151,13 +151,19 @@ describe 'JSON filter' do
     end
 
     describe 'Input as Hash' do
-      let(:input) { load_fixture('json/hash.json') }
-      let(:output) { 'Error: Regexp supports only String and Number records' }
+      let(:input) { '{"foo": "bar"}' }
+      let(:output) do
+        <<~OUTPUT
+          {
+            "foo":"bar"
+          }
+        OUTPUT
+      end
 
       before { run_rf('-j /foo/', input) }
 
-      it { expect(last_command_started).not_to be_successfully_executed }
-      it { expect(last_command_started).to have_output_on_stderr output_string_eq output }
+      it { expect(last_command_started).to be_successfully_executed }
+      it { expect(last_command_started).to have_output output_string_eq output }
     end
   end
 end

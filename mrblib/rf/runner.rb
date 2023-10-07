@@ -5,9 +5,7 @@ module Rf
     end
 
     attr_reader :container, :bind,
-                :quiet, :command,
-                :filter, :slurp
-    alias quiet? quiet
+                :command, :filter
 
     # @param [Hash<String>] opts
     #   :command => String
@@ -17,10 +15,18 @@ module Rf
     def initialize(opts)
       @command = opts[:command]
       @filter = opts[:filter]
-      @slurp = opts[:slurp]
-      @quiet = opts[:quiet]
+      @slurp = true & opts[:slurp]
+      @quiet = true & opts[:quiet]
 
       setup_container
+    end
+
+    def slurp?
+      @slurp
+    end
+
+    def quiet?
+      @quiet
     end
 
     # enclose the scope of binding
@@ -30,7 +36,7 @@ module Rf
     end
 
     def run
-      if slurp
+      if slurp?
         r = filter.read
         do_action(r, 1, [r])
       else
@@ -46,7 +52,7 @@ module Rf
       container.fields = fields
       bind.eval("NR = $. = #{index}") # index is Integer
 
-      render bind.eval(command)
+      render bind.eval(command), record
     end
 
     def records
@@ -57,11 +63,11 @@ module Rf
       end
     end
 
-    def render(val)
-      return if quiet?(val)
-      return unless s = filter.decorate(val)
+    def render(val, record)
+      return if quiet?
+      return unless output = filter.format(val, record)
 
-      puts s
+      puts output
     end
 
     def post_action

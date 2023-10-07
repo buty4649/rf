@@ -97,7 +97,7 @@ describe 'Feature' do
           },
           'key is not exist' => {
             command: '_.piyo',
-            output: ''
+            output: 'null'
           }
         }
       end

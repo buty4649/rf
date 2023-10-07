@@ -23,8 +23,10 @@ module Rf
         @data.gets&.chomp
       end
 
-      def decorate(val)
+      def format(val, record)
         case val
+        when String, false, nil
+          val
         when true
           record
         when Regexp
@@ -36,9 +38,7 @@ module Rf
             m.post_match
           ].join
         when Array
-          val.map(&method(:decorate)).join(' ')
-        when false, nil
-          nil
+          val.map(&:to_s).join(' ')
         else
           val.to_s
         end
