@@ -10,7 +10,6 @@ describe 'Show help text' do
         -f, --file=program_file          executed the contents of program_file
         -n, --quiet                      suppress automatic priting
         -s, --slurp                      read all reacords into an array
-            --debug                      enable debug mode
             --help                       show this message
             --version                    show version
 
