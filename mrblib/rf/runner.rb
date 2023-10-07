@@ -36,12 +36,14 @@ module Rf
     end
 
     def run
+      records = filter.records
       if slurp?
-        r = filter.read
-        do_action(r, 1, [r])
+        r = records.to_a
+        do_action(r, 1, r)
       else
-        records.each do |record, index, fields|
-          do_action(record, index, fields)
+        records.each_with_index do |record, index|
+          index += 1
+          do_action(record, index, filter.split(record))
         end
       end
       post_action

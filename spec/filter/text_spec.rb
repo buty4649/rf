@@ -117,9 +117,9 @@ describe 'Text filter' do
     end
 
     describe 'Read all at once' do
-      let(:output) { %("#{input.gsub("\n", '\n')}") }
+      let(:output) { input.chomp.gsub("\n", ' ') }
 
-      before { run_rf('-s -q "p _"', input) }
+      before { run_rf('-s "_"', input) }
 
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output_on_stdout output_string_eq output }
