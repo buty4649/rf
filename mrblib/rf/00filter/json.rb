@@ -1,10 +1,16 @@
 module Rf
   module Filter
     class Json < Base
-      Config = Struct.new(:raw)
+      class << self
+        def config
+          @config ||= Struct.new(:raw).new
+        end
 
-      def self.config
-        @config ||= Config.new
+        def configure(opt)
+          opt.on('-r', '--raw-string', 'output raw strings') do
+            config.raw = true
+          end
+        end
       end
 
       def raw?

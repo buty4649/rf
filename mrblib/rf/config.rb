@@ -6,72 +6,108 @@ module Rf
       Parser.new.parse(argv)
     end
 
-    class Parser
+    class Parser # rubocop:disable Metrics/ClassLength
       DEFAULT_FILTER_TYPE = :text
+      PROGRAM_NAME = 'rf'
+
+      class OptionMap
+        attr_reader :opts
+
+        def initialize
+          @opts = []
+
+          yield self if block_given?
+        end
+
+        def on(*args, &block)
+          @opts << {
+            args:,
+            block:
+          }
+        end
+
+        # Transfer options to OptionParser
+        # @param parser [OptionParser]
+        # @return [OptionParser]
+        def transfer(parser)
+          @opts.each do |opt|
+            parser.on(*opt[:args], &opt[:block])
+          end
+
+          parser
+        end
+      end
 
       def initialize
         @config = Config.new
+        @filter_options = load_filter_options
       end
 
-      def option # rubocop:disable Metrics/AbcSize
-        @option ||= OptionParser.new do |opt|
+      def load_filter_options
+        result = {}
+
+        Filter.types.each do |type|
+          opt = OptionMap.new
+          Filter.load(type).configure(opt)
+          result[type] = opt
+        end
+
+        result
+      end
+
+      def help_text
+        opts = banner_and_filter_options
+        opts.separator 'global options:'
+        global_options.transfer(opts)
+        opts.separator ''
+        opts.help + summarize_filter_options
+      end
+
+      def option_parser
+        OptionParser.new do |opt|
           opt.program_name = 'rf'
           opt.version = VERSION
           opt.release = "mruby #{MRUBY_VERSION}"
           opt.summary_indent = ' ' * 2
+        end
+      end
 
+      def banner_and_filter_options
+        option_parser.tap do |opt|
           opt.banner = <<~BANNER
-            Usage: rf [options] 'command' file ...
-                   rf [options] -f program_file file ...
+            Usage: rf [filter type] [options] 'command' file ...
+                   rf [filter type] [options] -f program_file file ...
           BANNER
+          opt.separator 'filter types:'
+          opt.on('-t', "--type={#{Filter.types.join('|')}}", 'set the type of input (default: text)')
+          opt.on('-j', '--json', 'same as --type=json')
+          opt.on('-y', '--yaml', 'same as --type=yaml')
+          opt.separator ''
+        end
+      end
 
-          opt.separator 'global options:'
-          opt.on('-t', "--type={#{Filter.types.join('|')}}",
-                 "set the type of input (default: #{DEFAULT_FILTER_TYPE})") do |v|
-            load_filter(v.to_sym)
-          end
-          opt.on('-j', '--json', 'same as -tjson') { load_filter(:json) }
-          opt.on('-y', '--yaml', 'same as -tyaml') { load_filter(:yaml) }
-
+      def global_options
+        @global_options ||= OptionMap.new do |opt|
           opt.on('-f', '--file=program_file', 'executed the contents of program_file') { |f| @config.script_file = f }
           opt.on('-n', '--quiet', 'suppress automatic priting') { @config.quiet = true }
           opt.on('-s', '--slurp', 'read all reacords into an array') { @config.slurp = true }
           opt.on('--help', 'show this message') { print_help_and_exit }
-          opt.on('--version', 'show version') { print_version_and_exit(opt) }
-
-          add_text_options(opt)
-          add_json_options(opt)
-          add_yaml_options(opt)
+          opt.on('--version', 'show version') { print_version_and_exit }
         end
       end
 
-      def add_text_options(opt)
-        opt.separator ''
-        opt.separator 'text options:'
-        opt.on('-F VAL', '--filed-separator', 'set the field separator(regexp)') do |v|
-          Filter::Text.config.fs = v
-        end
-      end
-
-      def add_json_options(opt)
-        opt.separator ''
-        opt.separator 'json options:'
-        opt.on('-r', '--raw-string', 'output raw strings') do
-          Filter::Json.config.raw = true
-        end
-      end
-
-      def add_yaml_options(opt)
-        opt.separator ''
-        opt.separator 'yaml options:'
-        opt.on('--[no-]doc', '[no] output document sperator(---) (default:--no-doc)') do |v|
-          Filter::Yaml.config.no_doc = !v
-        end
+      def summarize_filter_options
+        Filter.types.map do |type|
+          OptionParser.new do |opt|
+            opt.summary_indent = ' ' * 2
+            opt.separator "#{type} options:"
+            Filter.load(type).configure(opt)
+          end.summarize.join
+        end.join("\n")
       end
 
       def parse(argv)
         parameter = parse_options(argv)
-        load_filter(DEFAULT_FILTER_TYPE) unless @config.filter
 
         if @config.script_file
           @config.command = File.read(@config.script_file)
@@ -85,24 +121,58 @@ module Rf
 
       def parse_options(argv)
         print_help_and_exit(1) if argv.empty?
-        option.order(argv)
+
+        type, argv = parse_type_option(argv)
+        @config.filter = Filter.load(type)
+
+        @filter_options[type].transfer(
+          global_options.transfer(option_parser)
+        ).order(argv)
       end
 
-      def load_filter(type)
-        @config.filter = Filter.load(type)
+      def parse_type_option(argv)
+        argv = argv.dup
+        type = case argv.first
+               when '-t', '--type'
+                 arg, type = argv.shift(2)
+                 validate_type(arg, type)
+                 type.to_sym
+               when /^(-t)(.+)$/, /^(--type)=(.+)$/
+                 argv.shift
+                 arg = Regexp.last_match[1]
+                 type = Regexp.last_match[2]
+                 validate_type(arg, type)
+                 type.to_sym
+               when '-j', '--json'
+                 argv.shift
+                 :json
+               when '-y', '--yaml'
+                 argv.shift
+                 :yaml
+               else
+                 DEFAULT_FILTER_TYPE
+               end
+        [type, argv]
+      end
+
+      def validate_type(arg, type)
+        raise "missing argument: #{arg}" unless type
+        return if Filter.types.include?(type.to_sym)
+
+        raise %("#{type}" is invalid type. possible values: #{Filter.types.join(',')})
       end
 
       def print_help_and_exit(exit_status = 0)
         if exit_status.zero?
-          puts option.help
+          puts help_text
         else
-          warn option.help
+          warn help_text
         end
         exit exit_status
       end
 
-      def print_version_and_exit(opt)
-        puts opt.ver
+      def print_version_and_exit
+        puts option_parser.ver
         exit
       end
     end

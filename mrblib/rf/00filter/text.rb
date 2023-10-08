@@ -1,18 +1,27 @@
 module Rf
   module Filter
     class Text < Base
-      Config = Struct.new(:fs)
+      class << self
+        def config
+          @config ||= Struct.new(:fs).new
+        end
 
-      def self.config
-        @config ||= Config.new
+        def configure(opt)
+          opt.on('-F VAL', '--filed-separator', 'set the field separator(regexp)') do |v|
+            config.fs = v
+          end
+        end
+      end
+
+      def config
+        self.class.config
       end
 
       def initialize(io)
         super()
 
         @data = io
-        fs = self.class.config.fs
-        $; = Regexp.new(fs) if fs
+        $; = Regexp.new(config.fs) if config.fs
       end
 
       def gets

@@ -122,7 +122,7 @@ describe 'JSON filter' do
       let(:input) { load_fixture('json/string.json') }
       let(:output) { '' }
 
-      before { run_rf('-q -j _', input) }
+      before { run_rf('-j -q _', input) }
 
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output output_string_eq output }

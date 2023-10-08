@@ -1,12 +1,14 @@
 describe 'Show help text' do
   let(:help_text) do
     <<~TEXT
-      Usage: rf [options] 'command' file ...
-             rf [options] -f program_file file ...
-      global options:
+      Usage: rf [filter type] [options] 'command' file ...
+             rf [filter type] [options] -f program_file file ...
+      filter types:
         -t, --type={text|json|yaml}      set the type of input (default: text)
-        -j, --json                       same as -tjson
-        -y, --yaml                       same as -tyaml
+        -j, --json                       same as --type=json
+        -y, --yaml                       same as --type=yaml
+
+      global options:
         -f, --file=program_file          executed the contents of program_file
         -n, --quiet                      suppress automatic priting
         -s, --slurp                      read all reacords into an array

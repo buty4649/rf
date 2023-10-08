@@ -1,10 +1,16 @@
 module Rf
   module Filter
     class Yaml < Base
-      Config = Struct.new(:no_doc)
+      class << self
+        def config
+          @config ||= Struct.new(:no_doc).new(no_doc: true)
+        end
 
-      def self.config
-        @config ||= Config.new(no_doc: true)
+        def configure(opt)
+          opt.on('--[no-]doc', '[no] output document sperator(---) (default:--no-doc)') do |v|
+            config.no_doc = !v
+          end
+        end
       end
 
       def no_doc?
