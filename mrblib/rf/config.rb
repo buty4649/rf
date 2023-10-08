@@ -8,59 +8,102 @@ module Rf
 
     class Parser # rubocop:disable Metrics/ClassLength
       DEFAULT_FILTER_TYPE = :text
+      PROGRAM_NAME = 'rf'
+
+      class OptionMap
+        attr_reader :opts
+
+        def initialize
+          @opts = []
+
+          yield self if block_given?
+        end
+
+        def on(*args, &block)
+          @opts << {
+            args:,
+            block:
+          }
+        end
+
+        # Transfer options to OptionParser
+        # @param parser [OptionParser]
+        # @return [OptionParser]
+        def transfer(parser)
+          @opts.each do |opt|
+            parser.on(*opt[:args], &opt[:block])
+          end
+
+          parser
+        end
+      end
 
       def initialize
         @config = Config.new
+        @filter_options = load_filter_options
       end
 
-      def summary
+      def load_filter_options
+        result = {}
+
+        Filter.types.each do |type|
+          opt = OptionMap.new
+          Filter.load(type).configure(opt)
+          result[type] = opt
+        end
+
+        result
+      end
+
+      def help_text
+        opts = banner_and_filter_options
+        opts.separator 'global options:'
+        global_options.transfer(opts)
+        opts.separator ''
+        opts.help + summarize_filter_options
+      end
+
+      def option_parser
         OptionParser.new do |opt|
           opt.program_name = 'rf'
           opt.version = VERSION
           opt.release = "mruby #{MRUBY_VERSION}"
           opt.summary_indent = ' ' * 2
+        end
+      end
 
+      def banner_and_filter_options
+        option_parser.tap do |opt|
           opt.banner = <<~BANNER
             Usage: rf [filter type] [options] 'command' file ...
                    rf [filter type] [options] -f program_file file ...
           BANNER
-
           opt.separator 'filter types:'
           opt.on('-t', "--type={#{Filter.types.join('|')}}", 'set the type of input (default: text)')
           opt.on('-j', '--json', 'same as --type=json')
           opt.on('-y', '--yaml', 'same as --type=yaml')
-
           opt.separator ''
         end
       end
 
-      def global_options(opt = OptionParser.new)
-        opt.separator 'global options:'
-
-        opt.on('-f', '--file=program_file', 'executed the contents of program_file') { |f| @config.script_file = f }
-        opt.on('-n', '--quiet', 'suppress automatic priting') { @config.quiet = true }
-        opt.on('-s', '--slurp', 'read all reacords into an array') { @config.slurp = true }
-        opt.on('--help', 'show this message') { print_help_and_exit }
-        opt.on('--version', 'show version') { print_version_and_exit }
-      end
-
-      def filter_options(type, opt = global_options)
-        opt.separator ''
-        opt.separator "#{type} options:"
-
-        case type
-        when :text then Filter::Text.configure(opt)
-        when :json then Filter::Json.configure(opt)
-        when :yaml then Filter::Yaml.configure(opt)
+      def global_options
+        @global_options ||= OptionMap.new do |opt|
+          opt.on('-f', '--file=program_file', 'executed the contents of program_file') { |f| @config.script_file = f }
+          opt.on('-n', '--quiet', 'suppress automatic priting') { @config.quiet = true }
+          opt.on('-s', '--slurp', 'read all reacords into an array') { @config.slurp = true }
+          opt.on('--help', 'show this message') { print_help_and_exit }
+          opt.on('--version', 'show version') { print_version_and_exit }
         end
       end
 
-      def all_options
-        opt = global_options(summary)
-        %i[text json yaml].each do |type|
-          filter_options(type, opt)
-        end
-        opt
+      def summarize_filter_options
+        Filter.types.map do |type|
+          OptionParser.new do |opt|
+            opt.summary_indent = ' ' * 2
+            opt.separator "#{type} options:"
+            Filter.load(type).configure(opt)
+          end.summarize.join
+        end.join("\n")
       end
 
       def parse(argv)
@@ -82,7 +125,9 @@ module Rf
         type, argv = parse_type_option(argv)
         @config.filter = Filter.load(type)
 
-        filter_options(type).order(argv)
+        @filter_options[type].transfer(
+          global_options.transfer(option_parser)
+        ).order(argv)
       end
 
       def parse_type_option(argv)
@@ -119,15 +164,15 @@ module Rf
 
       def print_help_and_exit(exit_status = 0)
         if exit_status.zero?
-          puts all_options.help
+          puts help_text
         else
-          warn all_options.help
+          warn help_text
         end
         exit exit_status
       end
 
       def print_version_and_exit
-        puts all_options.ver
+        puts option_parser.ver
         exit
       end
     end

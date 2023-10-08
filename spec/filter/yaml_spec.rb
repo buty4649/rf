@@ -118,7 +118,7 @@ describe 'YAML filter' do
       let(:input) { load_fixture('yaml/string.yml') }
       let(:output) { '' }
 
-      before { run_rf('-q -y _', input) }
+      before { run_rf('-y -q _', input) }
 
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output output_string_eq output }
