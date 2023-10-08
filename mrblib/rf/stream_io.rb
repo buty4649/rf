@@ -1,29 +1,22 @@
 module Rf
   class StreamIO
     def initialize(files)
+      @files = files
       if files.empty?
-        @files = []
-        @current = $stdin
+        open_stdin
       else
         @files = files.dup
-        @current = self.open(@files.shift)
+        open_next
       end
-    end
-
-    def open(file)
-      File.open(file)
-    rescue Errno::ENOENT
-      raise NotFound, file
     end
 
     def gets
-      if line = @current.gets
+      if line = @current&.gets
         return line
       end
 
-      return unless file = @files.shift
+      return unless open_next
 
-      @current = self.open(file)
       gets
     end
 
@@ -34,7 +27,23 @@ module Rf
     end
 
     def read
-      @current.read + @files.map { |file| File.read(file) }.join
+      result = @current.read
+      result += @current.read while open_next
+      result
+    end
+
+    private
+
+    def open_stdin
+      @current = $stdin
+    end
+
+    def open_next
+      @current = if file = @files.shift
+                   File.open(file)
+                 end
+    rescue Errno::ENOENT
+      raise NotFound, file
     end
   end
 end
