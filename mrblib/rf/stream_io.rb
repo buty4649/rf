@@ -1,18 +1,13 @@
 module Rf
-  class Files
-    class NotFound < StandardError
-      def initialize(file)
-        super "file not found: #{file}"
-      end
-    end
-
+  class StreamIO
     def initialize(files)
-      files.each do |file|
-        raise NotFound, file unless File.exist?(file)
+      if files.empty?
+        @files = []
+        @current = $stdin
+      else
+        @files = files.dup
+        @current = self.open(@files.shift)
       end
-
-      @files = files.dup
-      @current = self.open(@files.shift)
     end
 
     def open(file)

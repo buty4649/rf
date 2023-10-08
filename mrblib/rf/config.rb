@@ -8,7 +8,6 @@ module Rf
 
     class Parser # rubocop:disable Metrics/ClassLength
       DEFAULT_FILTER_TYPE = :text
-      PROGRAM_NAME = 'rf'
 
       class OptionMap
         attr_reader :opts
@@ -115,7 +114,7 @@ module Rf
           print_help_and_exit(1) if parameter.empty?
           @config.command = parameter.shift
         end
-        @config.files = parameter unless parameter.empty?
+        @config.files = parameter.empty? ? [] : parameter
         @config
       end
 
