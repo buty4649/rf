@@ -11,7 +11,7 @@ module Rf
                    slurp: config.slurp,
                    quiet: config.quiet
                  })
-    rescue Files::NotFound => e
+    rescue NotFound => e
       print_exception_and_exit(e, false)
     rescue SyntaxError, StandardError => e
       print_exception_and_exit(e)
@@ -22,11 +22,7 @@ module Rf
     end
 
     def io
-      if files = config.files
-        Files.new(files)
-      else
-        $stdin
-      end
+      StreamIO.new(config.files)
     end
 
     def print_exception_and_exit(exc, backtrace = debug?)
