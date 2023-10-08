@@ -11,6 +11,18 @@ describe 'YAML filter' do
     end
   end
 
+  context 'with -r option' do
+    describe 'Output string' do
+      let(:input) { load_fixture('yaml/multibyte_string.yml') }
+      let(:output) { '🍣🍣🍣' }
+
+      before { run_rf('-t yaml -r _', input) }
+
+      it { expect(last_command_started).to be_successfully_executed }
+      it { expect(last_command_started).to have_output output_string_eq output }
+    end
+  end
+
   context 'when input from stdin' do
     describe 'Output string' do
       let(:input) { load_fixture('yaml/string.yml') }
