@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/cucumber/aruba.git
-  revision: e9192bec97e8d26c7382efee5f8bbd06fb96a924
+  revision: 9143d0484ca5e9b99ec34085fb42cb142493fcc0
   branch: main
   specs:
     aruba (2.2.0)
@@ -20,14 +20,14 @@ GEM
     builder (3.2.4)
     coderay (1.1.3)
     contracts (0.17)
-    cucumber (9.0.1)
+    cucumber (9.0.2)
       builder (~> 3.2, >= 3.2.4)
       cucumber-ci-environment (~> 9.2, >= 9.2.0)
-      cucumber-core (~> 11.0, >= 11.0.0)
+      cucumber-core (~> 11.1, >= 11.1.0)
       cucumber-cucumber-expressions (~> 16.1, >= 16.1.2)
-      cucumber-gherkin (>= 23.0.1, < 26.2.1)
+      cucumber-gherkin (>= 24, < 26.2.1)
       cucumber-html-formatter (~> 20.4, >= 20.4.0)
-      cucumber-messages (>= 18, < 23)
+      cucumber-messages (>= 19, < 23)
       diff-lcs (~> 1.5, >= 1.5.0)
       mini_mime (~> 1.1, >= 1.1.5)
       multi_test (~> 1.1, >= 1.1.0)
@@ -46,7 +46,8 @@ GEM
     cucumber-tag-expressions (4.1.0)
     debug_inspector (1.1.0)
     diff-lcs (1.5.0)
-    ffi (1.15.5)
+    ffi (1.16.3)
+    ffi (1.16.3-x64-mingw-ucrt)
     json (2.6.3)
     language_server-protocol (3.17.0.3)
     mini_mime (1.1.5)
