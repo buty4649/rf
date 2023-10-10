@@ -57,6 +57,8 @@ module Rf
           record.to_yaml
         when Regexp
           record.to_yaml if val.match?(record.to_s)
+        when nil
+          '--- null'
         else
           val.to_yaml
         end
