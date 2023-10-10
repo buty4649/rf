@@ -201,4 +201,14 @@ describe 'YAML filter' do
       it { expect(last_command_started).to have_output output_string_eq output }
     end
   end
+
+  describe 'Output nil value' do
+    let(:input) { 'foobar' }
+    let(:output) { 'null' }
+
+    before { run_rf('-y nil', input) }
+
+    it { expect(last_command_started).to be_successfully_executed }
+    it { expect(last_command_started).to have_output output_string_eq output }
+  end
 end
