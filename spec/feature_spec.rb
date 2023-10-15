@@ -93,17 +93,17 @@ describe 'Feature' do
         {
           'key is exist' => {
             command: '_.foo',
-            output: '"bar"'
+            output: 'bar'
           },
           'key is not exist' => {
-            command: '_.piyo',
-            output: 'null'
+            command: '_.piyo.class.to_s',
+            output: 'NilClass'
           }
         }
       end
 
       with_them do
-        before { run_rf("-j '#{command}'", input) }
+        before { run_rf("-j -r '#{command}'", input) }
 
         it { expect(last_command_started).to be_successfully_executed }
         it { expect(last_command_started).to have_output output_string_eq output }

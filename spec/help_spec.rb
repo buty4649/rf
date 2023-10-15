@@ -20,9 +20,11 @@ describe 'Show help text' do
 
       json options:
         -r, --raw-string                 output raw strings
+            --disable-boolean-mode       consider true/false/null as json literal
 
       yaml options:
         -r, --raw-string                 output raw strings
+            --disable-boolean-mode       consider true/false/null as yaml literal
             --[no-]doc                   [no] output document sperator(---) (default:--no-doc)
     TEXT
   end
