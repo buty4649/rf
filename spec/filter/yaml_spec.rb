@@ -218,6 +218,10 @@ describe 'YAML filter' do
         'NilClass' => {
           command: 'nil',
           output: 'null'
+        },
+        'Hash with null value' => {
+          command: '{foo: nil}',
+          output: 'foo: null'
         }
       }
     end
