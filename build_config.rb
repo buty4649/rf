@@ -23,7 +23,7 @@ def build_config(conf, target = nil, strip: false)
   end
 
   conf.archiver.command = 'zig ar'
-  conf.cc.defines += %w[MRB_STR_LENGTH_MAX=0 MRB_UTF8_STRING]
+  conf.cc.defines += %w[MRB_STR_LENGTH_MAX=0 MRB_UTF8_STRING MRUBY_YAML_NO_CANONICAL_NULL]
   conf.host_target = target if target
 end
 

@@ -14,11 +14,6 @@ builds:
       branch: master
       commit: e6397a090d1efe04d5dab57c63897f0d79bbad89
       version: 0.0.0
-    https://github.com/mrbgems/mruby-yaml.git:
-      url: https://github.com/mrbgems/mruby-yaml.git
-      branch: master
-      commit: 123010195bf621e784ee9d4ff9144a4b8e9cbb6a
-      version: 0.1.0
     https://github.com/mattn/mruby-json.git:
       url: https://github.com/mattn/mruby-json.git
       branch: master
@@ -44,6 +39,11 @@ builds:
       branch: master
       commit: ce9bc7a8b4ff11a438c36826ed2c685237c96b05
       version: 0.0.0
+    https://github.com/buty4649/mruby-yaml.git:
+      url: https://github.com/buty4649/mruby-yaml.git
+      branch: master
+      commit: 61387b50f150626a1cab8833545847ccc3d993b6
+      version: 0.1.0
   linux-amd64:
     https://github.com/mattn/mruby-json.git:
       url: https://github.com/mattn/mruby-json.git
@@ -55,11 +55,6 @@ builds:
       branch: master
       commit: e6397a090d1efe04d5dab57c63897f0d79bbad89
       version: 0.0.0
-    https://github.com/mrbgems/mruby-yaml.git:
-      url: https://github.com/mrbgems/mruby-yaml.git
-      branch: master
-      commit: 123010195bf621e784ee9d4ff9144a4b8e9cbb6a
-      version: 0.1.0
     https://github.com/buty4649/mruby-onig-regexp.git:
       url: https://github.com/buty4649/mruby-onig-regexp.git
       branch: fix-build-error-with-mingw
@@ -75,6 +70,11 @@ builds:
       branch: master
       commit: 056ae324451ef16a50c7887e117f0ea30921b71b
       version: 0.0.0
+    https://github.com/buty4649/mruby-yaml.git:
+      url: https://github.com/buty4649/mruby-yaml.git
+      branch: master
+      commit: 61387b50f150626a1cab8833545847ccc3d993b6
+      version: 0.1.0
   linux-arm64:
     https://github.com/mattn/mruby-json.git:
       url: https://github.com/mattn/mruby-json.git
@@ -86,11 +86,6 @@ builds:
       branch: master
       commit: e6397a090d1efe04d5dab57c63897f0d79bbad89
       version: 0.0.0
-    https://github.com/mrbgems/mruby-yaml.git:
-      url: https://github.com/mrbgems/mruby-yaml.git
-      branch: master
-      commit: 123010195bf621e784ee9d4ff9144a4b8e9cbb6a
-      version: 0.1.0
     https://github.com/buty4649/mruby-onig-regexp.git:
       url: https://github.com/buty4649/mruby-onig-regexp.git
       branch: fix-build-error-with-mingw
@@ -106,6 +101,11 @@ builds:
       branch: master
       commit: 056ae324451ef16a50c7887e117f0ea30921b71b
       version: 0.0.0
+    https://github.com/buty4649/mruby-yaml.git:
+      url: https://github.com/buty4649/mruby-yaml.git
+      branch: master
+      commit: 61387b50f150626a1cab8833545847ccc3d993b6
+      version: 0.1.0
   darwin-amd64:
     https://github.com/mattn/mruby-json.git:
       url: https://github.com/mattn/mruby-json.git
@@ -117,11 +117,6 @@ builds:
       branch: master
       commit: e6397a090d1efe04d5dab57c63897f0d79bbad89
       version: 0.0.0
-    https://github.com/mrbgems/mruby-yaml.git:
-      url: https://github.com/mrbgems/mruby-yaml.git
-      branch: master
-      commit: 123010195bf621e784ee9d4ff9144a4b8e9cbb6a
-      version: 0.1.0
     https://github.com/buty4649/mruby-onig-regexp.git:
       url: https://github.com/buty4649/mruby-onig-regexp.git
       branch: fix-build-error-with-mingw
@@ -137,6 +132,11 @@ builds:
       branch: master
       commit: 056ae324451ef16a50c7887e117f0ea30921b71b
       version: 0.0.0
+    https://github.com/buty4649/mruby-yaml.git:
+      url: https://github.com/buty4649/mruby-yaml.git
+      branch: master
+      commit: 61387b50f150626a1cab8833545847ccc3d993b6
+      version: 0.1.0
   darwin-arm64:
     https://github.com/mattn/mruby-json.git:
       url: https://github.com/mattn/mruby-json.git
@@ -148,11 +148,6 @@ builds:
       branch: master
       commit: e6397a090d1efe04d5dab57c63897f0d79bbad89
       version: 0.0.0
-    https://github.com/mrbgems/mruby-yaml.git:
-      url: https://github.com/mrbgems/mruby-yaml.git
-      branch: master
-      commit: 123010195bf621e784ee9d4ff9144a4b8e9cbb6a
-      version: 0.1.0
     https://github.com/buty4649/mruby-onig-regexp.git:
       url: https://github.com/buty4649/mruby-onig-regexp.git
       branch: fix-build-error-with-mingw
@@ -168,6 +163,11 @@ builds:
       branch: master
       commit: 056ae324451ef16a50c7887e117f0ea30921b71b
       version: 0.0.0
+    https://github.com/buty4649/mruby-yaml.git:
+      url: https://github.com/buty4649/mruby-yaml.git
+      branch: master
+      commit: 61387b50f150626a1cab8833545847ccc3d993b6
+      version: 0.1.0
   windows-amd64:
     https://github.com/mattn/mruby-json.git:
       url: https://github.com/mattn/mruby-json.git
@@ -179,11 +179,6 @@ builds:
       branch: master
       commit: e6397a090d1efe04d5dab57c63897f0d79bbad89
       version: 0.0.0
-    https://github.com/mrbgems/mruby-yaml.git:
-      url: https://github.com/mrbgems/mruby-yaml.git
-      branch: master
-      commit: 123010195bf621e784ee9d4ff9144a4b8e9cbb6a
-      version: 0.1.0
     https://github.com/buty4649/mruby-onig-regexp.git:
       url: https://github.com/buty4649/mruby-onig-regexp.git
       branch: fix-build-error-with-mingw
@@ -199,3 +194,8 @@ builds:
       branch: master
       commit: 056ae324451ef16a50c7887e117f0ea30921b71b
       version: 0.0.0
+    https://github.com/buty4649/mruby-yaml.git:
+      url: https://github.com/buty4649/mruby-yaml.git
+      branch: master
+      commit: 61387b50f150626a1cab8833545847ccc3d993b6
+      version: 0.1.0

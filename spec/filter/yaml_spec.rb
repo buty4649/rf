@@ -217,7 +217,7 @@ describe 'YAML filter' do
         },
         'NilClass' => {
           command: 'nil',
-          output: '~'
+          output: 'null'
         }
       }
     end
