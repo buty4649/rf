@@ -98,6 +98,7 @@ if build_targets.include?('windows-amd64')
       cc.command = "#{ccache}#{conf.host_target}-gcc-posix"
       cc.flags << '-static'
     end
+    conf.cc.defines      += %w[MRB_STR_LENGTH_MAX=0 MRB_UTF8_STRING MRUBY_YAML_NO_CANONICAL_NULL]
     conf.cxx.command      = "#{ccache}#{conf.host_target}-g++"
     conf.archiver.command = "#{ccache}#{conf.host_target}-gcc-ar"
 
