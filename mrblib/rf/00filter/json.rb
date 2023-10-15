@@ -3,18 +3,27 @@ module Rf
     class Json < Base
       class << self
         def config
-          @config ||= Struct.new(:raw).new
+          @config ||= Struct.new(:raw, :boolean_mode).new.tap do |config|
+            config.boolean_mode = true
+          end
         end
 
         def configure(opt)
           opt.on('-r', '--raw-string', 'output raw strings') do
             config.raw = true
           end
+          opt.on('--disable-boolean-mode', 'consider true/false/null as json literal') do
+            config.boolean_mode = false
+          end
         end
       end
 
       def raw?
         self.class.config.raw
+      end
+
+      def boolean_mode?
+        self.class.config.boolean_mode
       end
 
       def initialize(io)
@@ -39,9 +48,19 @@ module Rf
         when MatchData
           record.to_json
         when Regexp
-          record.to_json if val.match?(record.to_s)
+          val.match(record.to_s) { record.to_json }
+        when true, false, nil
+          boolean_or_nil_to_json(val, record)
         else
           val.to_json
+        end
+      end
+
+      def boolean_or_nil_to_json(boolean_or_nil, record)
+        if boolean_mode?
+          record.to_json if boolean_or_nil == true
+        else
+          boolean_or_nil.to_json
         end
       end
     end
