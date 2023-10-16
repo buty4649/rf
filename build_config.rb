@@ -90,13 +90,10 @@ end
 if build_targets.include?('windows-amd64')
   MRuby::CrossBuild.new('windows-amd64') do |conf|
     build_config(conf, 'x86_64-windows', strip: true)
-    conf.cc.flags << '-lws2_32'
-    conf.linker.flags << '-lws2_32'
 
     conf.exts do |exts|
       exts.object = '.obj'
       exts.executable = '.exe'
-      exts.library = '.lib'
     end
 
     crossbuild_root = File.join(build_dir, 'crossbuild')
@@ -104,7 +101,8 @@ if build_targets.include?('windows-amd64')
     crossbuild_lib_path = File.join(crossbuild_root, 'gai_strerror.o')
     crossbuild_src_path = File.join(__dir__, 'crossbuild', 'gai_strerror.c')
     `#{conf.cc.command} #{conf.cc.flags.join(' ')} -o #{crossbuild_lib_path} -c #{crossbuild_src_path}`
-    conf.linker.flags << crossbuild_lib_path
+    conf.linker.flags += [crossbuild_lib_path]
+    conf.linker.libraries += %w[wsock32 ws2_32]
 
     debug_config(conf)
     gem_config(conf)
