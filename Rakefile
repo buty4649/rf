@@ -1,7 +1,7 @@
 require 'shellwords'
 require_relative 'mrblib/rf/version'
 
-IMAGE_NAME = 'buty4649/mruby-build:3.2.0'
+IMAGE_NAME = 'buty4649/mruby-build:master'
 
 def docker_run(cmd: nil, env: nil)
   env_opts = env&.map { |e| ['-e', e] }
