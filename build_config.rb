@@ -13,7 +13,7 @@ end
 
 def build_config(conf, target = nil, strip: false)
   [conf.cc, conf.linker].each do |cc|
-    cc.command = "zig cc"
+    cc.command = 'zig cc'
     cc.flags += ['-target', target] if target
     cc.flags << '-s' if strip
   end
