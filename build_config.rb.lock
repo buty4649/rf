@@ -4,11 +4,6 @@ mruby:
   release_no: 30200
 builds:
   host:
-    https://github.com/mattn/mruby-onig-regexp.git:
-      url: https://github.com/mattn/mruby-onig-regexp.git
-      branch: master
-      commit: 074325207f9181ad242ffb8de34072607164f57f
-      version: 0.0.0
     https://github.com/fastly/mruby-optparse.git:
       url: https://github.com/fastly/mruby-optparse.git
       branch: master
@@ -34,16 +29,16 @@ builds:
       branch: master
       commit: 34a477d249b0d21671058be33aa75d04c3e981ba
       version: 0.0.0
-    https://github.com/buty4649/mruby-onig-regexp.git:
-      url: https://github.com/buty4649/mruby-onig-regexp.git
-      branch: master
-      commit: ce9bc7a8b4ff11a438c36826ed2c685237c96b05
-      version: 0.0.0
     https://github.com/buty4649/mruby-yaml.git:
       url: https://github.com/buty4649/mruby-yaml.git
       branch: master
       commit: 61387b50f150626a1cab8833545847ccc3d993b6
       version: 0.1.0
+    https://github.com/buty4649/mruby-onig-regexp.git:
+      url: https://github.com/buty4649/mruby-onig-regexp.git
+      branch: master
+      commit: 9342b100879fa711ba068a2c5c6fac528ca39d5a
+      version: 0.0.0
   linux-amd64:
     https://github.com/mattn/mruby-json.git:
       url: https://github.com/mattn/mruby-json.git
@@ -55,11 +50,6 @@ builds:
       branch: master
       commit: e6397a090d1efe04d5dab57c63897f0d79bbad89
       version: 0.0.0
-    https://github.com/buty4649/mruby-onig-regexp.git:
-      url: https://github.com/buty4649/mruby-onig-regexp.git
-      branch: fix-build-error-with-mingw
-      commit: ce9bc7a8b4ff11a438c36826ed2c685237c96b05
-      version: 0.0.0
     https://github.com/IceDragon200/mruby-catch-throw:
       url: https://github.com/IceDragon200/mruby-catch-throw
       branch: master
@@ -75,6 +65,11 @@ builds:
       branch: master
       commit: 61387b50f150626a1cab8833545847ccc3d993b6
       version: 0.1.0
+    https://github.com/buty4649/mruby-onig-regexp.git:
+      url: https://github.com/buty4649/mruby-onig-regexp.git
+      branch: master
+      commit: 9342b100879fa711ba068a2c5c6fac528ca39d5a
+      version: 0.0.0
   linux-arm64:
     https://github.com/mattn/mruby-json.git:
       url: https://github.com/mattn/mruby-json.git
@@ -86,11 +81,6 @@ builds:
       branch: master
       commit: e6397a090d1efe04d5dab57c63897f0d79bbad89
       version: 0.0.0
-    https://github.com/buty4649/mruby-onig-regexp.git:
-      url: https://github.com/buty4649/mruby-onig-regexp.git
-      branch: fix-build-error-with-mingw
-      commit: ce9bc7a8b4ff11a438c36826ed2c685237c96b05
-      version: 0.0.0
     https://github.com/IceDragon200/mruby-catch-throw:
       url: https://github.com/IceDragon200/mruby-catch-throw
       branch: master
@@ -106,6 +96,11 @@ builds:
       branch: master
       commit: 61387b50f150626a1cab8833545847ccc3d993b6
       version: 0.1.0
+    https://github.com/buty4649/mruby-onig-regexp.git:
+      url: https://github.com/buty4649/mruby-onig-regexp.git
+      branch: master
+      commit: 9342b100879fa711ba068a2c5c6fac528ca39d5a
+      version: 0.0.0
   darwin-amd64:
     https://github.com/mattn/mruby-json.git:
       url: https://github.com/mattn/mruby-json.git
@@ -117,11 +112,6 @@ builds:
       branch: master
       commit: e6397a090d1efe04d5dab57c63897f0d79bbad89
       version: 0.0.0
-    https://github.com/buty4649/mruby-onig-regexp.git:
-      url: https://github.com/buty4649/mruby-onig-regexp.git
-      branch: fix-build-error-with-mingw
-      commit: ce9bc7a8b4ff11a438c36826ed2c685237c96b05
-      version: 0.0.0
     https://github.com/IceDragon200/mruby-catch-throw:
       url: https://github.com/IceDragon200/mruby-catch-throw
       branch: master
@@ -137,6 +127,11 @@ builds:
       branch: master
       commit: 61387b50f150626a1cab8833545847ccc3d993b6
       version: 0.1.0
+    https://github.com/buty4649/mruby-onig-regexp.git:
+      url: https://github.com/buty4649/mruby-onig-regexp.git
+      branch: master
+      commit: 9342b100879fa711ba068a2c5c6fac528ca39d5a
+      version: 0.0.0
   darwin-arm64:
     https://github.com/mattn/mruby-json.git:
       url: https://github.com/mattn/mruby-json.git
@@ -148,11 +143,6 @@ builds:
       branch: master
       commit: e6397a090d1efe04d5dab57c63897f0d79bbad89
       version: 0.0.0
-    https://github.com/buty4649/mruby-onig-regexp.git:
-      url: https://github.com/buty4649/mruby-onig-regexp.git
-      branch: fix-build-error-with-mingw
-      commit: ce9bc7a8b4ff11a438c36826ed2c685237c96b05
-      version: 0.0.0
     https://github.com/IceDragon200/mruby-catch-throw:
       url: https://github.com/IceDragon200/mruby-catch-throw
       branch: master
@@ -168,6 +158,11 @@ builds:
       branch: master
       commit: 61387b50f150626a1cab8833545847ccc3d993b6
       version: 0.1.0
+    https://github.com/buty4649/mruby-onig-regexp.git:
+      url: https://github.com/buty4649/mruby-onig-regexp.git
+      branch: master
+      commit: 9342b100879fa711ba068a2c5c6fac528ca39d5a
+      version: 0.0.0
   windows-amd64:
     https://github.com/mattn/mruby-json.git:
       url: https://github.com/mattn/mruby-json.git
@@ -179,11 +174,6 @@ builds:
       branch: master
       commit: e6397a090d1efe04d5dab57c63897f0d79bbad89
       version: 0.0.0
-    https://github.com/buty4649/mruby-onig-regexp.git:
-      url: https://github.com/buty4649/mruby-onig-regexp.git
-      branch: fix-build-error-with-mingw
-      commit: ce9bc7a8b4ff11a438c36826ed2c685237c96b05
-      version: 0.0.0
     https://github.com/IceDragon200/mruby-catch-throw:
       url: https://github.com/IceDragon200/mruby-catch-throw
       branch: master
@@ -199,3 +189,8 @@ builds:
       branch: master
       commit: 61387b50f150626a1cab8833545847ccc3d993b6
       version: 0.1.0
+    https://github.com/buty4649/mruby-onig-regexp.git:
+      url: https://github.com/buty4649/mruby-onig-regexp.git
+      branch: master
+      commit: 9342b100879fa711ba068a2c5c6fac528ca39d5a
+      version: 0.0.0
