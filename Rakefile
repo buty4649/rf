@@ -57,7 +57,6 @@ namespace :build do
     desc "Build the project for #{target}"
     task target do
       env = ["MRUBY_BUILD_TARGETS=#{target}"]
-      env += ['USE_CCACHE=1', "CCACHE_DIR=build/ccache/#{target}"] unless ENV['CCACHE_DISABLE']
       docker_run(env:)
     end
   end

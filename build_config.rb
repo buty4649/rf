@@ -11,13 +11,9 @@ def debug_config(conf)
   conf.enable_debug
 end
 
-def ccache
-  'ccache ' if ENV['USE_CCACHE']
-end
-
 def build_config(conf, target = nil, strip: false)
   [conf.cc, conf.linker].each do |cc|
-    cc.command = "#{ccache}zig cc"
+    cc.command = "zig cc"
     cc.flags += ['-target', target] if target
     cc.flags << '-s' if strip
   end
@@ -95,12 +91,12 @@ if build_targets.include?('windows-amd64')
     conf.host_target      = 'x86_64-w64-mingw32'
 
     [conf.cc, conf.linker].each do |cc|
-      cc.command = "#{ccache}#{conf.host_target}-gcc-posix"
+      cc.command = "#{conf.host_target}-gcc-posix"
       cc.flags << '-static'
     end
     conf.cc.defines      += %w[MRB_STR_LENGTH_MAX=0 MRB_UTF8_STRING MRUBY_YAML_NO_CANONICAL_NULL]
-    conf.cxx.command      = "#{ccache}#{conf.host_target}-g++"
-    conf.archiver.command = "#{ccache}#{conf.host_target}-gcc-ar"
+    conf.cxx.command      = "#{conf.host_target}-g++"
+    conf.archiver.command = "#{conf.host_target}-gcc-ar"
 
     conf.exts do |exts|
       exts.object = '.obj'
