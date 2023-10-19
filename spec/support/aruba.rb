@@ -10,8 +10,8 @@ end
 def rf_path
   %w[
     ../../build/host/bin/rf
-    ../../build/build/bin/rf
-    ../../build/build/bin/rf.exe
+    ../../build/bin/rf
+    ../../build/bin/rf.exe
   ].map { |path| File.expand_path(path, __dir__) }
     .find { |path| File.exist?(path) }
 end
