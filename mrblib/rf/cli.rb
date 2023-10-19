@@ -13,7 +13,7 @@ module Rf
                  })
     rescue NotFound => e
       print_exception_and_exit(e, false)
-    rescue SyntaxError, StandardError => e
+    rescue StandardError => e
       print_exception_and_exit(e)
     end
 
