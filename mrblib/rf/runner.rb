@@ -55,6 +55,9 @@ module Rf
       bind.eval("NR = $. = #{index}") # index is Integer
 
       render bind.eval(command), record
+    rescue ::SyntaxError => e
+      msg = e.message.delete_prefix('file (eval) ')
+      raise Rf::SyntaxError, msg
     end
 
     def records

@@ -8,10 +8,12 @@ Aruba.configure do |config|
 end
 
 def rf_path
-  rf_path = File.expand_path('../../build/bin/rf', __dir__)
-  return rf_path if File.exist?(rf_path)
-
-  "#{rf_path}.exe"
+  %w[
+    ../../build/host/bin/rf
+    ../../build/bin/rf
+    ../../build/bin/rf.exe
+  ].map { |path| File.expand_path(path, __dir__) }
+    .find { |path| File.exist?(path) }
 end
 
 def run_rf(args, input = nil)

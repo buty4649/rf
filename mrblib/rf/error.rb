@@ -4,4 +4,6 @@ module Rf
       super "file not found: #{file}"
     end
   end
+
+  class SyntaxError < StandardError; end
 end

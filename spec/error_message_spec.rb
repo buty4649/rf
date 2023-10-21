@@ -80,7 +80,7 @@ describe 'Show error message' do
     let(:input) { "test\n" }
     let(:error_message) do
       <<~OUTPUT
-        Error: line 1: syntax error, unexpected end of file (SyntaxError)
+        Error: line 1: syntax error, unexpected end of file (Rf::SyntaxError)
 
         trace (most recent call last):
       OUTPUT

@@ -1,7 +1,7 @@
 require 'shellwords'
 require_relative 'mrblib/rf/version'
 
-IMAGE_NAME = 'buty4649/mruby-build:3.2.0'
+IMAGE_NAME = 'buty4649/mruby-build:master'
 
 def docker_run(cmd: nil, env: nil)
   env_opts = env&.map { |e| ['-e', e] }
@@ -57,7 +57,6 @@ namespace :build do
     desc "Build the project for #{target}"
     task target do
       env = ["MRUBY_BUILD_TARGETS=#{target}"]
-      env += ['USE_CCACHE=1', "CCACHE_DIR=build/ccache/#{target}"] unless ENV['CCACHE_DISABLE']
       docker_run(env:)
     end
   end
