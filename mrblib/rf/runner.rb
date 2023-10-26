@@ -4,16 +4,17 @@ module Rf
       new(...).run
     end
 
-    attr_reader :container, :bind,
-                :command, :filter
+    attr_reader :container, :bind, :command, :filter, :files
 
     # @param [Hash<String>] opts
     #   :command => String
+    #   :files => Array<String>
     #   :filter => Rf::Filter
     #   :slurp => Boolean
     #   :quiet => Boolean
     def initialize(opts)
       @command = opts[:command]
+      @files = opts[:files] || %w[-]
       @filter = opts[:filter]
       @slurp = true & opts[:slurp]
       @quiet = true & opts[:quiet]
@@ -36,17 +37,38 @@ module Rf
     end
 
     def run
-      records = filter.records
-      if slurp?
-        r = records.to_a
-        do_action(r, 1, r)
-      else
-        records.each_with_index do |record, index|
-          index += 1
-          do_action(record, index, filter.split(record))
+      files.each do |file|
+        records = Record.read(filter.new(open(file)))
+        if slurp?
+          r = records.to_a
+          do_action(r, 1, r)
+        else
+          records.each_with_index do |record, index|
+            index += 1
+            do_action(record, index, split(record))
+          end
         end
+        post_action
       end
-      post_action
+    end
+
+    def open(file)
+      file == '-' ? $stdin : File.open(file)
+        rescue Errno::ENOENT
+          raise NotFound, file
+    end
+
+    def split(val)
+      case val
+      when Array
+        val
+      when Hash
+        val.to_a
+      when String
+        val.split
+      else
+        [val]
+      end
     end
 
     def do_action(record, index, fields)
@@ -58,14 +80,6 @@ module Rf
     rescue ::SyntaxError => e
       msg = e.message.delete_prefix('file (eval) ')
       raise Rf::SyntaxError, msg
-    end
-
-    def records
-      Enumerator.new do |y|
-        while record = filter.gets
-          y << [record, filter.index, filter.split(record)]
-        end
-      end
     end
 
     def render(val, record)
