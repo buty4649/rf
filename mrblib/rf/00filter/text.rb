@@ -11,6 +11,27 @@ module Rf
             config.fs = v
           end
         end
+
+        def format(val, record)
+          case val
+          when String, false, nil
+            val
+          when true
+            record
+          when Regexp
+            return unless m = val.match(record)
+
+            [
+              m.pre_match,
+              m.to_s.red,
+              m.post_match
+            ].join
+          when Array
+            val.map(&:to_s).join("\n")
+          else
+            val.to_s
+          end
+        end
       end
 
       def config
@@ -18,35 +39,13 @@ module Rf
       end
 
       def initialize(io)
-        super()
+        super
 
-        @data = io
         $; = Regexp.new(config.fs) if config.fs
       end
 
       def gets
-        @data.gets&.chomp
-      end
-
-      def format(val, record)
-        case val
-        when String, false, nil
-          val
-        when true
-          record
-        when Regexp
-          return unless m = val.match(record)
-
-          [
-            m.pre_match,
-            m.to_s.red,
-            m.post_match
-          ].join
-        when Array
-          val.map(&:to_s).join("\n")
-        else
-          val.to_s
-        end
+        io.gets&.chomp
       end
     end
   end

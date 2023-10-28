@@ -16,18 +16,41 @@ module Rf
             config.boolean_mode = false
           end
         end
-      end
 
-      def raw?
-        self.class.config.raw
-      end
+        def raw?
+          config.raw
+        end
 
-      def boolean_mode?
-        self.class.config.boolean_mode
+        def boolean_mode?
+          config.boolean_mode
+        end
+
+        def format(val, record)
+          case val
+          when String
+            raw? ? val : val.to_json
+          when MatchData
+            record.to_json
+          when Regexp
+            val.match(record.to_s) { record.to_json }
+          when true, false, nil
+            boolean_or_nil_to_json(val, record)
+          else
+            val.to_json
+          end
+        end
+
+        def boolean_or_nil_to_json(boolean_or_nil, record)
+          if boolean_mode?
+            record.to_json if boolean_or_nil == true
+          else
+            boolean_or_nil.to_json
+          end
+        end
       end
 
       def initialize(io)
-        super()
+        super
 
         json = JSON.parse(io.read)
         @data = if json.instance_of?(Array)
@@ -39,29 +62,6 @@ module Rf
 
       def gets
         @data.shift
-      end
-
-      def format(val, record)
-        case val
-        when String
-          raw? ? val : val.to_json
-        when MatchData
-          record.to_json
-        when Regexp
-          val.match(record.to_s) { record.to_json }
-        when true, false, nil
-          boolean_or_nil_to_json(val, record)
-        else
-          val.to_json
-        end
-      end
-
-      def boolean_or_nil_to_json(boolean_or_nil, record)
-        if boolean_mode?
-          record.to_json if boolean_or_nil == true
-        else
-          boolean_or_nil.to_json
-        end
       end
     end
   end

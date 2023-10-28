@@ -5,30 +5,17 @@ module Rf
         raise NotImplementedError
       end
 
-      def format(val, record)
+      def self.format(val, record)
         raise NotImplementedError
       end
 
-      def records
-        Enumerator.new do |y|
-          while record = gets
-            y << record
-          end
-        end
+      def initialize(io)
+        @io = io
       end
 
-      def split(val)
-        case val
-        when Array
-          val
-        when Hash
-          val.to_a
-        when String
-          val.split
-        else
-          [val]
-        end
-      end
+      protected
+
+      attr_reader :io
     end
   end
 end

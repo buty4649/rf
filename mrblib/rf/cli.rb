@@ -7,7 +7,8 @@ module Rf
       Rf.add_features
       Runner.run({
                    command: config.command,
-                   filter: config.filter.new(io),
+                   files: config.files,
+                   filter: config.filter,
                    slurp: config.slurp,
                    quiet: config.quiet
                  })
@@ -19,10 +20,6 @@ module Rf
 
     def debug?
       ENV.fetch('RF_DEBUG', nil)
-    end
-
-    def io
-      StreamIO.new(config.files)
     end
 
     def print_exception_and_exit(exc, backtrace = debug?)

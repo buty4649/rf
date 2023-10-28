@@ -114,7 +114,7 @@ module Rf
           print_help_and_exit(1) if parameter.empty?
           @config.command = parameter.shift
         end
-        @config.files = parameter.empty? ? [] : parameter
+        @config.files = parameter unless parameter.empty?
         @config
       end
 
