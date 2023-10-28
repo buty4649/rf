@@ -38,7 +38,7 @@ module Rf
 
     def run
       files.each do |file|
-        records = Record.read(filter.new(open(file)))
+        records = Record.read(filter.new(self.open(file)))
         if slurp?
           r = records.to_a
           do_action(r, 1, r)
@@ -54,8 +54,8 @@ module Rf
 
     def open(file)
       file == '-' ? $stdin : File.open(file)
-        rescue Errno::ENOENT
-          raise NotFound, file
+    rescue Errno::ENOENT
+      raise NotFound, file
     end
 
     def split(val)
