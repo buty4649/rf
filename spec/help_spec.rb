@@ -9,6 +9,7 @@ describe 'Show help text' do
         -y, --yaml                       same as --type=yaml
 
       global options:
+        -H, --with-filename              print filename with output lines
         -f, --file=program_file          executed the contents of program_file
         -n, --quiet                      suppress automatic priting
         -s, --slurp                      read all reacords into an array

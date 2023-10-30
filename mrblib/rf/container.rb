@@ -1,5 +1,12 @@
 module Rf
   class Container
+    attr_accessor :filename, :with_filename
+
+    def initialize(opts = {})
+      @filenem = opts[:filename]
+      @with_filename = opts[:with_filename] || false
+    end
+
     def _
       $_
     end
@@ -25,6 +32,11 @@ module Rf
 
     def hash?
       _.instance_of?(Hash)
+    end
+
+    def puts(*)
+      $stdout.write("#{filename}: ") if with_filename && filename
+      $stdout.puts(*)
     end
 
     %i[gsub gsub! sub sub! tr tr!].each do |sym|

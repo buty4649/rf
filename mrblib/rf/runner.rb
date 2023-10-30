@@ -4,7 +4,7 @@ module Rf
       new(...).run
     end
 
-    attr_reader :container, :bind, :command, :filter, :files
+    attr_reader :container, :bind, :command, :filter, :files, :with_filename
 
     # @param [Hash<String>] opts
     #   :command => String
@@ -12,6 +12,7 @@ module Rf
     #   :filter => Rf::Filter
     #   :slurp => Boolean
     #   :quiet => Boolean
+    #   :with_filename => Boolean
     def initialize(opts)
       @command = opts[:command]
       @files = opts[:files] || %w[-]
@@ -20,6 +21,7 @@ module Rf
       @quiet = true & opts[:quiet]
 
       setup_container
+      @container.with_filename = opts[:with_filename] || (files.size > 1 && filter == Filter::Text)
     end
 
     def slurp?
@@ -36,9 +38,12 @@ module Rf
       @bind = container.instance_eval { binding }
     end
 
-    def run
-      files.each do |file|
-        records = Record.read(filter.new(self.open(file)))
+    def run # rubocop:disable Metrics/AbcSize
+      Rf.add_features
+
+      files.each do |filename|
+        @container.filename = filename
+        records = Record.read(filter.new(self.open(filename)))
         if slurp?
           r = records.to_a
           do_action(r, 1, r)
@@ -86,7 +91,7 @@ module Rf
       return if quiet?
       return unless output = filter.format(val, record)
 
-      puts output
+      @container.puts output
     end
 
     def post_action
