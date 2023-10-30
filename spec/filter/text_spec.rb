@@ -33,6 +33,38 @@ describe 'Text filter' do
     end
   end
 
+  context 'when use -H option' do
+    let(:output) do
+      input.split("\n").map { |line| "testfile: #{line}" }.join("\n")
+    end
+
+    before do
+      write_file 'testfile', input
+      run_rf('-H true testfile')
+    end
+
+    it { expect(last_command_started).to be_successfully_executed }
+    it { expect(last_command_started).to have_output_on_stdout output_string_eq output }
+  end
+
+  context 'when multiple files' do
+    let(:output) do
+      [
+        input.split("\n").map { |line| "testfile1: #{line}" }.join("\n"),
+        input.split("\n").map { |line| "testfile2: #{line}" }.join("\n")
+      ].join("\n")
+    end
+
+    before do
+      write_file 'testfile1', input
+      write_file 'testfile2', input
+      run_rf('true testfile1 testfile2')
+    end
+
+    it { expect(last_command_started).to be_successfully_executed }
+    it { expect(last_command_started).to have_output_on_stdout output_string_eq output }
+  end
+
   context 'when input from stdin' do
     describe 'Output all lines' do
       let(:output) { input }

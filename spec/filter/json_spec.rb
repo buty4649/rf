@@ -51,6 +51,55 @@ describe 'JSON filter' do
     end
   end
 
+  context 'when use -H option' do
+    let(:input) { '"foobar"' }
+    let(:output) do
+      input.split("\n").map { |line| "testfile: #{line}" }.join("\n")
+    end
+
+    before do
+      write_file 'testfile', input
+      run_rf('-j -H true testfile')
+    end
+
+    it { expect(last_command_started).to be_successfully_executed }
+    it { expect(last_command_started).to have_output_on_stdout output_string_eq output }
+  end
+
+  context 'when multiple files' do
+    let(:input) { '"foobar"' }
+
+    where do
+      {
+        'without -H option' => {
+          option: '',
+          output: <<~OUTPUT
+            "foobar"
+            "foobar"
+          OUTPUT
+        },
+        'with -H option' => {
+          option: '-H',
+          output: <<~OUTPUT
+            testfile1: "foobar"
+            testfile2: "foobar"
+          OUTPUT
+        }
+      }
+    end
+
+    with_them do
+      before do
+        write_file 'testfile1', input
+        write_file 'testfile2', input
+        run_rf("-j #{option} 'true' testfile1 testfile2")
+      end
+
+      it { expect(last_command_started).to be_successfully_executed }
+      it { expect(last_command_started).to have_output output_string_eq output }
+    end
+  end
+
   context 'when input from stdin' do
     describe 'Output string' do
       let(:input) { load_fixture('json/string.json') }

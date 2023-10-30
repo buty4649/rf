@@ -1,6 +1,6 @@
 module Rf
   class Config
-    attr_accessor :command, :files, :filter, :slurp, :script_file, :quiet
+    attr_accessor :command, :files, :filter, :slurp, :script_file, :quiet, :with_filename
 
     def self.parse(argv)
       Parser.new.parse(argv)
@@ -87,6 +87,7 @@ module Rf
 
       def global_options
         @global_options ||= OptionMap.new do |opt|
+          opt.on('-H', '--with-filename', 'print filename with output lines') { @config.with_filename = true }
           opt.on('-f', '--file=program_file', 'executed the contents of program_file') { |f| @config.script_file = f }
           opt.on('-n', '--quiet', 'suppress automatic priting') { @config.quiet = true }
           opt.on('-s', '--slurp', 'read all reacords into an array') { @config.slurp = true }

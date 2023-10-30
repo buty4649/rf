@@ -4,13 +4,13 @@ module Rf
 
     def run(argv)
       @config = Config.parse(argv)
-      Rf.add_features
       Runner.run({
                    command: config.command,
                    files: config.files,
                    filter: config.filter,
                    slurp: config.slurp,
-                   quiet: config.quiet
+                   quiet: config.quiet,
+                   with_filename: config.with_filename
                  })
     rescue NotFound => e
       print_exception_and_exit(e, false)
