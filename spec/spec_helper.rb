@@ -15,3 +15,7 @@ RSpec.configure do |config|
   config.include Aruba::Api
   config.before { setup_aruba }
 end
+
+def windows?
+  /mswin(?!ce)|mingw|cygwin|bccwin/.match?(RUBY_PLATFORM)
+end
