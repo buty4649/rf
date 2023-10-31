@@ -98,14 +98,14 @@ describe 'Show error message' do
       touch(file)
       if windows?
         # drop all permissions
-        `icacls #{file} /inheritancelevel:r`
+        `icacls #{expand_path(file)} /inheritancelevel:r`
       else
         chmod(0o000, file)
       end
       run_rf("_ #{file}")
 
       # restore permissions
-      `icalcs #{file} /inheritancelevel:e` if windows?
+      `icalcs #{expand_path(file)} /inheritancelevel:e` if windows?
     end
 
     it { expect(last_command_started).not_to be_successfully_executed }
