@@ -10,6 +10,7 @@ MRuby::Gem::Specification.new('rf') do |spec|
   spec.add_dependency 'mruby-binding', core: 'mruby-binding'
 
   %w[
+    mruby-file-stat
     mruby-json
     mruby-optparse
   ].each do |mgem|
