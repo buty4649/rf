@@ -105,7 +105,7 @@ describe 'Show error message' do
       run_rf("_ #{file}")
 
       # restore permissions
-      `icalcs #{expand_path(file)} /inheritancelevel:e` if windows?
+      `icacls #{expand_path(file)} /inheritancelevel:e` if windows?
     end
 
     it { expect(last_command_started).not_to be_successfully_executed }
