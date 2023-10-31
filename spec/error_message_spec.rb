@@ -76,6 +76,42 @@ describe 'Show error message' do
     it { expect(last_command_started).to have_output_on_stderr error_message }
   end
 
+  context 'when file is directory' do
+    let(:file) { '.' }
+    let(:error_message) do
+      "Error: #{file}: is a directory"
+    end
+
+    before { run_rf("_ #{file}") }
+
+    it { expect(last_command_started).not_to be_successfully_executed }
+    it { expect(last_command_started).to have_output_on_stderr error_message }
+  end
+
+  context 'when permission denied' do
+    let(:file) { 'testfile' }
+    let(:error_message) do
+      "Error: #{file}: permission denied"
+    end
+
+    before do
+      touch(file)
+      if windows?
+        # drop all permissions
+        `icacls #{expand_path(file)} /inheritancelevel:r`
+      else
+        chmod(0o000, file)
+      end
+      run_rf("_ #{file}")
+
+      # restore permissions
+      `icacls #{expand_path(file)} /inheritancelevel:e` if windows?
+    end
+
+    it { expect(last_command_started).not_to be_successfully_executed }
+    it { expect(last_command_started).to have_output_on_stderr error_message }
+  end
+
   context 'when enable debug mode' do
     let(:input) { "test\n" }
     let(:error_message) do

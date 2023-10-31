@@ -39,6 +39,11 @@ builds:
       branch: master
       commit: 9342b100879fa711ba068a2c5c6fac528ca39d5a
       version: 0.0.0
+    https://github.com/ksss/mruby-file-stat.git:
+      url: https://github.com/ksss/mruby-file-stat.git
+      branch: master
+      commit: bb773da39517f3ae7232538c7e9c476d45f3d9b7
+      version: 0.0.0
   linux-amd64:
     https://github.com/mattn/mruby-json.git:
       url: https://github.com/mattn/mruby-json.git
@@ -69,6 +74,11 @@ builds:
       url: https://github.com/buty4649/mruby-onig-regexp.git
       branch: master
       commit: 9342b100879fa711ba068a2c5c6fac528ca39d5a
+      version: 0.0.0
+    https://github.com/ksss/mruby-file-stat.git:
+      url: https://github.com/ksss/mruby-file-stat.git
+      branch: master
+      commit: bb773da39517f3ae7232538c7e9c476d45f3d9b7
       version: 0.0.0
   linux-arm64:
     https://github.com/mattn/mruby-json.git:
@@ -101,6 +111,11 @@ builds:
       branch: master
       commit: 9342b100879fa711ba068a2c5c6fac528ca39d5a
       version: 0.0.0
+    https://github.com/ksss/mruby-file-stat.git:
+      url: https://github.com/ksss/mruby-file-stat.git
+      branch: master
+      commit: bb773da39517f3ae7232538c7e9c476d45f3d9b7
+      version: 0.0.0
   darwin-amd64:
     https://github.com/mattn/mruby-json.git:
       url: https://github.com/mattn/mruby-json.git
@@ -131,6 +146,11 @@ builds:
       url: https://github.com/buty4649/mruby-onig-regexp.git
       branch: master
       commit: 9342b100879fa711ba068a2c5c6fac528ca39d5a
+      version: 0.0.0
+    https://github.com/ksss/mruby-file-stat.git:
+      url: https://github.com/ksss/mruby-file-stat.git
+      branch: master
+      commit: bb773da39517f3ae7232538c7e9c476d45f3d9b7
       version: 0.0.0
   darwin-arm64:
     https://github.com/mattn/mruby-json.git:
@@ -163,6 +183,11 @@ builds:
       branch: master
       commit: 9342b100879fa711ba068a2c5c6fac528ca39d5a
       version: 0.0.0
+    https://github.com/ksss/mruby-file-stat.git:
+      url: https://github.com/ksss/mruby-file-stat.git
+      branch: master
+      commit: bb773da39517f3ae7232538c7e9c476d45f3d9b7
+      version: 0.0.0
   windows-amd64:
     https://github.com/mattn/mruby-json.git:
       url: https://github.com/mattn/mruby-json.git
@@ -193,4 +218,9 @@ builds:
       url: https://github.com/buty4649/mruby-onig-regexp.git
       branch: master
       commit: 9342b100879fa711ba068a2c5c6fac528ca39d5a
+      version: 0.0.0
+    https://github.com/ksss/mruby-file-stat.git:
+      url: https://github.com/ksss/mruby-file-stat.git
+      branch: master
+      commit: bb773da39517f3ae7232538c7e9c476d45f3d9b7
       version: 0.0.0

@@ -58,9 +58,16 @@ module Rf
     end
 
     def open(file)
-      file == '-' ? $stdin : File.open(file)
+      return $stdin if file == '-'
+
+      stat = File::Stat.new(file)
+      raise IsDirectory, file if stat.directory?
+
+      File.open(file)
     rescue Errno::ENOENT
       raise NotFound, file
+    rescue Errno::EACCES
+      raise PermissionDenied, file
     end
 
     def split(val)
