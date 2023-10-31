@@ -13,5 +13,11 @@ module Rf
     end
   end
 
+  class PermissionDenied < Error
+    def initialize(path)
+      super "#{path}: permission denied"
+    end
+  end
+
   class SyntaxError < Error; end
 end

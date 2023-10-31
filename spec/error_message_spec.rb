@@ -88,6 +88,22 @@ describe 'Show error message' do
     it { expect(last_command_started).to have_output_on_stderr error_message }
   end
 
+  context 'when permission denied' do
+    let(:file) { 'testfile' }
+    let(:error_message) do
+      "Error: #{file}: permission denied"
+    end
+
+    before do
+      touch(file)
+      chmod(0o000, file)
+      run_rf("_ #{file}")
+    end
+
+    it { expect(last_command_started).not_to be_successfully_executed }
+    it { expect(last_command_started).to have_output_on_stderr error_message }
+  end
+
   context 'when enable debug mode' do
     let(:input) { "test\n" }
     let(:error_message) do

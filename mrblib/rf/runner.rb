@@ -66,6 +66,8 @@ module Rf
       File.open(file)
     rescue Errno::ENOENT
       raise NotFound, file
+    rescue Errno::EACCES
+      raise PermissionDenied, file
     end
 
     def split(val)
