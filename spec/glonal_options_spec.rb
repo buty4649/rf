@@ -2,16 +2,16 @@ describe 'Global options' do
   context 'with -R option' do
     let(:output) do
       <<~OUTPUT
-        ./foo/bar: foobar
         ./a/b/c: abc
+        ./foo/bar: foobar
       OUTPUT
     end
 
     before do
-      FileUtils.mkdir_p(expand_path('foo'))
-      write_file('foo/bar', 'foobar')
       FileUtils.mkdir_p(expand_path('a/b'))
       write_file('a/b/c', 'abc')
+      FileUtils.mkdir_p(expand_path('foo'))
+      write_file('foo/bar', 'foobar')
 
       run_rf('-R _ .')
     end

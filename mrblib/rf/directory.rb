@@ -5,15 +5,11 @@ module Rf
 
       def initialize(path)
         @path = path
-        @dir = Dir.open(path)
+        @children = Dir.entries(path).reject { |e| ['.', '..'].include?(e) }.sort
       end
 
       def next
-        child = loop do
-          child = @dir.read
-          return unless child
-          break child unless %w[. ..].include?(child)
-        end
+        return unless child = @children.shift
 
         File.join(@path, child)
       end
