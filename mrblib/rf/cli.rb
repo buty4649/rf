@@ -2,7 +2,7 @@ module Rf
   class Cli
     attr_reader :config
 
-    def run(argv)
+    def run(argv) # rubocop:disable Metrics/AbcSize
       @config = Config.parse(argv)
       Runner.run({
                    command: config.command,
@@ -10,6 +10,7 @@ module Rf
                    filter: config.filter,
                    slurp: config.slurp,
                    quiet: config.quiet,
+                   recursive: config.recursive,
                    with_filename: config.with_filename
                  })
     rescue NotFound => e
