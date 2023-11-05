@@ -10,6 +10,8 @@ describe 'Show help text' do
 
       global options:
         -H, --with-filename              print filename with output lines
+        -R, --recursive                  read all files under each directory recursively
+            --include-filename           searches for files matching a regex pattern
         -f, --file=program_file          executed the contents of program_file
         -n, --quiet                      suppress automatic priting
         -s, --slurp                      read all reacords into an array

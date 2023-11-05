@@ -4,24 +4,34 @@ module Rf
       new(...).run
     end
 
-    attr_reader :container, :bind, :command, :filter, :files, :with_filename
+    attr_reader :container, :bind, :command, :filter, :inputs, :with_filename
 
     # @param [Hash<String>] opts
     #   :command => String
     #   :files => Array<String>
     #   :filter => Rf::Filter
+    #   :inlude_filename => String or nil
     #   :slurp => Boolean
+    #   :recursive => Boolean
     #   :quiet => Boolean
     #   :with_filename => Boolean
-    def initialize(opts)
+    def initialize(opts) # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity
       @command = opts[:command]
-      @files = opts[:files] || %w[-]
       @filter = opts[:filter]
-      @slurp = true & opts[:slurp]
-      @quiet = true & opts[:quiet]
+      @slurp = opts[:slurp]
+      @quiet = opts[:quiet]
 
-      setup_container
-      @container.with_filename = opts[:with_filename] || (files.size > 1 && filter == Filter::Text)
+      files = opts[:files] || %w[-]
+      recursive = opts[:recursive]
+      include_filename = opts[:inlude_filename] || filter.filename_extension
+      @inputs = recursive ? Directory.open(files, include_filename) : files
+
+      with_filename = opts[:with_filename]
+      with_filename ||= filter == Filter::Text && (
+        files.size > 1 || (recursive && File.directory?(files.first))
+      )
+
+      setup_container(with_filename)
     end
 
     def slurp?
@@ -33,15 +43,16 @@ module Rf
     end
 
     # enclose the scope of binding
-    def setup_container
+    def setup_container(with_filename)
       @container = Container.new
       @bind = container.instance_eval { binding }
+      @container.with_filename = with_filename
     end
 
     def run # rubocop:disable Metrics/AbcSize
       Rf.add_features
 
-      files.each do |filename|
+      inputs.each do |filename|
         @container.filename = filename
         records = Record.read(filter.new(self.open(filename)))
         if slurp?
