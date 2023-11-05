@@ -3,7 +3,7 @@ require_relative '../mrblib/rf/version'
 describe 'Show version', type: :aruba do
   describe '--version' do
     let(:output) do
-      /^rf #{Rf::VERSION} \(mruby \d\.\d\.\d\)$/
+      /^rf #{Rf::VERSION} \(mruby \d\.\d\.\d [0-9a-f]+\)$/
     end
 
     before { run_rf('--version') }
