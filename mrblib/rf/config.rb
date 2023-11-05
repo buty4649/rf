@@ -67,9 +67,13 @@ module Rf
         OptionParser.new do |opt|
           opt.program_name = 'rf'
           opt.version = VERSION
-          opt.release = "mruby #{MRUBY_VERSION}"
+          opt.release = mruby_version
           opt.summary_indent = ' ' * 2
         end
+      end
+
+      def mruby_version
+        "mruby #{MRUBY_VERSION} #{MRUBY_COMMIT_ID[0..6]}"
       end
 
       def banner_and_filter_options
