@@ -72,6 +72,10 @@ module Rf
         def remove_doc_header(str)
           str.sub(/\A---[\s\n]/, '')
         end
+
+        def filename_extension
+          'ya?ml'
+        end
       end
 
       def initialize(io)

@@ -66,6 +66,30 @@ describe 'JSON filter' do
     it { expect(last_command_started).to have_output_on_stdout output_string_eq output }
   end
 
+  context 'with -R option' do
+    let(:output) do
+      <<~OUTPUT
+        "foobarbaz"
+        "foo"
+      OUTPUT
+    end
+
+    before do
+      write_file('foo.json', '"foo"')
+      write_file('notmatch.txt', '"not match"')
+      write_file('notmatch.yml', '"not match"')
+      FileUtils.mkdir_p(expand_path('a/b'))
+      write_file('foo/bar/baz.json', '"foobarbaz"')
+      write_file('foo/bar/notmatch.txt', '"not match"')
+      write_file('foo/bar/notmatch.yml', '"not match"')
+
+      run_rf('-j -R _ .')
+    end
+
+    it { expect(last_command_started).to be_successfully_executed }
+    it { expect(last_command_started).to have_output output_string_eq output }
+  end
+
   context 'when multiple files' do
     let(:input) { '"foobar"' }
 

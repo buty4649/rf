@@ -8,6 +8,7 @@ module Rf
                    command: config.command,
                    files: config.files,
                    filter: config.filter,
+                   inlude_filename: config.inlude_filename,
                    slurp: config.slurp,
                    quiet: config.quiet,
                    recursive: config.recursive,

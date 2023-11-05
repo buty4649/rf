@@ -5,7 +5,14 @@ module Rf
 
       def initialize(path)
         @path = path
-        @children = Dir.entries(path).reject { |e| ['.', '..'].include?(e) }.sort
+        @children = self.open(path)
+      end
+
+      def open(path)
+        entries = Dir.entries(path).reject do |e|
+          %w[. ..].include?(e)
+        end
+        entries.sort
       end
 
       def next
@@ -35,24 +42,27 @@ module Rf
       end
     end
 
-    def self.open(paths)
+    def self.open(paths, include_filename)
       Enumerator.new do |y|
         paths.each do |path|
-          if path == '-'
+          if path == '-' || File.file?(path)
             y << path
-            next
-          end
-
-          stat = File::Stat.new(path)
-          if stat.directory?
-            dir = Directory.new(path)
-            while path = dir.next
-              y << path
-            end
           else
-            y << path
+            each_entries(path, include_filename) do |entry|
+              y << entry
+            end
           end
         end
+      end
+    end
+
+    def self.each_entries(path, include_filename)
+      dir = Directory.new(path)
+      fnmatch = Regexp.new("\\.#{include_filename}$") if include_filename
+      while path = dir.next
+        next if fnmatch && !fnmatch.match?(path)
+
+        yield path
       end
     end
   end

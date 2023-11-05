@@ -47,6 +47,10 @@ module Rf
             boolean_or_nil.to_json
           end
         end
+
+        def filename_extension
+          'json'
+        end
       end
 
       def initialize(io)

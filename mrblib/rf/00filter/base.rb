@@ -9,6 +9,8 @@ module Rf
         raise NotImplementedError
       end
 
+      def self.filename_extension; end
+
       def initialize(io)
         @io = io
       end

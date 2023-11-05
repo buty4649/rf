@@ -23,6 +23,32 @@ describe 'YAML filter' do
     end
   end
 
+  context 'with -R option' do
+    let(:output) do
+      <<~OUTPUT
+        bar
+        foobarbaz
+        foo
+      OUTPUT
+    end
+
+    before do
+      write_file('bar.yaml', 'bar')
+      write_file('foo.yml', 'foo')
+      write_file('notmatch.txt', 'not match')
+      write_file('notmatch.json', '"not match"')
+      FileUtils.mkdir_p(expand_path('a/b'))
+      write_file('foo/bar/baz.yml', 'foobarbaz')
+      write_file('foo/bar/notmatch.txt', 'not match')
+      write_file('foo/bar/notmatch.json', '"not match"')
+
+      run_rf('-y -R _ .')
+    end
+
+    it { expect(last_command_started).to be_successfully_executed }
+    it { expect(last_command_started).to have_output output_string_eq output }
+  end
+
   context 'when input from stdin' do
     describe 'Output string' do
       let(:input) { load_fixture('yaml/string.yml') }

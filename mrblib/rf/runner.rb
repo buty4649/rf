@@ -10,11 +10,12 @@ module Rf
     #   :command => String
     #   :files => Array<String>
     #   :filter => Rf::Filter
+    #   :inlude_filename => String or nil
     #   :slurp => Boolean
     #   :recursive => Boolean
     #   :quiet => Boolean
     #   :with_filename => Boolean
-    def initialize(opts) # rubocop:disable Metrics/AbcSize
+    def initialize(opts) # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity
       @command = opts[:command]
       @filter = opts[:filter]
       @slurp = opts[:slurp]
@@ -22,7 +23,8 @@ module Rf
 
       files = opts[:files] || %w[-]
       recursive = opts[:recursive]
-      @inputs = recursive ? Directory.open(files) : files
+      include_filename = opts[:inlude_filename] || filter.filename_extension
+      @inputs = recursive ? Directory.open(files, include_filename) : files
 
       with_filename = opts[:with_filename]
       with_filename ||= filter == Filter::Text && (
