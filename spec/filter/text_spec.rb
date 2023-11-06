@@ -68,6 +68,22 @@ describe 'Text filter' do
     it { expect(last_command_started).to have_output output_string_eq output }
   end
 
+  context 'with -g option' do
+    let(:input) { 'foo' }
+    let(:output) { 'foo' }
+
+    where(:command) do
+      %w[-g --grep]
+    end
+
+    with_them do
+      before { run_rf("#{command} --no-color .", input) }
+
+      it { expect(last_command_started).to be_successfully_executed }
+      it { expect(last_command_started).to have_output_on_stdout output_string_eq output }
+    end
+  end
+
   context 'when multiple files' do
     let(:output) do
       [

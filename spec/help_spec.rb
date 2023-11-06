@@ -13,6 +13,7 @@ describe 'Show help text' do
         -R, --recursive                  read all files under each directory recursively
             --include-filename           searches for files matching a regex pattern
         -f, --file=program_file          executed the contents of program_file
+        -g, --grep                       Interpret command as a regex pattern for searching (like grep)
         -n, --quiet                      suppress automatic priting
         -s, --slurp                      read all reacords into an array
             --help                       show this message
