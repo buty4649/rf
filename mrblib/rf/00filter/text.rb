@@ -9,7 +9,7 @@ module Rf
         end
 
         def configure(opt)
-          opt.on('-F VAL', '--filed-separator', 'set the field separator(regexp)') do |v|
+          opt.on('-F VAL', '--filed-separator', 'set the field separator (allow regexp)') do |v|
             config.fs = v
           end
           opt.on('--[no-]color', '[no] colorized output (default: --color)') do |v|

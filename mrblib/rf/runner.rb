@@ -4,12 +4,13 @@ module Rf
       new(...).run
     end
 
-    attr_reader :container, :bind, :command, :filter, :inputs, :with_filename
+    attr_reader :container, :bind, :command, :filter, :grep_mode, :inputs, :with_filename
 
     # @param [Hash<String>] opts
     #   :command => String
     #   :files => Array<String>
     #   :filter => Rf::Filter
+    #   :grep_mode => Boolean
     #   :inlude_filename => String or nil
     #   :slurp => Boolean
     #   :recursive => Boolean
@@ -18,6 +19,7 @@ module Rf
     def initialize(opts) # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity
       @command = opts[:command]
       @filter = opts[:filter]
+      @grep_mode = opts[:grep_mode]
       @slurp = opts[:slurp]
       @quiet = opts[:quiet]
 
@@ -94,12 +96,17 @@ module Rf
       end
     end
 
-    def do_action(record, index, fields)
+    def do_action(record, index, fields) # rubocop:disable Metrics/AbcSize
       container.record = record
       container.fields = fields
       bind.eval("NR = $. = #{index}") # index is Integer
 
-      render bind.eval(command), record
+      result = if grep_mode
+                 Regexp.new(command)
+               else
+                 bind.eval(command)
+               end
+      render result, record
     rescue ::SyntaxError => e
       msg = e.message.delete_prefix('file (eval) ')
       raise Rf::SyntaxError, msg
