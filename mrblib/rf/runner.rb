@@ -72,9 +72,7 @@ module Rf
 
     def open(file)
       return $stdin if file == '-'
-
-      stat = File::Stat.new(file)
-      raise IsDirectory, file if stat.directory?
+      raise IsDirectory, file if File.directory?(file)
 
       File.open(file)
     rescue Errno::ENOENT
