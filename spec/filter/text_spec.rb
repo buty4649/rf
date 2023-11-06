@@ -113,17 +113,37 @@ describe 'Text filter' do
     end
 
     describe 'Output only the lines that match the regexp' do
-      let(:output) do
-        <<~OUTPUT
-          1 \e[31mfoo\e[0m
-          4 \e[31mfoo\e[0mbar
-        OUTPUT
+      where do
+        {
+          'default' => {
+            option: '',
+            output: <<~OUTPUT
+              1 \e[31mfoo\e[0m
+              4 \e[31mfoo\e[0mbar
+            OUTPUT
+          },
+          '--color' => {
+            option: '--color',
+            output: <<~OUTPUT
+              1 \e[31mfoo\e[0m
+              4 \e[31mfoo\e[0mbar
+            OUTPUT
+          },
+          '--no-color' => {
+            option: '--no-color',
+            output: <<~OUTPUT
+              1 foo
+              4 foobar
+            OUTPUT
+          }
+        }
       end
+      with_them do
+        before { run_rf("#{option} /foo/", input) }
 
-      before { run_rf('/foo/', input) }
-
-      it { expect(last_command_started).to be_successfully_executed }
-      it { expect(last_command_started).to have_output_on_stdout output_string_eq output }
+        it { expect(last_command_started).to be_successfully_executed }
+        it { expect(last_command_started).to have_output_on_stdout output_string_eq output }
+      end
     end
 
     describe 'Output only the substring that matches the regexp' do

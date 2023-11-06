@@ -20,6 +20,7 @@ describe 'Show help text' do
 
       text options:
         -F, --filed-separator VAL        set the field separator(regexp)
+            --[no-]color                 [no] colorized output (default: --color)
 
       json options:
         -r, --raw-string                 output raw strings
