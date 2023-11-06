@@ -16,7 +16,7 @@ module Rf
           opt.on('--disable-boolean-mode', 'consider true/false/null as yaml literal') do
             config.boolean_mode = false
           end
-          opt.on('--[no-]doc', '[no] output document sperator(---) (default:--no-doc)') do |v|
+          opt.on('--[no-]doc', '[no] output document sperator (refers to ---) (default:--no-doc)') do |v|
             config.no_doc = !v
           end
         end

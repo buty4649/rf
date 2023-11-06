@@ -101,7 +101,7 @@ module Rf
           opt.on('-g', '--grep', 'Interpret command as a regex pattern for searching (like grep)') do
             @config.grep_mode = true
           end
-          opt.on('-n', '--quiet', 'suppress automatic priting') { @config.quiet = true }
+          opt.on('-n', '--quiet', 'suppress automatic printing') { @config.quiet = true }
           opt.on('-s', '--slurp', 'read all reacords into an array') { @config.slurp = true }
           opt.on('--help', 'show this message') { print_help_and_exit }
           opt.on('--version', 'show version') { print_version_and_exit }
