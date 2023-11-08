@@ -1,6 +1,6 @@
 module Rf
   class Config
-    attr_accessor :command, :files, :filter, :grep_mode, :inlude_filename,
+    attr_accessor :command, :files, :filter, :grep_mode, :inlude_filename, :in_place,
                   :slurp, :script_file, :quiet, :recursive, :with_filename
 
     def self.parse(argv)
@@ -101,6 +101,9 @@ module Rf
           opt.on('-g', '--grep', 'Interpret command as a regex pattern for searching (like grep)') do
             @config.grep_mode = true
           end
+          opt.on('-i[SUFFIX]', '--in-place[=SUFFIX]', 'edit files in place (makes backup if SUFFIX supplied)') do |v|
+            @config.in_place = v || ''
+          end
           opt.on('-n', '--quiet', 'suppress automatic printing') { @config.quiet = true }
           opt.on('-s', '--slurp', 'read all reacords into an array') { @config.slurp = true }
           opt.on('--help', 'show this message') { print_help_and_exit }
@@ -128,6 +131,9 @@ module Rf
           @config.command = parameter.shift
         end
         @config.files = parameter unless parameter.empty?
+
+        raise ConflictOptions, %w[-R -i] if @config.recursive && @config.in_place
+
         @config
       end
 

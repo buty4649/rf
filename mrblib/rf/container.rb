@@ -1,3 +1,5 @@
+$output = $stdout
+
 module Rf
   class Container
     attr_accessor :filename, :with_filename
@@ -35,8 +37,8 @@ module Rf
     end
 
     def puts(*)
-      $stdout.write("#{filename}: ") if with_filename && filename
-      $stdout.puts(*)
+      $output.write("#{filename}: ") if with_filename && filename
+      $output.puts(*)
     end
 
     %i[gsub gsub! sub sub! tr tr!].each do |sym|

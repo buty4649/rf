@@ -28,3 +28,7 @@ def run_rf(args, input = nil)
 
   command
 end
+
+def read_file(path)
+  File.read(expand_path(path))
+end

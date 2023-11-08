@@ -19,5 +19,18 @@ module Rf
     end
   end
 
+  class ConflictOptions < Error
+    def initialize(options)
+      opts = options.is_a?(Array) ? options.join(', ') : options
+      super "#{opts}: conflict options"
+    end
+  end
+
+  class NotRegularFile < Error
+    def initialize(path)
+      super "#{path}: not a regular file"
+    end
+  end
+
   class SyntaxError < Error; end
 end
