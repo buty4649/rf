@@ -70,14 +70,14 @@ describe 'Text filter' do
 
   context 'with -g option' do
     let(:input) { 'foo' }
-    let(:output) { 'foo' }
+    let(:output) { "\e[31mf\e[0m\e[31mo\e[0m\e[31mo\e[0m" }
 
     where(:command) do
       %w[-g --grep]
     end
 
     with_them do
-      before { run_rf("#{command} --no-color .", input) }
+      before { run_rf("#{command} --color .", input) }
 
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output_on_stdout output_string_eq output }
