@@ -29,8 +29,7 @@ Style/StderrPuts:
   Enabled: false
 
 Style/GlobalVars:
-  Exclude:
-    - mrblib/rf/container.rb
+  AllowedVariables: [ $output, $F ]
 
 Style/SpecialGlobalVars:
   Exclude:
