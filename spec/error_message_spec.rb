@@ -163,4 +163,14 @@ describe 'Show error message' do
     it { expect(last_command_started).not_to be_successfully_executed }
     it { expect(last_command_started).to have_output_on_stderr include_output_string error_message }
   end
+
+  context 'when conflict options' do
+    let(:input) { "test\n" }
+    let(:error_message) { 'Error: -R, -i: conflict options' }
+
+    before { run_rf('-R -i _', input) }
+
+    it { expect(last_command_started).not_to be_successfully_executed }
+    it { expect(last_command_started).to have_output_on_stderr include_output_string error_message }
+  end
 end

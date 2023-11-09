@@ -14,6 +14,7 @@ describe 'Show help text' do
             --include-filename           searches for files matching a regex pattern
         -f, --file=program_file          executed the contents of program_file
         -g, --grep                       Interpret command as a regex pattern for searching (like grep)
+        -i, --in-place[=SUFFIX]          edit files in place (makes backup if SUFFIX supplied)
         -n, --quiet                      suppress automatic printing
         -s, --slurp                      read all reacords into an array
             --help                       show this message

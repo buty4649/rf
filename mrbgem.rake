@@ -10,7 +10,6 @@ MRuby::Gem::Specification.new('rf') do |spec|
   spec.add_dependency 'mruby-binding', core: 'mruby-binding'
 
   %w[
-    mruby-file-stat
     mruby-json
     mruby-optparse
   ].each do |mgem|
@@ -18,4 +17,5 @@ MRuby::Gem::Specification.new('rf') do |spec|
   end
   spec.add_dependency 'mruby-yaml',        github: 'buty4649/mruby-yaml'
   spec.add_dependency 'mruby-onig-regexp', github: 'buty4649/mruby-onig-regexp'
+  spec.add_dependency 'mruby-tempfile',    github: 'mrbgems/mruby-tempfile'
 end
