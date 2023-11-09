@@ -33,14 +33,14 @@ module Rf
         end
 
         def regexp_to_text(regexp, record)
-          return unless m = regexp.match(record)
+          result = ''
+          while m = regexp.match(record)
+            result += m.pre_match
+            result += config.color ? m.to_s.red : m.to_s
+            record = m.post_match
+          end
 
-          text = m.to_s.then { |s| config.color ? s.red : s }
-          [
-            m.pre_match,
-            text,
-            m.post_match
-          ].join
+          result.empty? ? nil : "#{result}#{record}"
         end
       end
 
