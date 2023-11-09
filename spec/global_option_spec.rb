@@ -35,7 +35,7 @@ describe 'Global options' do
     with_them do
       before do
         write_file('foo', 'foo')
-        run_rf(%(#{option}#{suffix} '"bar"' foo)).wait
+        run_rf(%(#{option}#{suffix} '"bar"' foo))
       end
 
       let(:actucal) { read_file("foo#{suffix}") }
