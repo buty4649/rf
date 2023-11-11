@@ -1,44 +1,34 @@
-describe 'Method' do
-  describe '#gsub' do
-    let(:input) { 'foo' }
-    let(:output) do
-      <<~OUTPUT
-        bar
-        foo
-      OUTPUT
-    end
+describe 'Container internal methods' do
+  using RSpec::Parameterized::TableSyntax
 
-    before { run_rf(%q('puts gsub(/foo/, "bar"); _'), input) }
-
-    it { expect(last_command_started).to be_successfully_executed }
-    it { expect(last_command_started).to have_output output_string_eq output }
+  where(:method, :expect_output) do
+    'gsub'  | %w[barbar foofoo].join("\n")
+    'gsub!' | %w[barbar barbar].join("\n")
+    'sub'   | %w[barfoo foofoo].join("\n")
+    'sub!'  | %w[barfoo barfoo].join("\n")
   end
 
-  describe '#gsub!' do
-    let(:input) { 'foo' }
-    let(:output) do
-      <<~OUTPUT
-        bar
-        bar
-      OUTPUT
-    end
+  with_them do
+    let(:input) { 'foofoo' }
+    let(:args) { %('puts #{method}(/foo/, "bar"); _') }
 
-    before { run_rf(%q('puts gsub!(/foo/, "bar"); _'), input) }
+    it_behaves_like 'a successful exec'
+  end
 
-    it { expect(last_command_started).to be_successfully_executed }
-    it { expect(last_command_started).to have_output output_string_eq output }
+  where(:method, :expect_output) do
+    'tr'  | %w[FOOFOO foofoo].join("\n")
+    'tr!' | %w[FOOFOO FOOFOO].join("\n")
+  end
+
+  with_them do
+    let(:input) { 'foofoo' }
+    let(:args) { %('puts #{method}("a-z", "A-Z"); _') }
+
+    it_behaves_like 'a successful exec'
   end
 
   %w[match m].each do |method|
-    describe "##{method}" do
-      let(:input) do
-        <<~INPUT
-          1 foo bar
-          2 foo baz
-          3 foo qux
-        INPUT
-      end
-
+    describe "Container##{method}" do
       where do
         {
           'String' => {
@@ -63,7 +53,7 @@ describe 'Method' do
             condition: '_1 == "3"',
             output: {
               without_block: '3 foo qux',
-              with_block: 3
+              with_block: '3'
             }
           },
           'FalseClass' => {
@@ -95,18 +85,26 @@ describe 'Method' do
       end
 
       with_them do
-        context 'without block' do
-          before { run_rf("'#{method} #{condition}'", input) }
+        let(:input) do
+          <<~INPUT
+            1 foo bar
+            2 foo baz
+            3 foo qux
+          INPUT
+        end
 
-          it { expect(last_command_started).to be_successfully_executed }
-          it { expect(last_command_started).to have_output output_string_eq output[:without_block] }
+        context 'without block' do
+          let(:args) { %('#{method} #{condition}') }
+          let(:expect_output) { output[:without_block] }
+
+          it_behaves_like 'a successful exec'
         end
 
         context 'with block' do
-          before { run_rf("'#{method} #{condition} { _1 }'", input) }
+          let(:args) { %('#{method} #{condition} { _1 }') }
+          let(:expect_output) { output[:with_block] }
 
-          it { expect(last_command_started).to be_successfully_executed }
-          it { expect(last_command_started).to have_output output_string_eq output[:with_block] }
+          it_behaves_like 'a successful exec'
         end
       end
     end
@@ -114,14 +112,6 @@ describe 'Method' do
 
   %w[match? m?].each do |method|
     describe "##{method}" do
-      let(:input) do
-        <<~INPUT
-          1 foo bar
-          2 foo baz
-          3 foo qux
-        INPUT
-      end
-
       where do
         {
           'String' => {
@@ -192,87 +182,99 @@ describe 'Method' do
       end
 
       with_them do
-        context 'without block' do
-          before { run_rf("'#{method} #{condition}'", input) }
+        let(:input) do
+          <<~INPUT
+            1 foo bar
+            2 foo baz
+            3 foo qux
+          INPUT
+        end
 
-          it { expect(last_command_started).to be_successfully_executed }
-          it { expect(last_command_started).to have_output output_string_eq output[:without_block] }
+        context 'without block' do
+          let(:args) { "'#{method} #{condition}'" }
+          let(:expect_output) { output[:without_block] }
+
+          it_behaves_like 'a successful exec'
         end
 
         context 'with block' do
-          before { run_rf("'#{method} #{condition} { _1 }'", input) }
+          let(:args) { "'#{method} #{condition} { _1 }'" }
+          let(:expect_output) { output[:with_block] }
 
-          it { expect(last_command_started).to be_successfully_executed }
-          it { expect(last_command_started).to have_output output_string_eq output[:with_block] }
+          it_behaves_like 'a successful exec'
         end
 
         describe 'return value' do
-          before { run_rf("-q 'p #{method} #{condition} { _1 }'", input) }
+          let(:args) { "-q 'p #{method} #{condition} { _1 }'" }
+          let(:expect_output) { output[:return_value] }
 
-          it { expect(last_command_started).to be_successfully_executed }
-          it { expect(last_command_started).to have_output output_string_eq output[:return_value] }
+          it_behaves_like 'a successful exec'
         end
       end
     end
   end
-
-  describe '#sub' do
-    let(:input) { 'foofoo' }
-    let(:output) do
-      <<~OUTPUT
-        barfoo
-        foofoo
-      OUTPUT
-    end
-
-    before { run_rf(%q('puts sub(/foo/, "bar"); _'), input) }
-
-    it { expect(last_command_started).to be_successfully_executed }
-    it { expect(last_command_started).to have_output output_string_eq output }
-  end
-
-  describe '#sub!' do
-    let(:input) { 'foofoo' }
-    let(:output) do
-      <<~OUTPUT
-        barfoo
-        barfoo
-      OUTPUT
-    end
-
-    before { run_rf(%q('puts sub!(/foo/, "bar"); _'), input) }
-
-    it { expect(last_command_started).to be_successfully_executed }
-    it { expect(last_command_started).to have_output output_string_eq output }
-  end
-
-  describe '#tr' do
-    let(:input) { 'foo' }
-    let(:output) do
-      <<~OUTPUT
-        FOO
-        foo
-      OUTPUT
-    end
-
-    before { run_rf(%q('puts tr("a-z", "A-Z"); _'), input) }
-
-    it { expect(last_command_started).to be_successfully_executed }
-    it { expect(last_command_started).to have_output output_string_eq output }
-  end
-
-  describe '#tr!' do
-    let(:input) { 'foo' }
-    let(:output) do
-      <<~OUTPUT
-        FOO
-        FOO
-      OUTPUT
-    end
-
-    before { run_rf(%q('puts tr!("a-z", "A-Z"); _'), input) }
-
-    it { expect(last_command_started).to be_successfully_executed }
-    it { expect(last_command_started).to have_output output_string_eq output }
-  end
 end
+
+# describe 'Method' do
+#
+#
+#  describe '#sub' do
+#    let(:input) { 'foofoo' }
+#    let(:output) do
+#      <<~OUTPUT
+#        barfoo
+#        foofoo
+#      OUTPUT
+#    end
+#
+#    before { run_rf(%q('puts sub(/foo/, "bar"); _'), input) }
+#
+#    it { expect(last_command_started).to be_successfully_executed }
+#    it { expect(last_command_started).to have_output output_string_eq output }
+#  end
+#
+#  describe '#sub!' do
+#    let(:input) { 'foofoo' }
+#    let(:output) do
+#      <<~OUTPUT
+#        barfoo
+#        barfoo
+#      OUTPUT
+#    end
+#
+#    before { run_rf(%q('puts sub!(/foo/, "bar"); _'), input) }
+#
+#    it { expect(last_command_started).to be_successfully_executed }
+#    it { expect(last_command_started).to have_output output_string_eq output }
+#  end
+#
+#  describe '#tr' do
+#    let(:input) { 'foo' }
+#    let(:output) do
+#      <<~OUTPUT
+#        FOO
+#        foo
+#      OUTPUT
+#    end
+#
+#    before { run_rf(%q('puts tr("a-z", "A-Z"); _'), input) }
+#
+#    it { expect(last_command_started).to be_successfully_executed }
+#    it { expect(last_command_started).to have_output output_string_eq output }
+#  end
+#
+#  describe '#tr!' do
+#    let(:input) { 'foo' }
+#    let(:output) do
+#      <<~OUTPUT
+#        FOO
+#        FOO
+#      OUTPUT
+#    end
+#
+#    before { run_rf(%q('puts tr!("a-z", "A-Z"); _'), input) }
+#
+#    it { expect(last_command_started).to be_successfully_executed }
+#    it { expect(last_command_started).to have_output output_string_eq output }
+#  end
+# end

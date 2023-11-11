@@ -1,5 +1,5 @@
 describe 'Show help text' do
-  let(:help_text) do
+  let(:expect_output) do
     <<~TEXT
       Usage: rf [filter type] [options] 'command' file ...
              rf [filter type] [options] -f program_file file ...
@@ -35,24 +35,19 @@ describe 'Show help text' do
     TEXT
   end
 
-  describe '--help' do
-    before { run_rf('--help') }
-
-    it { expect(last_command_started).to be_successfully_executed }
-    it { expect(last_command_started).to have_output_on_stdout output_string_eq help_text }
+  where(:args) do
+    %w[--help -h]
   end
 
-  context 'when empty option' do
-    before { run_rf('') }
-
-    it { expect(last_command_started).not_to be_successfully_executed }
-    it { expect(last_command_started).to have_output_on_stderr output_string_eq help_text }
+  with_them do
+    it_behaves_like 'a successful exec'
   end
 
-  context 'when not enough option' do
-    before { run_rf('-t text') }
+  where(:args) do
+    ['', '-t text']
+  end
 
-    it { expect(last_command_started).not_to be_successfully_executed }
-    it { expect(last_command_started).to have_output_on_stderr output_string_eq help_text }
+  with_them do
+    it_behaves_like 'a failed exec'
   end
 end
