@@ -14,6 +14,8 @@ RSpec.configure do |config|
   # need each parallel test to have its own working directory
   config.include Aruba::Api
   config.before { setup_aruba }
+
+  Kernel.srand config.seed
 end
 
 def windows?

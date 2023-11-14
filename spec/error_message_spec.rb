@@ -1,98 +1,29 @@
 describe 'Show error message' do
-  context 'when invalid option' do
-    before { run_rf('--invalid-option') }
+  using RSpec::Parameterized::TableSyntax
 
-    let(:error_message) do
-      'Error: invalid option: --invalid-option'
-    end
-
-    it { expect(last_command_started).not_to be_successfully_executed }
-    it { expect(last_command_started).to have_output_on_stderr error_message }
+  where(:args, :expect_output) do
+    '--invalid-option'     | 'Error: invalid option: --invalid-option'
+    '-t test'              | 'Error: "test" is invalid type. possible values: text,json,yaml'
+    '-t'                   | 'Error: missing argument: -t'
+    '-F'                   | 'Error: missing argument: -F'
+    '_ not_found_file'     | 'Error: file not found: not_found_file'
+    '_ .'                  | 'Error: .: is a directory'
+    '-f program_file'      | 'Error: No such file or directory - open program_file'
+    '-R -i _'              | 'Error: -R, -i: conflict options'
+    'if'                   | 'Error: line 1: syntax error, unexpected end of file'
+    '_.very_useful_method' | "Error: undefined method 'very_useful_method'"
+    'unknown_method'       | "Error: undefined method 'unknown_method'"
   end
 
-  context 'when invalid type' do
-    before { run_rf('-t test') }
-
-    let(:error_message) do
-      'Error: "test" is invalid type. possible values: text,json,yaml'
-    end
-
-    it { expect(last_command_started).not_to be_successfully_executed }
-    it { expect(last_command_started).to have_output_on_stderr error_message }
-  end
-
-  context 'when missing argument' do
-    let(:error_message_prefix) do
-      'Error: missing argument: '
-    end
-
-    %w[-t -F].each do |option|
-      describe option do
-        before { run_rf(option) }
-
-        it { expect(last_command_started).not_to be_successfully_executed }
-
-        it {
-          error_message = "#{error_message_prefix}#{option}"
-          expect(last_command_started).to have_output_on_stderr error_message
-        }
-      end
-    end
-  end
-
-  context 'when syntax error' do
+  with_them do
     let(:input) { "test\n" }
-    let(:error_message) do
-      'Error: line 1: syntax error, unexpected end of file'
-    end
-
-    before { run_rf('if', input) }
-
-    it { expect(last_command_started).not_to be_successfully_executed }
-    it { expect(last_command_started).to have_output_on_stderr error_message }
-  end
-
-  context 'when no method error (StandardError)' do
-    let(:input) { "test\n" }
-    let(:error_message) do
-      "Error: undefined method 'very_useful_method'"
-    end
-
-    before { run_rf('_.very_useful_method', input) }
-
-    it { expect(last_command_started).not_to be_successfully_executed }
-    it { expect(last_command_started).to have_output_on_stderr error_message }
-  end
-
-  context 'when file not found' do
-    let(:file) { 'not_found_file' }
-    let(:error_message) do
-      "Error: file not found: #{file}"
-    end
-
-    before { run_rf("'' #{file}") }
-
-    it { expect(last_command_started).not_to be_successfully_executed }
-    it { expect(last_command_started).to have_output_on_stderr error_message }
-  end
-
-  context 'when file is directory' do
-    let(:file) { '.' }
-    let(:error_message) do
-      "Error: #{file}: is a directory"
-    end
-
-    before { run_rf("_ #{file}") }
-
-    it { expect(last_command_started).not_to be_successfully_executed }
-    it { expect(last_command_started).to have_output_on_stderr error_message }
+    it_behaves_like 'a failed exec'
   end
 
   context 'when permission denied' do
-    let(:file) { 'testfile' }
-    let(:error_message) do
-      "Error: #{file}: permission denied"
-    end
+    let(:file) { 'permission_denied_file' }
+    let(:args) { "_ #{file}" }
+    let(:expect_output) { "Error: #{file}: permission denied" }
 
     before do
       touch(file)
@@ -102,20 +33,21 @@ describe 'Show error message' do
       else
         chmod(0o000, file)
       end
-      run_rf("_ #{file}")
+    end
 
+    after do
       # restore permissions
       `icacls #{expand_path(file)} /inheritancelevel:e` if windows?
     end
 
-    it { expect(last_command_started).not_to be_successfully_executed }
-    it { expect(last_command_started).to have_output_on_stderr error_message }
+    it_behaves_like 'a failed exec'
   end
 
   context 'when enable debug mode' do
     let(:input) { "test\n" }
-    let(:error_message) do
-      <<~OUTPUT
+    let(:args) { 'if' }
+    let(:expect_output) do
+      Regexp.new(Regexp.escape(<<~OUTPUT))
         Error: line 1: syntax error, unexpected end of file (Rf::SyntaxError)
 
         trace (most recent call last):
@@ -124,53 +56,12 @@ describe 'Show error message' do
 
     before do
       ENV['RF_DEBUG'] = 'y'
-      run_rf('if', input)
+    end
+
+    after do
       ENV['RF_DEBUG'] = nil
     end
 
-    it { expect(last_command_started).not_to be_successfully_executed }
-    it { expect(last_command_started).to have_output_on_stderr include_output_string error_message }
-  end
-
-  context 'when method missing' do
-    describe 'internal method' do
-      let(:input) { "test\n" }
-      let(:error_message) { "Error: undefined method 'unknown_method'" }
-
-      before { run_rf('unknown_method', input) }
-
-      it { expect(last_command_started).not_to be_successfully_executed }
-      it { expect(last_command_started).to have_output_on_stderr include_output_string error_message }
-    end
-
-    describe 'Hash method' do
-      let(:input) { load_fixture('json/hash.json') }
-      let(:error_message) { "Error: undefined method 'unknown_method'" }
-
-      before { run_rf('_.unknown_method', input) }
-
-      it { expect(last_command_started).not_to be_successfully_executed }
-      it { expect(last_command_started).to have_output_on_stderr include_output_string error_message }
-    end
-  end
-
-  context 'when program file not found' do
-    let(:input) { "test\n" }
-    let(:error_message) { 'Error: No such file or directory - open program_file' }
-
-    before { run_rf('-f program_file', input) }
-
-    it { expect(last_command_started).not_to be_successfully_executed }
-    it { expect(last_command_started).to have_output_on_stderr include_output_string error_message }
-  end
-
-  context 'when conflict options' do
-    let(:input) { "test\n" }
-    let(:error_message) { 'Error: -R, -i: conflict options' }
-
-    before { run_rf('-R -i _', input) }
-
-    it { expect(last_command_started).not_to be_successfully_executed }
-    it { expect(last_command_started).to have_output_on_stderr include_output_string error_message }
+    it_behaves_like 'a failed exec'
   end
 end

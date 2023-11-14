@@ -6,12 +6,10 @@ describe 'Special Variables' do
 
     with_them do
       let(:input) { 'foo' }
-      let(:output) { input }
+      let(:args) { "-q 'puts #{name}'" }
+      let(:expect_output) { input }
 
-      before { run_rf("-q 'puts #{name}'", input) }
-
-      it { expect(last_command_started).to be_successfully_executed }
-      it { expect(last_command_started).to have_output output_string_eq output }
+      it_behaves_like 'a successful exec'
     end
   end
 
@@ -23,7 +21,8 @@ describe 'Special Variables' do
     with_them do
       context 'when record is String' do
         let(:input) { 'foo bar baz' }
-        let(:output) do
+        let(:args) { '-q "p $F[0],$F[1],$F[2]"' }
+        let(:expect_output) do
           <<~OUTPUT
             "foo"
             "bar"
@@ -31,10 +30,7 @@ describe 'Special Variables' do
           OUTPUT
         end
 
-        before { run_rf('-q "p $F[0],$F[1],$F[2]"', input) }
-
-        it { expect(last_command_started).to be_successfully_executed }
-        it { expect(last_command_started).to have_output output_string_eq output }
+        it_behaves_like 'a successful exec'
       end
 
       context 'when record is Hash' do
@@ -47,7 +43,8 @@ describe 'Special Variables' do
             }
           JSON
         end
-        let(:output) do
+        let(:args) { "-j -q 'p #{name}[0],#{name}[1],#{name}[2]'" }
+        let(:expect_output) do
           <<~OUTPUT
             ["a", 1]
             ["b", 2]
@@ -55,15 +52,13 @@ describe 'Special Variables' do
           OUTPUT
         end
 
-        before { run_rf("-j -q 'p #{name}[0],#{name}[1],#{name}[2]'", input) }
-
-        it { expect(last_command_started).to be_successfully_executed }
-        it { expect(last_command_started).to have_output output_string_eq output }
+        it_behaves_like 'a successful exec'
       end
 
       context 'when record is Other class' do
         let(:input) { '1' }
-        let(:output) do
+        let(:args) { "-j -q 'p #{name}[0],#{name}[1],#{name}[2]'" }
+        let(:expect_output) do
           <<~OUTPUT
             1
             nil
@@ -71,10 +66,7 @@ describe 'Special Variables' do
           OUTPUT
         end
 
-        before { run_rf("-j -q 'p #{name}[0],#{name}[1],#{name}[2]'", input) }
-
-        it { expect(last_command_started).to be_successfully_executed }
-        it { expect(last_command_started).to have_output output_string_eq output }
+        it_behaves_like 'a successful exec'
       end
     end
   end
@@ -92,7 +84,8 @@ describe 'Special Variables' do
           baz
         TEXT
       end
-      let(:output) do
+      let(:args) { %('[#{name}, _].join(" ")') }
+      let(:expect_output) do
         <<~OUTPUT
           1 foo
           2 bar
@@ -100,10 +93,7 @@ describe 'Special Variables' do
         OUTPUT
       end
 
-      before { run_rf(%/'[#{name}, _].join(" ")'/, input) }
-
-      it { expect(last_command_started).to be_successfully_executed }
-      it { expect(last_command_started).to have_output output_string_eq output }
+      it_behaves_like 'a successful exec'
     end
   end
 end
