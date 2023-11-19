@@ -1,6 +1,6 @@
 module Rf
   class Config
-    attr_accessor :command, :files, :filter, :grep_mode, :inlude_filename, :in_place,
+    attr_accessor :command, :files, :filter, :grep_mode, :include_filename, :in_place,
                   :slurp, :script_file, :quiet, :recursive, :with_filename
 
     def self.parse(argv)
@@ -39,8 +39,14 @@ module Rf
       end
 
       def initialize
-        @config = Config.new
+        @config = default_config
         @filter_options = load_filter_options
+      end
+
+      def default_config
+        Config.new.tap do |cfg|
+          cfg.files = %w[-]
+        end
       end
 
       def load_filter_options
@@ -95,7 +101,7 @@ module Rf
           opt.on('-H', '--with-filename', 'print filename with output lines') { @config.with_filename = true }
           opt.on('-R', '--recursive', 'read all files under each directory recursively') { @config.recursive = true }
           opt.on('--include-filename', 'searches for files matching a regex pattern') do |p|
-            @config.inlude_filename = p
+            @config.include_filename = p
           end
           opt.on('-f', '--file=program_file', 'executed the contents of program_file') { |f| @config.script_file = f }
           opt.on('-g', '--grep', 'Interpret command as a regex pattern for searching (like grep)') do
@@ -132,7 +138,7 @@ module Rf
         end
         @config.files = parameter unless parameter.empty?
 
-        raise ConflictOptions, %w[-R -i] if @config.recursive && @config.in_place
+        validate_config
 
         @config
       end
@@ -173,13 +179,6 @@ module Rf
         [type, argv]
       end
 
-      def validate_type(arg, type)
-        raise "missing argument: #{arg}" unless type
-        return if Filter.types.include?(type.to_sym)
-
-        raise %("#{type}" is invalid type. possible values: #{Filter.types.join(',')})
-      end
-
       def print_help_and_exit(exit_status = 0)
         if exit_status.zero?
           puts help_text
@@ -192,6 +191,17 @@ module Rf
       def print_version_and_exit
         puts option_parser.ver
         exit
+      end
+
+      def validate_type(arg, type)
+        raise "missing argument: #{arg}" unless type
+        return if Filter.types.include?(type.to_sym)
+
+        raise %("#{type}" is invalid type. possible values: #{Filter.types.join(',')})
+      end
+
+      def validate_config
+        raise ConflictOptions, %w[-R -i] if @config.recursive && @config.in_place
       end
     end
   end
