@@ -3,6 +3,14 @@ class String
     "\e[31m#{self}\e[0m"
   end
 
+  def magenta
+    "\e[35m#{self}\e[0m"
+  end
+
+  def cyan
+    "\e[36m#{self}\e[0m"
+  end
+
   def try_to_i
     Integer(self)
   rescue ArgumentError

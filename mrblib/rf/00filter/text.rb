@@ -3,17 +3,12 @@ module Rf
     class Text < Base
       class << self
         def config
-          @config ||= Struct.new(:fs, :color).new.tap do |c|
-            c.color = true
-          end
+          @config ||= Struct.new(:fs).new
         end
 
         def configure(opt)
           opt.on('-F VAL', '--filed-separator', 'set the field separator (allow regexp)') do |v|
             config.fs = v
-          end
-          opt.on('--[no-]color', '[no] colorized output (default: --color)') do |v|
-            config.color = v
           end
         end
 
@@ -36,7 +31,7 @@ module Rf
           result = ''
           while m = regexp.match(record)
             result += m.pre_match
-            result += config.color ? m.to_s.red : m.to_s
+            result += colorize ? m.to_s.red : m.to_s
             record = m.post_match
           end
 

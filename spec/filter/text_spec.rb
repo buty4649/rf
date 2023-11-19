@@ -34,7 +34,7 @@ describe 'Text filter' do
   end
 
   context 'when use -H option' do
-    let(:args) { '-H true testfile' }
+    let(:args) { '-H --no-color true testfile' }
     let(:expect_output) do
       input.split("\n").map { |line| "testfile:#{line}" }.join("\n")
     end
@@ -47,7 +47,7 @@ describe 'Text filter' do
   end
 
   context 'with -R option' do
-    let(:args) { '-R _ .' }
+    let(:args) { '-R --no-color _ .' }
     let(:expect_output) do
       <<~OUTPUT
         ./a/b/c:abc
@@ -82,7 +82,7 @@ describe 'Text filter' do
   end
 
   context 'when multiple files' do
-    let(:args) { 'true testfile1 testfile2' }
+    let(:args) { '--no-color true testfile1 testfile2' }
     let(:expect_output) do
       [
         input.split("\n").map { |line| "testfile1:#{line}" }.join("\n"),

@@ -278,7 +278,7 @@ describe 'YAML filter' do
 
   context 'when use -H option' do
     let(:input) { 'foobar' }
-    let(:args) { '-y -H true testfile' }
+    let(:args) { '-y -H --no-color true testfile' }
     let(:expect_output) do
       input.split("\n").map { |line| "testfile:#{line}" }.join("\n")
     end
@@ -313,7 +313,7 @@ describe 'YAML filter' do
     end
 
     with_them do
-      let(:args) { "-y #{option} true testfile1 testfile2" }
+      let(:args) { "-y #{option} --no-color true testfile1 testfile2" }
       before do
         write_file 'testfile1', input
         write_file 'testfile2', input
