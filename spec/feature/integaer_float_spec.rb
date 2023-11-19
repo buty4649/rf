@@ -1,26 +1,44 @@
-describe 'Extended addition feature for Integer and Float' do
-  where(:case_name, :args, :expect_output) do
-    def random_number(klass)
-      number = rand(100)
-      klass == 'Float' ? number.to_f : number
+%i[Integer Float].each do |klass|
+  describe "#{klass} class features" do
+    where(:case_name, :args, :expect_output) do
+      %w[+ - * /].map do |mark|
+        left = random_number(klass)
+        statement = %(#{left} #{mark} "1")
+        answer = left.__send__(mark, 1)
+
+        [
+          "##{mark} with String argument",
+          %('#{statement}'),
+          answer.to_s
+        ]
+      end
     end
 
-    %w[Integer Float].product(%w[+ - * /]).map do |klass, mark|
-      left = random_number(klass)
-      statement = %(#{left} #{mark} "1")
-      answer = left.__send__(mark, 1)
+    with_them do
+      let(:input) { '' }
 
-      [
-        "#{klass}#+ with String argument",
-        %('#{statement}'),
-        answer.to_s
-      ]
+      it_behaves_like 'a successful exec', input: '1'
     end
-  end
 
-  with_them do
-    let(:input) { '' }
+    where(:case_name, :args, :expect_output) do
+      %i[< <= > >=].map do |mark|
+        left = random_number(klass)
+        right = random_number(klass)
+        statement = %(#{left} #{mark} "#{right}")
+        answer = left.__send__(mark, right)
 
-    it_behaves_like 'a successful exec', input: '1'
+        [
+          "##{mark} with String argument",
+          %(-q 'p #{statement}'),
+          answer.to_s
+        ]
+      end
+    end
+
+    with_them do
+      let(:input) { '' }
+
+      it_behaves_like 'a successful exec', input: '1'
+    end
   end
 end
