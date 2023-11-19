@@ -21,3 +21,8 @@ end
 def windows?
   /mswin(?!ce)|mingw|cygwin|bccwin/.match?(RUBY_PLATFORM)
 end
+
+def random_number(klass)
+  number = rand(100)
+  klass == Float ? number.to_f : number
+end
