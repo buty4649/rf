@@ -7,8 +7,8 @@ describe 'Behavior with recursive option' do
     let(:args) { "#{opts} _ ." }
     let(:expect_output) do
       <<~OUTPUT
-        ./a/b/c: abc
-        ./foo/bar: foobar
+        ./a/b/c:abc
+        ./foo/bar:foobar
       OUTPUT
     end
 

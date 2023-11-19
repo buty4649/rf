@@ -34,24 +34,24 @@ describe 'Text filter' do
   end
 
   context 'when use -H option' do
-    let(:output) do
-      input.split("\n").map { |line| "testfile: #{line}" }.join("\n")
+    let(:args) { '-H true testfile' }
+    let(:expect_output) do
+      input.split("\n").map { |line| "testfile:#{line}" }.join("\n")
     end
 
     before do
       write_file 'testfile', input
-      run_rf('-H true testfile')
     end
 
-    it { expect(last_command_started).to be_successfully_executed }
-    it { expect(last_command_started).to have_output_on_stdout output_string_eq output }
+    it_behaves_like 'a successful exec'
   end
 
   context 'with -R option' do
-    let(:output) do
+    let(:args) { '-R _ .' }
+    let(:expect_output) do
       <<~OUTPUT
-        ./a/b/c: abc
-        ./foo/bar: foobar
+        ./a/b/c:abc
+        ./foo/bar:foobar
       OUTPUT
     end
 
@@ -60,12 +60,9 @@ describe 'Text filter' do
       write_file('a/b/c', 'abc')
       FileUtils.mkdir_p(expand_path('foo'))
       write_file('foo/bar', 'foobar')
-
-      run_rf('-R _ .')
     end
 
-    it { expect(last_command_started).to be_successfully_executed }
-    it { expect(last_command_started).to have_output output_string_eq output }
+    it_behaves_like 'a successful exec'
   end
 
   context 'with -g option' do
@@ -85,21 +82,20 @@ describe 'Text filter' do
   end
 
   context 'when multiple files' do
-    let(:output) do
+    let(:args) { 'true testfile1 testfile2' }
+    let(:expect_output) do
       [
-        input.split("\n").map { |line| "testfile1: #{line}" }.join("\n"),
-        input.split("\n").map { |line| "testfile2: #{line}" }.join("\n")
+        input.split("\n").map { |line| "testfile1:#{line}" }.join("\n"),
+        input.split("\n").map { |line| "testfile2:#{line}" }.join("\n")
       ].join("\n")
     end
 
     before do
       write_file 'testfile1', input
       write_file 'testfile2', input
-      run_rf('true testfile1 testfile2')
     end
 
-    it { expect(last_command_started).to be_successfully_executed }
-    it { expect(last_command_started).to have_output_on_stdout output_string_eq output }
+    it_behaves_like 'a successful exec'
   end
 
   context 'when input from stdin' do

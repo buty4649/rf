@@ -2,11 +2,12 @@ $output = $stdout
 
 module Rf
   class Container
-    attr_accessor :filename, :with_filename
+    attr_accessor :filename
 
     def initialize(opts = {})
       @filenem = opts[:filename]
       @with_filename = opts[:with_filename] || false
+      @with_record_number = opts[:with_record_number] || false
     end
 
     def _
@@ -37,7 +38,9 @@ module Rf
     end
 
     def puts(*)
-      $output.write("#{filename}: ") if with_filename && filename
+      $output.write("#{filename}:") if @with_filename && filename
+      $output.write("#{NR}:") if @with_record_number
+
       $output.puts(*)
     end
 
