@@ -1,6 +1,10 @@
 module Rf
   module Filter
     class Base
+      class << self
+        attr_accessor :colorize
+      end
+
       def gets
         raise NotImplementedError
       end

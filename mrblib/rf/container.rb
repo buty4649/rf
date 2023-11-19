@@ -8,6 +8,7 @@ module Rf
       @filenem = opts[:filename]
       @with_filename = opts[:with_filename] || false
       @with_record_number = opts[:with_record_number] || false
+      @colorize = opts[:colorize] || false
     end
 
     def _
@@ -38,10 +39,21 @@ module Rf
     end
 
     def puts(*)
-      $output.write("#{filename}:") if @with_filename && filename
-      $output.write("#{NR}:") if @with_record_number
-
+      $output.write(generate_line_prefix)
       $output.puts(*)
+    end
+
+    def generate_line_prefix
+      prefix = []
+      prefix << filename if @with_filename && filename
+      prefix << NR.to_s if @with_record_number
+      prefix.map do |s|
+        if @colorize
+          s.magenta + ':'.cyan
+        else
+          "#{s}:"
+        end
+      end.join
     end
 
     %i[gsub gsub! sub sub! tr tr!].each do |sym|

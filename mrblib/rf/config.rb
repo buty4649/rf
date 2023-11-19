@@ -1,6 +1,6 @@
 module Rf
   class Config
-    attr_accessor :command, :files, :filter, :grep_mode, :include_filename, :in_place,
+    attr_accessor :color, :command, :files, :filter, :grep_mode, :include_filename, :in_place,
                   :slurp, :script_file, :quiet, :recursive, :with_filename, :with_record_number
 
     def self.parse(argv)
@@ -45,6 +45,7 @@ module Rf
 
       def default_config
         Config.new.tap do |cfg|
+          cfg.color = true
           cfg.files = %w[-]
         end
       end
@@ -115,6 +116,9 @@ module Rf
           end
           opt.on('-n', '--quiet', 'suppress automatic printing') { @config.quiet = true }
           opt.on('-s', '--slurp', 'read all reacords into an array') { @config.slurp = true }
+          opt.on('--[no-]color', '[no] colorized output (default: --color)') do |v|
+            @config.color = v
+          end
           opt.on('--help', 'show this message') { print_help_and_exit }
           opt.on('--version', 'show version') { print_version_and_exit }
         end

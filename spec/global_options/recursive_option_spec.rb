@@ -4,7 +4,7 @@ describe 'Behavior with recursive option' do
   end
 
   with_them do
-    let(:args) { "#{opts} _ ." }
+    let(:args) { "#{opts} --no-color _ ." }
     let(:expect_output) do
       <<~OUTPUT
         ./a/b/c:abc

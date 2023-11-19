@@ -7,7 +7,7 @@ module Rf
     attr_reader :config, :bind, :container, :inputs
 
     %w[
-      command filter files grep_mode in_place include_filename
+      color? command filter files grep_mode in_place include_filename
       slurp? quiet? recursive? with_record_number?
     ].each do |name|
       n = name.delete_suffix('?')
@@ -28,7 +28,7 @@ module Rf
     def initialize(cfg)
       @config = cfg
       @inputs = recursive? ? Directory.open(files, include_filename || filter.filename_extension) : files
-
+      filter.colorize = color?
       setup_container
     end
 
@@ -36,7 +36,8 @@ module Rf
     def setup_container
       @container = Container.new({
                                    with_filename: with_filename?,
-                                   with_record_number: with_record_number?
+                                   with_record_number: with_record_number?,
+                                   colorize: color?
                                  })
       @bind = container.instance_eval { binding }
     end

@@ -6,7 +6,7 @@ describe 'Behavior with --with-record-number option' do
       baz
     INPUT
   end
-  let(:args) { '--with-record-number _' }
+  let(:args) { '--with-record-number --no-color _' }
   let(:expect_output) do
     <<~OUTPUT
       1:foo
@@ -17,8 +17,21 @@ describe 'Behavior with --with-record-number option' do
 
   it_behaves_like 'a successful exec'
 
+  context 'with --color option' do
+    let(:args) { '--with-record-number --color _' }
+    let(:expect_output) do
+      <<~OUTPUT
+        \e[35m1\e[0m\e[36m:\e[0mfoo
+        \e[35m2\e[0m\e[36m:\e[0mbar
+        \e[35m3\e[0m\e[36m:\e[0mbaz
+      OUTPUT
+    end
+
+    it_behaves_like 'a successful exec'
+  end
+
   context 'with --with-file-name option' do
-    let(:args) { '--with-record-number --with-filename _ testfile' }
+    let(:args) { '--with-record-number --with-filename --no-color _ testfile' }
     let(:expect_output) do
       <<~OUTPUT
         testfile:1:foo
@@ -32,5 +45,22 @@ describe 'Behavior with --with-record-number option' do
     end
 
     it_behaves_like 'a successful exec'
+
+    context 'with --color option' do
+      let(:args) { '--with-record-number --with-filename --color _ testfile' }
+      let(:expect_output) do
+        <<~OUTPUT
+          \e[35mtestfile\e[0m\e[36m:\e[0m\e[35m1\e[0m\e[36m:\e[0mfoo
+          \e[35mtestfile\e[0m\e[36m:\e[0m\e[35m2\e[0m\e[36m:\e[0mbar
+          \e[35mtestfile\e[0m\e[36m:\e[0m\e[35m3\e[0m\e[36m:\e[0mbaz
+        OUTPUT
+      end
+
+      before do
+        write_file 'testfile', input
+      end
+
+      it_behaves_like 'a successful exec'
+    end
   end
 end
