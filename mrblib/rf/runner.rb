@@ -8,7 +8,7 @@ module Rf
 
     %w[
       command filter files grep_mode in_place include_filename
-      slurp? quiet? recursive?
+      slurp? quiet? recursive? with_record_number?
     ].each do |name|
       n = name.delete_suffix('?')
       define_method(name.to_sym) { config.send(n) }
@@ -34,9 +34,11 @@ module Rf
 
     # enclose the scope of binding
     def setup_container
-      @container = Container.new
+      @container = Container.new({
+                                   with_filename: with_filename?,
+                                   with_record_number: with_record_number?
+                                 })
       @bind = container.instance_eval { binding }
-      @container.with_filename = with_filename?
     end
 
     def run # rubocop:disable Metrics/AbcSize

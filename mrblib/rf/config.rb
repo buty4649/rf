@@ -1,7 +1,7 @@
 module Rf
   class Config
     attr_accessor :command, :files, :filter, :grep_mode, :include_filename, :in_place,
-                  :slurp, :script_file, :quiet, :recursive, :with_filename
+                  :slurp, :script_file, :quiet, :recursive, :with_filename, :with_record_number
 
     def self.parse(argv)
       Parser.new.parse(argv)
@@ -99,6 +99,9 @@ module Rf
       def global_options # rubocop:disable Metrics/AbcSize
         @global_options ||= OptionMap.new do |opt|
           opt.on('-H', '--with-filename', 'print filename with output lines') { @config.with_filename = true }
+          opt.on('--with-record-number', 'print record number with output lines') do
+            @config.with_record_number = true
+          end
           opt.on('-R', '--recursive', 'read all files under each directory recursively') { @config.recursive = true }
           opt.on('--include-filename', 'searches for files matching a regex pattern') do |p|
             @config.include_filename = p

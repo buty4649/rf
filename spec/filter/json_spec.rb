@@ -53,17 +53,16 @@ describe 'JSON filter' do
 
   context 'when use -H option' do
     let(:input) { '"foobar"' }
-    let(:output) do
-      input.split("\n").map { |line| "testfile: #{line}" }.join("\n")
+    let(:args) { '-j -H true testfile' }
+    let(:expect_output) do
+      input.split("\n").map { |line| "testfile:#{line}" }.join("\n")
     end
 
     before do
       write_file 'testfile', input
-      run_rf('-j -H true testfile')
     end
 
-    it { expect(last_command_started).to be_successfully_executed }
-    it { expect(last_command_started).to have_output_on_stdout output_string_eq output }
+    it_behaves_like 'a successful exec'
   end
 
   context 'with -R option' do
@@ -113,30 +112,29 @@ describe 'JSON filter' do
       {
         'without -H option' => {
           option: '',
-          output: <<~OUTPUT
+          expect_output: <<~OUTPUT
             "foobar"
             "foobar"
           OUTPUT
         },
         'with -H option' => {
           option: '-H',
-          output: <<~OUTPUT
-            testfile1: "foobar"
-            testfile2: "foobar"
+          expect_output: <<~OUTPUT
+            testfile1:"foobar"
+            testfile2:"foobar"
           OUTPUT
         }
       }
     end
 
     with_them do
+      let(:args) { "-j #{option} true testfile1 testfile2" }
       before do
         write_file 'testfile1', input
         write_file 'testfile2', input
-        run_rf("-j #{option} 'true' testfile1 testfile2")
       end
 
-      it { expect(last_command_started).to be_successfully_executed }
-      it { expect(last_command_started).to have_output output_string_eq output }
+      it_behaves_like 'a successful exec'
     end
   end
 
