@@ -55,15 +55,14 @@ module Rf
           tempfile = write_file if in_place.empty?
         end
 
-        records = Record.read(filter.new(input))
-        if slurp?
-          r = records.to_a
-          do_action(r, 1, r)
-        else
-          records.each_with_index do |record, index|
-            index += 1
-            do_action(record, index, split(record))
-          end
+        reader = filter.new(input)
+        records = Record.read(reader)
+        records = [records.to_a] if slurp?
+
+        records.each_with_index do |record, index|
+          index += 1
+          result = do_action(record, index, split(record))
+          render result, record, reader.binary?
         end
         post_action
 
@@ -76,10 +75,9 @@ module Rf
     end
 
     def read_open(file)
-      return $stdin if file == '-'
       raise IsDirectory, file if File.directory?(file)
 
-      File.open(file)
+      BufferedIO.new(file)
     rescue Errno::ENOENT
       raise NotFound, file
     rescue Errno::EACCES
@@ -111,27 +109,30 @@ module Rf
       end
     end
 
-    def do_action(record, index, fields) # rubocop:disable Metrics/AbcSize
+    def do_action(record, index, fields)
       container.record = record
       container.fields = fields
       bind.eval("NR = $. = #{index}") # index is Integer
 
-      result = if grep_mode
-                 Regexp.new(command)
-               else
-                 bind.eval(command)
-               end
-      render result, record
+      if grep_mode
+        Regexp.new(command)
+      else
+        bind.eval(command)
+      end
     rescue ::SyntaxError => e
       msg = e.message.delete_prefix('file (eval) ')
       raise Rf::SyntaxError, msg
     end
 
-    def render(val, record)
+    def render(val, record, binary_match)
       return if quiet?
       return unless output = filter.format(val, record)
 
-      @container.puts output
+      if binary_match
+        puts 'Binary file matches.'
+      else
+        @container.puts output
+      end
     end
 
     def post_action

@@ -9,6 +9,10 @@ module Rf
         raise NotImplementedError
       end
 
+      def binary?
+        @io.binary?
+      end
+
       def self.format(val, record)
         raise NotImplementedError
       end
