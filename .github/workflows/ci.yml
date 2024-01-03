@@ -12,7 +12,7 @@ jobs:
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
-        ruby-version: 3.2
+        ruby-version: 3.3
     - name: Install dependencies
       run: bundle install
     - name: Run rubocop
@@ -41,7 +41,7 @@ jobs:
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
-        ruby-version: 3.2
+        ruby-version: 3.3
         bundler-cache: true
     - name: build
       run: rake build:${{ matrix.os }}-${{ matrix.arch }}
@@ -74,7 +74,7 @@ jobs:
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
-        ruby-version: 3.2
+        ruby-version: 3.3
         bundler-cache: true
     - name: Install dependencies
       run: bundle install
