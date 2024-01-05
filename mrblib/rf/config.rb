@@ -45,7 +45,7 @@ module Rf
 
       def default_config
         Config.new.tap do |cfg|
-          cfg.color = true
+          cfg.color = $stdout.tty?
           cfg.files = %w[-]
         end
       end
@@ -116,7 +116,7 @@ module Rf
           end
           opt.on('-n', '--quiet', 'suppress automatic printing') { @config.quiet = true }
           opt.on('-s', '--slurp', 'read all reacords into an array') { @config.slurp = true }
-          opt.on('--[no-]color', '[no] colorized output (default: --color)') do |v|
+          opt.on('--[no-]color', '[no] colorized output (default: --color in TTY)') do |v|
             @config.color = v
           end
           opt.on('--help', 'show this message') { print_help_and_exit }

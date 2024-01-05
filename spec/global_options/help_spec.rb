@@ -22,7 +22,7 @@ describe 'Show help text' do
 
       text options:
         -F, --filed-separator VAL        set the field separator (allow regexp)
-            --[no-]color                 [no] colorized output (default: --color)
+            --[no-]color                 [no] colorized output (default: --color in TTY)
 
       json options:
         -r, --raw-string                 output raw strings
