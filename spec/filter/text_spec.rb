@@ -130,8 +130,8 @@ describe 'Text filter' do
           'default' => {
             option: '',
             output: <<~OUTPUT
-              1 \e[31mfoo\e[0m
-              4 \e[31mfoo\e[0mbar
+              1 foo
+              4 foobar
             OUTPUT
           },
           '--color' => {

@@ -45,7 +45,7 @@ module Rf
 
       def default_config
         Config.new.tap do |cfg|
-          cfg.color = true
+          cfg.color = $stdout.tty?
           cfg.files = %w[-]
         end
       end
