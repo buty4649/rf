@@ -12,10 +12,10 @@ MRuby::Gem::Specification.new('rf') do |spec|
   %w[
     mruby-json
     mruby-optparse
+    mruby-tempfile
   ].each do |mgem|
     spec.add_dependency mgem, mgem:
   end
-  spec.add_dependency 'mruby-yaml',        github: 'buty4649/mruby-yaml'
+  spec.add_dependency 'mruby-yaml', github: 'buty4649/mruby-yaml'
   spec.add_dependency 'mruby-onig-regexp', github: 'buty4649/mruby-onig-regexp'
-  spec.add_dependency 'mruby-tempfile',    github: 'mrbgems/mruby-tempfile'
 end
