@@ -85,6 +85,11 @@ builds:
       branch: master
       commit: bb773da39517f3ae7232538c7e9c476d45f3d9b7
       version: 0.0.0
+    https://github.com/mrbgems/mruby-tempfile.git:
+      url: https://github.com/mrbgems/mruby-tempfile.git
+      branch: master
+      commit: 48073012c932f540dc3773b2dc6b079caf71a70d
+      version: 0.0.0
   linux-arm64:
     https://github.com/mattn/mruby-json.git:
       url: https://github.com/mattn/mruby-json.git
@@ -120,6 +125,11 @@ builds:
       url: https://github.com/ksss/mruby-file-stat.git
       branch: master
       commit: bb773da39517f3ae7232538c7e9c476d45f3d9b7
+      version: 0.0.0
+    https://github.com/mrbgems/mruby-tempfile.git:
+      url: https://github.com/mrbgems/mruby-tempfile.git
+      branch: master
+      commit: 48073012c932f540dc3773b2dc6b079caf71a70d
       version: 0.0.0
   darwin-amd64:
     https://github.com/mattn/mruby-json.git:
@@ -157,6 +167,11 @@ builds:
       branch: master
       commit: bb773da39517f3ae7232538c7e9c476d45f3d9b7
       version: 0.0.0
+    https://github.com/mrbgems/mruby-tempfile.git:
+      url: https://github.com/mrbgems/mruby-tempfile.git
+      branch: master
+      commit: 48073012c932f540dc3773b2dc6b079caf71a70d
+      version: 0.0.0
   darwin-arm64:
     https://github.com/mattn/mruby-json.git:
       url: https://github.com/mattn/mruby-json.git
@@ -192,6 +207,11 @@ builds:
       url: https://github.com/ksss/mruby-file-stat.git
       branch: master
       commit: bb773da39517f3ae7232538c7e9c476d45f3d9b7
+      version: 0.0.0
+    https://github.com/mrbgems/mruby-tempfile.git:
+      url: https://github.com/mrbgems/mruby-tempfile.git
+      branch: master
+      commit: 48073012c932f540dc3773b2dc6b079caf71a70d
       version: 0.0.0
   windows-amd64:
     https://github.com/mattn/mruby-json.git:

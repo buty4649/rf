@@ -12,11 +12,14 @@ def debug_config(conf)
   conf.enable_debug
 end
 
-def build_config(conf, target = nil, strip: false)
+def build_config(conf, target = nil, optimize: false)
   [conf.cc, conf.linker].each do |cc|
     cc.command = 'zig cc'
     cc.flags += ['-target', target] if target
-    cc.flags << '-s' if strip
+    if optimize
+      cc.flags += %w[-s -O3]
+      cc.flags += %w[-mtune=native -march=native] if target == 'x86_64-linux-musl'
+    end
   end
 
   conf.archiver.command = 'zig ar'
@@ -25,7 +28,7 @@ def build_config(conf, target = nil, strip: false)
 end
 
 MRuby::Build.new do |conf|
-  build_config(conf)
+  build_config(conf, optimize: true)
   debug_config(conf)
   gem_config(conf)
 end
@@ -39,7 +42,7 @@ build_targets = ENV['MRUBY_BUILD_TARGETS']&.split(',') || []
   next unless build_targets.include?(arch)
 
   MRuby::CrossBuild.new(arch) do |conf|
-    build_config(conf, target, strip: true)
+    build_config(conf, target, optimize: true)
     debug_config(conf)
     gem_config(conf)
   end
@@ -49,7 +52,7 @@ if build_targets.include?('darwin-amd64')
   MRuby::CrossBuild.new('darwin-amd64') do |conf|
     macos_sdk = ENV.fetch('MACOSX_SDK_PATH').shellescape
 
-    build_config(conf, 'x86_64-macos', strip: true)
+    build_config(conf, 'x86_64-macos', optimize: true)
     conf.cc.flags += ['-Wno-overriding-t-option', '-mmacosx-version-min=10.14',
                       '-isysroot', macos_sdk, '-iwithsysroot', '/usr/include',
                       '-iframeworkwithsysroot', '/System/Library/Frameworks']
@@ -68,7 +71,7 @@ if build_targets.include?('darwin-arm64')
   MRuby::CrossBuild.new('darwin-arm64') do |conf|
     macos_sdk = ENV.fetch('MACOSX_SDK_PATH').shellescape
 
-    build_config(conf, 'aarch64-macos', strip: true)
+    build_config(conf, 'aarch64-macos', optimize: true)
     conf.cc.flags += ['-Wno-overriding-t-option', '-mmacosx-version-min=11.1',
                       '-isysroot', macos_sdk, '-iwithsysroot', '/usr/include',
                       '-iframeworkwithsysroot', '/System/Library/Frameworks']
@@ -93,7 +96,7 @@ if build_targets.include?('windows-amd64')
 
     [conf.cc, conf.linker].each do |cc|
       cc.command = "#{conf.host_target}-gcc-posix"
-      cc.flags << '-static'
+      cc.flags += %w[-static -O3 -mtune=native -march=native]
     end
     conf.cc.defines      += %w[MRB_STR_LENGTH_MAX=0 MRB_UTF8_STRING MRUBY_YAML_NO_CANONICAL_NULL]
     conf.cxx.command      = "#{conf.host_target}-g++"
