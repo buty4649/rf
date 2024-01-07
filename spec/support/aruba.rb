@@ -5,6 +5,7 @@ Aruba.configure do |config|
   working_directory = File.join('tmp/aruba', ENV['TEST_ENV_NUMBER'] || '1')
   config.working_directory = working_directory
   config.remove_ansi_escape_sequences = false
+  config.exit_timeout = 3
 end
 
 def rf_path
@@ -26,8 +27,6 @@ def run_rf(args, input = nil)
     type input.chomp
     close_input
   end
-
-  command.wait
 
   # Call the stop method here to avoid IO waiting on command output.
   # This approach efficiently handles the output processing by caching it immediately,
