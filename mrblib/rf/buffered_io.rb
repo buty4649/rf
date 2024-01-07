@@ -21,8 +21,16 @@ module Rf
         fill_buffer if @buffer.empty?
         break if @buffer.empty?
 
-        newline_index = @buffer.index("\n")
-        if newline_index
+        if @buffer =~ /\n/
+          # bug: In the case of binary files, String#index enters an infinite loop, thus returning the entire buffer.
+          # see. https://github.com/mruby/mruby/issues/6143
+          if @binary
+            line = @buffer.slice!(0..-1)
+            @buffer.clear
+            break
+          end
+
+          newline_index = @buffer.index("\n")
           line << @buffer.slice!(0..newline_index)
           break
         else
