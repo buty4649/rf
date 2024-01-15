@@ -46,6 +46,7 @@ GEM
     debug_inspector (1.2.0)
     diff-lcs (1.5.0)
     ffi (1.16.3)
+    ffi (1.16.3-x64-mingw-ucrt)
     json (2.7.1)
     language_server-protocol (3.17.0.3)
     mini_mime (1.1.5)
@@ -53,7 +54,7 @@ GEM
     parallel (1.24.0)
     parallel_tests (4.4.0)
       parallel
-    parser (3.3.0.2)
+    parser (3.3.0.4)
       ast (~> 2.4.1)
       racc
     proc_to_ast (0.1.0)
@@ -89,11 +90,11 @@ GEM
       binding_of_caller
       rspec-parameterized-core (< 2)
     rspec-support (3.12.1)
-    rubocop (1.59.0)
+    rubocop (1.60.0)
       json (~> 2.3)
       language_server-protocol (>= 3.17.0)
       parallel (~> 1.10)
-      parser (>= 3.2.2.4)
+      parser (>= 3.3.0.2)
       rainbow (>= 2.2.2, < 4.0)
       regexp_parser (>= 1.8, < 3.0)
       rexml (>= 3.2.5, < 4.0)
