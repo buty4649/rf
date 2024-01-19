@@ -52,7 +52,7 @@ module Rf
       if read_data.nil? || read_data.empty?
         @end_of_file = true
       else
-        @binary = true if /(?![\r\n])\p{Cntrl}/.match?(read_data)
+        @binary = true if /(?![\r\n\t])\p{Cntrl}/.match?(read_data)
 
         @buffer << read_data
       end
