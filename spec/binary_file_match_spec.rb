@@ -20,4 +20,12 @@ describe 'Binary file match' do
 
     it_behaves_like 'a successful exec'
   end
+
+  describe 'non-binary file' do
+    let(:input) { "hello\tworld\n" }
+    let(:args) { '_' }
+    let(:expect_output) { "hello\tworld" }
+
+    it_behaves_like 'a successful exec'
+  end
 end
