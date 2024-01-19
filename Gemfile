@@ -9,4 +9,7 @@ group 'test' do
   gem 'rspec-parameterized', '>= 1.0.0'
   gem 'rubocop'
   gem 'rubocop-rspec'
+
+  # fix: build error on windows
+  gem 'ffi', github: 'ffi/ffi', branch: 'master'
 end
