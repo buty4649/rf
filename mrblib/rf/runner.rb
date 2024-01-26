@@ -77,7 +77,7 @@ module Rf
     def read_open(file)
       raise IsDirectory, file if File.directory?(file)
 
-      BufferedIO.new(file)
+      Reader.new(file)
     rescue Errno::ENOENT
       raise NotFound, file
     rescue Errno::EACCES
