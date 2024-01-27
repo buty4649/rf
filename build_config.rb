@@ -29,7 +29,7 @@ def build_config(conf, target = nil, strip: false)
 end
 
 MRuby::Build.new do |conf|
-  build_config(conf, strip: true)
+  build_config(conf)
   debug_config(conf)
   gem_config(conf)
 end
