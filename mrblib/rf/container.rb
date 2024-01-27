@@ -2,6 +2,12 @@ $output = $stdout
 
 module Rf
   class Container
+    class NoMethodError < StandardError
+      def initialize(sym)
+        super("undefined method `#{sym}'. Record is an instance of #{Record.class}}")
+      end
+    end
+
     attr_accessor :filename
 
     def initialize(opts = {})
@@ -60,21 +66,19 @@ module Rf
       end.join
     end
 
-    %i[gsub gsub! sub sub! tr tr!].each do |sym|
+    %i[grep grep_v gsub gsub! sub sub!].each do |sym|
       define_method(sym) do |*args, &block|
-        _.__send__(sym, *args, &block) if string?
+        raise NoMethodError, sym unless _.respond_to?(sym)
+
+        _.__send__(sym, *args, &block)
       end
     end
 
-    %i[dig].each do |sym|
+    %i[dig tr tr!].each do |sym|
       define_method(sym) do |*args|
-        _.__send__(sym, *args) if hash?
-      end
-    end
+        raise NoMethodError, sym unless _.respond_to?(sym)
 
-    %i[grep grep_v].each do |sym|
-      define_method(sym) do |*args, &block|
-        _.__send__(sym, *args, &block) if array?
+        _.__send__(sym, *args)
       end
     end
 
