@@ -27,6 +27,20 @@ describe 'Container internal methods' do
     it_behaves_like 'a successful exec'
   end
 
+  where(:command, :expect_output) do
+    'grep(/foo/)'   | %w[foo].join("\n")
+    'grep_v(/bar/)' | %w[foo baz].join("\n")
+    'grep(/foo/){|i| i + "hoge" }' | %w[foohoge].join("\n")
+    'grep_v(/bar/){|i| i+ "hoge" }' | %w[foohoge bazhoge].join("\n")
+  end
+
+  with_them do
+    let(:input) { %w[foo bar baz].join("\n") }
+    let(:args) { %(-s '#{command}') }
+
+    it_behaves_like 'a successful exec'
+  end
+
   %w[match m].each do |method|
     describe "Container##{method}" do
       where do
@@ -214,67 +228,3 @@ describe 'Container internal methods' do
     end
   end
 end
-
-# describe 'Method' do
-#
-#
-#  describe '#sub' do
-#    let(:input) { 'foofoo' }
-#    let(:output) do
-#      <<~OUTPUT
-#        barfoo
-#        foofoo
-#      OUTPUT
-#    end
-#
-#    before { run_rf(%q('puts sub(/foo/, "bar"); _'), input) }
-#
-#    it { expect(last_command_started).to be_successfully_executed }
-#    it { expect(last_command_started).to have_output output_string_eq output }
-#  end
-#
-#  describe '#sub!' do
-#    let(:input) { 'foofoo' }
-#    let(:output) do
-#      <<~OUTPUT
-#        barfoo
-#        barfoo
-#      OUTPUT
-#    end
-#
-#    before { run_rf(%q('puts sub!(/foo/, "bar"); _'), input) }
-#
-#    it { expect(last_command_started).to be_successfully_executed }
-#    it { expect(last_command_started).to have_output output_string_eq output }
-#  end
-#
-#  describe '#tr' do
-#    let(:input) { 'foo' }
-#    let(:output) do
-#      <<~OUTPUT
-#        FOO
-#        foo
-#      OUTPUT
-#    end
-#
-#    before { run_rf(%q('puts tr("a-z", "A-Z"); _'), input) }
-#
-#    it { expect(last_command_started).to be_successfully_executed }
-#    it { expect(last_command_started).to have_output output_string_eq output }
-#  end
-#
-#  describe '#tr!' do
-#    let(:input) { 'foo' }
-#    let(:output) do
-#      <<~OUTPUT
-#        FOO
-#        FOO
-#      OUTPUT
-#    end
-#
-#    before { run_rf(%q('puts tr!("a-z", "A-Z"); _'), input) }
-#
-#    it { expect(last_command_started).to be_successfully_executed }
-#    it { expect(last_command_started).to have_output output_string_eq output }
-#  end
-# end

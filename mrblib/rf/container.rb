@@ -38,6 +38,10 @@ module Rf
       _.instance_of?(Hash)
     end
 
+    def array?
+      _.instance_of?(Array)
+    end
+
     def puts(*)
       $output.write(generate_line_prefix)
       $output.puts(*)
@@ -62,6 +66,18 @@ module Rf
       end
     end
 
+    %i[dig].each do |sym|
+      define_method(sym) do |*args|
+        _.__send__(sym, *args) if hash?
+      end
+    end
+
+    %i[grep grep_v].each do |sym|
+      define_method(sym) do |*args, &block|
+        _.__send__(sym, *args, &block) if array?
+      end
+    end
+
     def match(condition)
       regexp = if condition.is_a?(Regexp)
                  condition
@@ -82,12 +98,6 @@ module Rf
       match(condition) ? true : false
     end
     alias m? match?
-
-    %i[dig].each do |sym|
-      define_method(sym) do |*args|
-        _.__send__(sym, *args) if hash?
-      end
-    end
 
     def respond_to_missing?(sym, *)
       # check for _0, _1, _2, _3, ...
