@@ -22,10 +22,15 @@ def build_config(conf, target = nil, strip: false)
     cc.command = 'zig cc'
     cc.flags += flags
   end
+  build_cc_defines(conf)
 
   conf.archiver.command = 'zig ar'
-  conf.cc.defines += %w[MRB_STR_LENGTH_MAX=0 MRB_UTF8_STRING MRUBY_YAML_NO_CANONICAL_NULL MRB_IREP_LVAR_MERGE_LIMIT=240]
   conf.host_target = target if target
+end
+
+def build_cc_defines(conf)
+  conf.cc.defines += %w[MRB_STR_LENGTH_MAX=0 MRB_UTF8_STRING MRUBY_YAML_NO_CANONICAL_NULL MRB_IREP_LVAR_MERGE_LIMIT=240
+                        MRB_ARY_LENGTH_MAX=0]
 end
 
 MRuby::Build.new do |conf|
@@ -99,8 +104,7 @@ if build_targets.include?('windows-amd64')
       cc.command = "#{conf.host_target}-gcc-posix"
       cc.flags += %w[-static -O3 -s]
     end
-    conf.cc.defines      += %w[MRB_STR_LENGTH_MAX=0 MRB_UTF8_STRING MRUBY_YAML_NO_CANONICAL_NULL
-                               MRB_IREP_LVAR_MERGE_LIMIT=240]
+    build_cc_defines(conf)
     conf.cxx.command      = "#{conf.host_target}-g++"
     conf.archiver.command = "#{conf.host_target}-gcc-ar"
 
