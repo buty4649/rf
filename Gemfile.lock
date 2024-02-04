@@ -12,7 +12,7 @@ GIT
 
 GIT
   remote: https://github.com/ffi/ffi.git
-  revision: ba6c315bfd5868f73d826dd9b402dd5d889ac1aa
+  revision: 69dc3be33034318d81e6296f7fb5e74e86649d93
   branch: master
   specs:
     ffi (1.16.4)
