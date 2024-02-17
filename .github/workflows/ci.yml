@@ -25,7 +25,7 @@ jobs:
       matrix:
         os-arch: [linux-amd64, darwin-arm64, windows-amd64]
         include:
-          - os: windows
+          - os-arch: windows-amd64
             suffix: .exe
     steps:
     - uses: actions/checkout@v4
