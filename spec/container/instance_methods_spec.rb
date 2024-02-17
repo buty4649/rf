@@ -28,10 +28,10 @@ describe 'Container internal methods' do
   end
 
   where(:command, :expect_output) do
-    'grep(/foo/)'   | %w[foo].join("\n")
-    'grep_v(/bar/)' | %w[foo baz].join("\n")
-    'grep(/foo/){|i| i + "hoge" }' | %w[foohoge].join("\n")
-    'grep_v(/bar/){|i| i+ "hoge" }' | %w[foohoge bazhoge].join("\n")
+    'grep(/foo/)'   | 'foo'
+    'grep_v(/bar/)' | 'foo baz'
+    'grep(/foo/){|i| i + "hoge" }' | 'foohoge'
+    'grep_v(/bar/){|i| i+ "hoge" }' | 'foohoge bazhoge'
   end
 
   with_them do

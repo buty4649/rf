@@ -202,7 +202,7 @@ describe 'Text filter' do
     end
 
     describe 'Read all at once' do
-      let(:output) { input }
+      let(:output) { '1 foo 2 bar 3 baz 4 foobar' }
 
       before { run_rf('-s "_"', input) }
 
@@ -265,7 +265,7 @@ describe 'Text filter' do
 
   describe 'Output the array is automatically joined with the spaces' do
     let(:input) { 'foo,bar,baz' }
-    let(:output) { %w[foo bar baz].join("\n") }
+    let(:output) { 'foo bar baz' }
 
     before { run_rf('-F, $F', input) }
 

@@ -21,7 +21,7 @@ module Rf
           when Regexp
             regexp_to_text(val, record)
           when Array
-            val.map(&:to_s).join("\n")
+            val.map(&:to_s).join(' ')
           else
             val.to_s
           end
