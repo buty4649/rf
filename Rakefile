@@ -15,7 +15,7 @@ end
 def build_targets
   %w[
     linux-amd64 linux-arm64
-    darwin-amd64 darwin-arm64
+    darwin-arm64
     windows-amd64
   ]
 end

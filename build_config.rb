@@ -54,25 +54,6 @@ build_targets = ENV['MRUBY_BUILD_TARGETS']&.split(',') || []
   end
 end
 
-if build_targets.include?('darwin-amd64')
-  MRuby::CrossBuild.new('darwin-amd64') do |conf|
-    macos_sdk = ENV.fetch('MACOSX_SDK_PATH').shellescape
-
-    build_config(conf, 'x86_64-macos', strip: true)
-    conf.cc.flags += ['-Wno-overriding-t-option', '-mmacosx-version-min=10.14',
-                      '-isysroot', macos_sdk, '-iwithsysroot', '/usr/include',
-                      '-iframeworkwithsysroot', '/System/Library/Frameworks']
-    conf.linker.flags += ['-Wno-overriding-t-option', '-mmacosx-version-min=10.14',
-                          '--sysroot', macos_sdk, '-F/System/Library/Frameworks', '-L/usr/lib']
-    conf.archiver.command = 'zig ar'
-    ENV['RANLIB'] ||= 'zig ranlib'
-    conf.host_target = 'x86_64-darwin'
-
-    debug_config(conf)
-    gem_config(conf)
-  end
-end
-
 if build_targets.include?('darwin-arm64')
   MRuby::CrossBuild.new('darwin-arm64') do |conf|
     macos_sdk = ENV.fetch('MACOSX_SDK_PATH').shellescape
