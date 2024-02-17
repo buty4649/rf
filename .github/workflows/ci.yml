@@ -24,11 +24,13 @@ jobs:
     strategy:
       matrix:
         os: [linux, darwin, windows]
-        arch: [amd64]
+        arch: [amd64, arm64]
         include:
           - os: windows
             suffix: .exe
         exclude:
+          - os: darwin
+            arch: amd64
           - os: windows
             arch: arm64
     steps:
@@ -56,12 +58,12 @@ jobs:
     needs: build
     strategy:
       matrix:
-        runs-on: [ubuntu-latest, macos-latest, windows-latest]
+        runs-on: [ubuntu-latest, macos-14, windows-latest]
         include:
           - runs-on: ubuntu-latest
             os-arch: linux-amd64
-          - runs-on: macos-latest
-            os-arch: darwin-amd64
+          - runs-on: macos-14
+            os-arch: darwin-arm64
           - runs-on: windows-latest
             os-arch: windows-amd64
     runs-on: ${{ matrix.runs-on }}

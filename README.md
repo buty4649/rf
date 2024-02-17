@@ -62,11 +62,11 @@ You can download rf from the [Release page](https://github.com/buty4649/rf/relea
 Binary files are provided for each platform and architecture.
 Please refer to the following table for each corresponding status.
 
-|     | amd64 | arm64|
-|-----|-------|------|
-|Linux|✅    |✅    |
-|MacOS|✅    |✅    |
-|Windows|✅  |-     |
+|       | amd64 | arm64|
+|-------|-------|------|
+|Linux  |✅     |✅    |
+|MacOS  |-      |✅    |
+|Windows|✅     |-     |
 
 You can also install it using each package manager as another method.
 
