@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        os-arch: [linux-amd64, darwin-amd64, windows-amd64]
+        os-arch: [linux-amd64, darwin-arm64, windows-amd64]
         include:
           - os: windows
             suffix: .exe
