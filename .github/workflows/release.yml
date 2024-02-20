@@ -32,3 +32,15 @@ jobs:
         VERSION=$(echo ${{ github.ref }} | sed -e "s#refs/tags/##g")
         echo "VERSION: ${VERSION}"
         gh release create $VERSION --generate-notes release/*.tar.gz release/*.zip release/checksums.txt
+
+    - uses: actions/create-github-app-token@v1
+      id: app-token
+      with:
+        app-id: 831852
+        private-key: ${{ secrets.WORKFLOW_KICKER_PRIVATE_KEY }}
+        owner: buty4649
+        repositories: homebrew-tap
+    - name: Run update workflow for homebrew-tap
+      run: gh workflow run update.yml --repo buty4649/homebrew-tap --ref main
+      env:
+        GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
