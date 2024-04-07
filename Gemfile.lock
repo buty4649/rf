@@ -12,10 +12,10 @@ GIT
 
 GIT
   remote: https://github.com/ffi/ffi.git
-  revision: 808848d65752c392069a2e04c7d9994df072984b
+  revision: 1e051cd3a388db846fad321c33f4d84c5911cf73
   branch: master
   specs:
-    ffi (1.16.4)
+    ffi (1.17.0.rc1)
 
 GEM
   remote: https://rubygems.org/
