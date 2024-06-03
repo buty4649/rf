@@ -63,6 +63,8 @@ jobs:
     runs-on: ${{ matrix.runs-on }}
     steps:
     - uses: actions/checkout@v4
+      with:
+        submodules: true
     - uses: actions/download-artifact@v4
       with:
         name: rf-${{ github.sha }}-${{ matrix.os-arch }}
