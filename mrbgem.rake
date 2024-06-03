@@ -16,6 +16,7 @@ MRuby::Gem::Specification.new('rf') do |spec|
   ].each do |mgem|
     spec.add_dependency mgem, mgem:
   end
+  spec.add_dependency 'mruby-commit-id', github: 'buty4649/mruby-commit-id', branch: 'main'
   spec.add_dependency 'mruby-yaml', github: 'buty4649/mruby-yaml'
   spec.add_dependency 'mruby-onig-regexp', github: 'buty4649/mruby-onig-regexp'
 end
