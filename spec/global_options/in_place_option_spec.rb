@@ -24,4 +24,24 @@ describe 'Behavior with in-place option' do
       it { expect(file_content).to eq "bar\n" }
     end
   end
+
+  context 'when multiple files are given' do
+    before do
+      write_file('test1', 'abc')
+      write_file('test2', 'bac')
+    end
+
+    let(:args) do
+      %(-i 'gsub(/a/, "A")' test1 test2)
+    end
+    let(:expect_output) { '' }
+
+    it_behaves_like 'a successful exec' do
+      let(:test1) { read_file('test1') }
+      let(:test2) { read_file('test2') }
+
+      it { expect(test1).to eq "Abc\n" }
+      it { expect(test2).to eq "bAc\n" }
+    end
+  end
 end

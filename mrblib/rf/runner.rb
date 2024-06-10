@@ -18,7 +18,7 @@ module Rf
     # or when the recursive (-r) option is specified along with a directory.
     def with_filename?
       return true if config.with_filename
-      return false unless filter == Filter::Text
+      return false if filter != Filter::Text || in_place
 
       files.size > 1 || (recursive? && File.directory?(files.first))
     end
