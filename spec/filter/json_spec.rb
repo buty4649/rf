@@ -270,7 +270,7 @@ describe 'JSON filter' do
       let(:output) do
         <<~OUTPUT
           {
-            "foo":"bar"
+            "foo": "bar"
           }
         OUTPUT
       end

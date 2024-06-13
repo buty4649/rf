@@ -54,6 +54,11 @@ builds:
       branch: main
       commit: 2fa9d2fbd52c4cee2cb473321a7fbb451dacf103
       version: 0.0.0
+    https://github.com/buty4649/mruby-yyjson.git:
+      url: https://github.com/buty4649/mruby-yyjson.git
+      branch: main
+      commit: d0ef1618dfb25917376c59f84d7eac3cfb19fce5
+      version: 1.0.0
   linux-amd64:
     https://github.com/mattn/mruby-json.git:
       url: https://github.com/mattn/mruby-json.git
