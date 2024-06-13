@@ -7,7 +7,7 @@ describe 'to_json' do
   let(:expect_output) do
     <<~OUTPUT
       {
-        "foo":"bar"
+        "foo": "bar"
       }
     OUTPUT
   end

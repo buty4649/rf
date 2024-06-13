@@ -270,7 +270,7 @@ describe 'JSON filter' do
       let(:output) do
         <<~OUTPUT
           {
-            "foo":"bar"
+            "foo": "bar"
           }
         OUTPUT
       end
@@ -279,6 +279,36 @@ describe 'JSON filter' do
 
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output output_string_eq output }
+    end
+  end
+
+  context 'when inptut is invalid JSON' do
+    describe 'Error message' do
+      let(:input) { '{"foo": "bar"' }
+
+      let(:args) { '-j _' }
+      let(:expect_output) do
+        'Error: failed to parse JSON: unexpected end of data position: 14'
+      end
+
+      it_behaves_like 'a failed exec'
+    end
+  end
+
+  context 'with duplicate keys in the input object' do
+    describe 'Output string' do
+      let(:input) { '{"foo": "bar", "foo": "baz"}' }
+
+      let(:args) { '-j _' }
+      let(:expect_output) do
+        <<~JSON
+          {
+            "foo": "baz"
+          }
+        JSON
+      end
+
+      it_behaves_like 'a successful exec'
     end
   end
 end
