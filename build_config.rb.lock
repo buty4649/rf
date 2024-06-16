@@ -9,11 +9,6 @@ builds:
       branch: master
       commit: e6397a090d1efe04d5dab57c63897f0d79bbad89
       version: 0.0.0
-    https://github.com/mattn/mruby-json.git:
-      url: https://github.com/mattn/mruby-json.git
-      branch: master
-      commit: f99d9428025469f2400f93c53b185f65f963e507
-      version: 0.0.0
     https://github.com/IceDragon200/mruby-catch-throw:
       url: https://github.com/IceDragon200/mruby-catch-throw
       branch: master
@@ -57,14 +52,9 @@ builds:
     https://github.com/buty4649/mruby-yyjson.git:
       url: https://github.com/buty4649/mruby-yyjson.git
       branch: main
-      commit: d0ef1618dfb25917376c59f84d7eac3cfb19fce5
-      version: 1.0.0
+      commit: 8f46e5c1c0e5c1dae8c45de5e7db059112cb3641
+      version: 1.2.0
   linux-amd64:
-    https://github.com/mattn/mruby-json.git:
-      url: https://github.com/mattn/mruby-json.git
-      branch: master
-      commit: f99d9428025469f2400f93c53b185f65f963e507
-      version: 0.0.0
     https://github.com/fastly/mruby-optparse.git:
       url: https://github.com/fastly/mruby-optparse.git
       branch: master
@@ -108,14 +98,9 @@ builds:
     https://github.com/buty4649/mruby-yyjson.git:
       url: https://github.com/buty4649/mruby-yyjson.git
       branch: main
-      commit: d0ef1618dfb25917376c59f84d7eac3cfb19fce5
-      version: 1.0.0
+      commit: 8f46e5c1c0e5c1dae8c45de5e7db059112cb3641
+      version: 1.2.0
   linux-arm64:
-    https://github.com/mattn/mruby-json.git:
-      url: https://github.com/mattn/mruby-json.git
-      branch: master
-      commit: f99d9428025469f2400f93c53b185f65f963e507
-      version: 0.0.0
     https://github.com/fastly/mruby-optparse.git:
       url: https://github.com/fastly/mruby-optparse.git
       branch: master
@@ -159,14 +144,9 @@ builds:
     https://github.com/buty4649/mruby-yyjson.git:
       url: https://github.com/buty4649/mruby-yyjson.git
       branch: main
-      commit: d0ef1618dfb25917376c59f84d7eac3cfb19fce5
-      version: 1.0.0
+      commit: 8f46e5c1c0e5c1dae8c45de5e7db059112cb3641
+      version: 1.2.0
   darwin-amd64:
-    https://github.com/mattn/mruby-json.git:
-      url: https://github.com/mattn/mruby-json.git
-      branch: master
-      commit: f99d9428025469f2400f93c53b185f65f963e507
-      version: 0.0.0
     https://github.com/fastly/mruby-optparse.git:
       url: https://github.com/fastly/mruby-optparse.git
       branch: master
@@ -203,11 +183,6 @@ builds:
       commit: 48073012c932f540dc3773b2dc6b079caf71a70d
       version: 0.0.0
   darwin-arm64:
-    https://github.com/mattn/mruby-json.git:
-      url: https://github.com/mattn/mruby-json.git
-      branch: master
-      commit: f99d9428025469f2400f93c53b185f65f963e507
-      version: 0.0.0
     https://github.com/fastly/mruby-optparse.git:
       url: https://github.com/fastly/mruby-optparse.git
       branch: master
@@ -251,14 +226,9 @@ builds:
     https://github.com/buty4649/mruby-yyjson.git:
       url: https://github.com/buty4649/mruby-yyjson.git
       branch: main
-      commit: d0ef1618dfb25917376c59f84d7eac3cfb19fce5
-      version: 1.0.0
+      commit: 8f46e5c1c0e5c1dae8c45de5e7db059112cb3641
+      version: 1.2.0
   windows-amd64:
-    https://github.com/mattn/mruby-json.git:
-      url: https://github.com/mattn/mruby-json.git
-      branch: master
-      commit: f99d9428025469f2400f93c53b185f65f963e507
-      version: 0.0.0
     https://github.com/fastly/mruby-optparse.git:
       url: https://github.com/fastly/mruby-optparse.git
       branch: master
@@ -302,5 +272,5 @@ builds:
     https://github.com/buty4649/mruby-yyjson.git:
       url: https://github.com/buty4649/mruby-yyjson.git
       branch: main
-      commit: d0ef1618dfb25917376c59f84d7eac3cfb19fce5
-      version: 1.0.0
+      commit: 8f46e5c1c0e5c1dae8c45de5e7db059112cb3641
+      version: 1.2.0
