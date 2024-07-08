@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/cucumber/aruba.git
-  revision: c56cebb7d9d68fc551bc937489e6d627ee62d613
+  revision: 01243576385c58f9b4c046faec6bdd1f79ff5022
   branch: main
   specs:
     aruba (2.2.0)
@@ -24,7 +24,7 @@ GEM
     bigdecimal (3.1.8)
     binding_of_caller (1.0.1)
       debug_inspector (>= 1.2.0)
-    builder (3.2.4)
+    builder (3.3.0)
     coderay (1.1.3)
     contracts (0.17)
     cucumber (9.2.0)
@@ -48,7 +48,7 @@ GEM
       bigdecimal
     cucumber-gherkin (27.0.0)
       cucumber-messages (>= 19.1.4, < 23)
-    cucumber-html-formatter (21.3.1)
+    cucumber-html-formatter (21.4.0)
       cucumber-messages (> 19, < 25)
     cucumber-messages (22.0.0)
     cucumber-tag-expressions (6.1.0)
@@ -80,7 +80,7 @@ GEM
       rspec-mocks (~> 3.13.0)
     rspec-core (3.13.0)
       rspec-support (~> 3.13.0)
-    rspec-expectations (3.13.0)
+    rspec-expectations (3.13.1)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.13.0)
     rspec-mocks (3.13.0)
@@ -115,7 +115,7 @@ GEM
       rubocop (~> 1.61)
     ruby-progressbar (1.13.0)
     strscan (3.1.0)
-    sys-uname (1.2.3)
+    sys-uname (1.3.0)
       ffi (~> 1.1)
     thor (1.3.1)
     unicode-display_width (2.5.0)
