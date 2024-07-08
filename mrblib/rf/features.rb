@@ -19,7 +19,6 @@ module Rf
       add_features_to_float
       add_features_to_string
       add_features_to_hash
-      add_features_to_json
       add_features_to_nil_class
     end
 
@@ -86,12 +85,6 @@ module Rf
 
       Hash.define_method(:respond_to_missing?) do
         true
-      end
-    end
-
-    def add_features_to_json
-      Object.define_method(:to_json) do
-        JSON.pretty_generate(self)
       end
     end
 

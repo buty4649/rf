@@ -52,8 +52,8 @@ builds:
     https://github.com/buty4649/mruby-yyjson.git:
       url: https://github.com/buty4649/mruby-yyjson.git
       branch: main
-      commit: 3ecdfacf5a1bacee5d28292dbaf45b5febc1fbbf
-      version: 1.4.0
+      commit: 9c39053267fd7f48fa6368fb5f07bb08780120f4
+      version: 1.5.0
   linux-amd64:
     https://github.com/fastly/mruby-optparse.git:
       url: https://github.com/fastly/mruby-optparse.git
@@ -98,8 +98,8 @@ builds:
     https://github.com/buty4649/mruby-yyjson.git:
       url: https://github.com/buty4649/mruby-yyjson.git
       branch: main
-      commit: 3ecdfacf5a1bacee5d28292dbaf45b5febc1fbbf
-      version: 1.4.0
+      commit: 9c39053267fd7f48fa6368fb5f07bb08780120f4
+      version: 1.5.0
   linux-arm64:
     https://github.com/fastly/mruby-optparse.git:
       url: https://github.com/fastly/mruby-optparse.git
@@ -144,8 +144,8 @@ builds:
     https://github.com/buty4649/mruby-yyjson.git:
       url: https://github.com/buty4649/mruby-yyjson.git
       branch: main
-      commit: 3ecdfacf5a1bacee5d28292dbaf45b5febc1fbbf
-      version: 1.4.0
+      commit: 9c39053267fd7f48fa6368fb5f07bb08780120f4
+      version: 1.5.0
   darwin-amd64:
     https://github.com/fastly/mruby-optparse.git:
       url: https://github.com/fastly/mruby-optparse.git
@@ -226,8 +226,8 @@ builds:
     https://github.com/buty4649/mruby-yyjson.git:
       url: https://github.com/buty4649/mruby-yyjson.git
       branch: main
-      commit: 3ecdfacf5a1bacee5d28292dbaf45b5febc1fbbf
-      version: 1.4.0
+      commit: 9c39053267fd7f48fa6368fb5f07bb08780120f4
+      version: 1.5.0
   windows-amd64:
     https://github.com/fastly/mruby-optparse.git:
       url: https://github.com/fastly/mruby-optparse.git
@@ -272,5 +272,5 @@ builds:
     https://github.com/buty4649/mruby-yyjson.git:
       url: https://github.com/buty4649/mruby-yyjson.git
       branch: main
-      commit: 3ecdfacf5a1bacee5d28292dbaf45b5febc1fbbf
-      version: 1.4.0
+      commit: 9c39053267fd7f48fa6368fb5f07bb08780120f4
+      version: 1.5.0
