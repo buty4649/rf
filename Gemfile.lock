@@ -10,13 +10,6 @@ GIT
       rspec-expectations (~> 3.4)
       thor (~> 1.0)
 
-GIT
-  remote: https://github.com/ffi/ffi.git
-  revision: ecfb225096ae76ba2a5e8115f046bd0ac23095e6
-  branch: master
-  specs:
-    ffi (1.17.0)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -54,6 +47,9 @@ GEM
     cucumber-tag-expressions (6.1.0)
     debug_inspector (1.2.0)
     diff-lcs (1.5.1)
+    ffi (1.17.0-arm64-darwin)
+    ffi (1.17.0-x64-mingw-ucrt)
+    ffi (1.17.0-x86_64-linux-gnu)
     json (2.7.2)
     language_server-protocol (3.17.0.3)
     mini_mime (1.1.5)
@@ -124,13 +120,13 @@ GEM
       parser (>= 3.3.0)
 
 PLATFORMS
-  arm64-darwin-22
+  arm64-darwin-23
   x64-mingw-ucrt
   x86_64-linux
 
 DEPENDENCIES
   aruba!
-  ffi!
+  ffi
   parallel_tests
   rake
   rspec
@@ -138,5 +134,8 @@ DEPENDENCIES
   rubocop
   rubocop-rspec
 
+RUBY VERSION
+   ruby 3.3.4p94
+
 BUNDLED WITH
-   2.5.3
+   2.5.11
