@@ -5,6 +5,7 @@ AllCops:
   SuggestExtensions: false
   Exclude:
     - build/**/*
+    - mruby/**/*
 
 Lint/AssignmentInCondition:
   Enabled: false
