@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/cucumber/aruba.git
-  revision: 1b79a9841fc904593492ff95ccb655433183cf09
+  revision: b2e8ca9d1ae58977ccacb4e41c747d356d8f005d
   branch: main
   specs:
     aruba (2.2.0)
@@ -33,7 +33,7 @@ GEM
       multi_test (~> 1.1)
       sys-uname (~> 1.2)
     cucumber-ci-environment (10.0.1)
-    cucumber-core (13.0.2)
+    cucumber-core (13.0.3)
       cucumber-gherkin (>= 27, < 28)
       cucumber-messages (>= 20, < 23)
       cucumber-tag-expressions (> 5, < 7)
@@ -41,8 +41,8 @@ GEM
       bigdecimal
     cucumber-gherkin (27.0.0)
       cucumber-messages (>= 19.1.4, < 23)
-    cucumber-html-formatter (21.4.0)
-      cucumber-messages (> 19, < 25)
+    cucumber-html-formatter (21.7.0)
+      cucumber-messages (> 19, < 27)
     cucumber-messages (22.0.0)
     cucumber-tag-expressions (6.1.0)
     debug_inspector (1.2.0)
