@@ -52,8 +52,13 @@ builds:
     https://github.com/buty4649/mruby-yyjson.git:
       url: https://github.com/buty4649/mruby-yyjson.git
       branch: main
-      commit: 9c39053267fd7f48fa6368fb5f07bb08780120f4
-      version: 1.5.0
+      commit: e2cb1425cbfcb55768c8b20779ec88381112ef23
+      version: 1.7.0
+    https://github.com/buty4649/mruby-terminal-color.git:
+      url: https://github.com/buty4649/mruby-terminal-color.git
+      branch: main
+      commit: 456ebc2761248ff23bf6ea7ec436310f6b325a0f
+      version: 1.1.0
   linux-amd64:
     https://github.com/fastly/mruby-optparse.git:
       url: https://github.com/fastly/mruby-optparse.git
@@ -98,8 +103,13 @@ builds:
     https://github.com/buty4649/mruby-yyjson.git:
       url: https://github.com/buty4649/mruby-yyjson.git
       branch: main
-      commit: 9c39053267fd7f48fa6368fb5f07bb08780120f4
-      version: 1.5.0
+      commit: e2cb1425cbfcb55768c8b20779ec88381112ef23
+      version: 1.7.0
+    https://github.com/buty4649/mruby-terminal-color.git:
+      url: https://github.com/buty4649/mruby-terminal-color.git
+      branch: main
+      commit: 456ebc2761248ff23bf6ea7ec436310f6b325a0f
+      version: 1.1.0
   linux-arm64:
     https://github.com/fastly/mruby-optparse.git:
       url: https://github.com/fastly/mruby-optparse.git
@@ -144,8 +154,13 @@ builds:
     https://github.com/buty4649/mruby-yyjson.git:
       url: https://github.com/buty4649/mruby-yyjson.git
       branch: main
-      commit: 9c39053267fd7f48fa6368fb5f07bb08780120f4
-      version: 1.5.0
+      commit: e2cb1425cbfcb55768c8b20779ec88381112ef23
+      version: 1.7.0
+    https://github.com/buty4649/mruby-terminal-color.git:
+      url: https://github.com/buty4649/mruby-terminal-color.git
+      branch: main
+      commit: 456ebc2761248ff23bf6ea7ec436310f6b325a0f
+      version: 1.1.0
   darwin-amd64:
     https://github.com/fastly/mruby-optparse.git:
       url: https://github.com/fastly/mruby-optparse.git
@@ -226,8 +241,13 @@ builds:
     https://github.com/buty4649/mruby-yyjson.git:
       url: https://github.com/buty4649/mruby-yyjson.git
       branch: main
-      commit: 9c39053267fd7f48fa6368fb5f07bb08780120f4
-      version: 1.5.0
+      commit: e2cb1425cbfcb55768c8b20779ec88381112ef23
+      version: 1.7.0
+    https://github.com/buty4649/mruby-terminal-color.git:
+      url: https://github.com/buty4649/mruby-terminal-color.git
+      branch: main
+      commit: 456ebc2761248ff23bf6ea7ec436310f6b325a0f
+      version: 1.1.0
   windows-amd64:
     https://github.com/fastly/mruby-optparse.git:
       url: https://github.com/fastly/mruby-optparse.git
@@ -272,5 +292,10 @@ builds:
     https://github.com/buty4649/mruby-yyjson.git:
       url: https://github.com/buty4649/mruby-yyjson.git
       branch: main
-      commit: 9c39053267fd7f48fa6368fb5f07bb08780120f4
-      version: 1.5.0
+      commit: e2cb1425cbfcb55768c8b20779ec88381112ef23
+      version: 1.7.0
+    https://github.com/buty4649/mruby-terminal-color.git:
+      url: https://github.com/buty4649/mruby-terminal-color.git
+      branch: main
+      commit: 456ebc2761248ff23bf6ea7ec436310f6b325a0f
+      version: 1.1.0
