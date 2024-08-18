@@ -42,7 +42,7 @@ module Rf
       @bind = container.instance_eval { binding }
     end
 
-    def run # rubocop:disable Metrics/AbcSize
+    def run
       Rf.add_features
 
       inputs.each do |filename|
