@@ -7,7 +7,7 @@ describe 'Special Variables' do
     with_them do
       let(:input) { 'foo' }
       let(:args) { "-q 'puts #{name}'" }
-      let(:expect_output) { input }
+      let(:expect_output) { "#{input}\n" }
 
       it_behaves_like 'a successful exec'
     end

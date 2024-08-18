@@ -1,7 +1,7 @@
 describe 'Show error message' do
   using RSpec::Parameterized::TableSyntax
 
-  where(:args, :expect_output) do
+  where(:args, :output) do
     '--invalid-option'     | 'Error: invalid option: --invalid-option'
     '-t test'              | 'Error: "test" is invalid type. possible values: text,json,yaml'
     '-t'                   | 'Error: missing argument: -t'
@@ -17,13 +17,14 @@ describe 'Show error message' do
 
   with_them do
     let(:input) { "test\n" }
+    let(:expect_output) { "#{output}\n" }
     it_behaves_like 'a failed exec'
   end
 
   context 'when permission denied' do
     let(:file) { 'permission_denied_file' }
     let(:args) { "_ #{file}" }
-    let(:expect_output) { "Error: #{file}: permission denied" }
+    let(:expect_output) { "Error: #{file}: permission denied\n" }
 
     before do
       touch(file)

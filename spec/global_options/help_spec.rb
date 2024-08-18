@@ -10,6 +10,7 @@ describe 'Show help text' do
 
       global options:
         -H, --with-filename              print filename with output lines
+            --with-record-number         print record number with output lines
         -R, --recursive                  read all files under each directory recursively
             --include-filename           searches for files matching a regex pattern
         -f, --file=program_file          executed the contents of program_file
@@ -17,19 +18,19 @@ describe 'Show help text' do
         -i, --in-place[=SUFFIX]          edit files in place (makes backup if SUFFIX supplied)
         -n, --quiet                      suppress automatic printing
         -s, --slurp                      read all reacords into an array
+            --[no-]color                 [no] colorized output (default: --color in TTY)
             --help                       show this message
             --version                    show version
 
       text options:
         -F, --filed-separator VAL        set the field separator (allow regexp)
-            --[no-]color                 [no] colorized output (default: --color in TTY)
 
       json options:
         -r, --raw-string                 output raw strings
             --disable-boolean-mode       consider true/false/null as json literal
+        -m, --minify                     minify json output
 
       yaml options:
-        -r, --raw-string                 output raw strings
             --disable-boolean-mode       consider true/false/null as yaml literal
             --[no-]doc                   [no] output document sperator (refers to ---) (default:--no-doc)
     TEXT

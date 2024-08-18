@@ -9,7 +9,7 @@
         [
           "##{mark} with String argument",
           %('#{statement}'),
-          answer.to_s
+          "#{answer}\n"
         ]
       end
     end
@@ -30,7 +30,7 @@
         [
           "##{mark} with String argument",
           %(-q 'p #{statement}'),
-          answer.to_s
+          "#{answer}\n"
         ]
       end
     end

@@ -4,7 +4,7 @@ describe 'Binary file match' do
   context 'when input is from stdin' do
     let(:input) { content }
     let(:args) { '_' }
-    let(:expect_output) { 'Binary file matches.' }
+    let(:expect_output) { "Binary file matches.\n" }
 
     it_behaves_like 'a successful exec'
   end
@@ -12,7 +12,7 @@ describe 'Binary file match' do
   context 'when input is from file' do
     let(:file) { 'binary_file' }
     let(:args) { "_ #{file}" }
-    let(:expect_output) { 'Binary file matches.' }
+    let(:expect_output) { "Binary file matches.\n" }
 
     before do
       write_file(file, content)
@@ -24,7 +24,7 @@ describe 'Binary file match' do
   describe 'non-binary file' do
     let(:input) { "hello\tworld\n" }
     let(:args) { '_' }
-    let(:expect_output) { "hello\tworld" }
+    let(:expect_output) { "hello\tworld\n" }
 
     it_behaves_like 'a successful exec'
   end

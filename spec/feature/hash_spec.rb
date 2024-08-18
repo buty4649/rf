@@ -3,11 +3,11 @@ describe 'Automatic accessor addition to Hash' do
     {
       'key is exist' => {
         args: '-j _.foo',
-        expect_output: 'bar'
+        expect_output: "\"bar\"\n"
       },
       'key is not exist' => {
         args: '-j _.piyo.class.to_s',
-        expect_output: 'NilClass'
+        expect_output: "\"NilClass\"\n"
       }
     }
   end
