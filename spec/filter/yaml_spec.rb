@@ -79,7 +79,7 @@ describe 'YAML filter' do
     describe 'Output UTF-8 string' do
       let(:input) { 'あいうえお🍣' }
       let(:args) { '-y _' }
-      let(:expect_output) { 'あいうえお🍣' }
+      let(:expect_output) { "あいうえお🍣\n" }
 
       it_behaves_like 'a successful exec'
     end
@@ -247,19 +247,19 @@ describe 'YAML filter' do
       {
         'TrueClass' => {
           command: 'true',
-          expect_output: 'true'
+          expect_output: "true\n"
         },
         'FalseClass' => {
           command: 'false',
-          expect_output: 'false'
+          expect_output: "false\n"
         },
         'NilClass' => {
           command: 'nil',
-          expect_output: 'null'
+          expect_output: "null\n"
         },
         'Hash with null value' => {
           command: '{foo: nil}',
-          expect_output: ':foo: null'
+          expect_output: ":foo: null\n"
         }
       }
     end
@@ -275,7 +275,8 @@ describe 'YAML filter' do
     let(:input) { 'foobar' }
     let(:args) { '-y -H --no-color true testfile' }
     let(:expect_output) do
-      input.split("\n").map { |line| "testfile:#{line}" }.join("\n")
+      out = input.split("\n").map { |line| "testfile:#{line}" }.join("\n")
+      "#{out}\n"
     end
 
     before do

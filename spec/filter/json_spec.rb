@@ -55,7 +55,8 @@ describe 'JSON filter' do
     let(:input) { '"foobar"' }
     let(:args) { '-j -H --no-color true testfile' }
     let(:expect_output) do
-      input.split("\n").map { |line| "testfile:#{line}" }.join("\n")
+      out = input.split("\n").map { |line| "testfile:#{line}" }.join("\n")
+      "#{out}\n"
     end
 
     before do
@@ -288,7 +289,7 @@ describe 'JSON filter' do
 
       let(:args) { '-j _' }
       let(:expect_output) do
-        'Error: failed to parse JSON: unexpected end of data position: 14'
+        "Error: failed to parse JSON: unexpected end of data position: 14\n"
       end
 
       it_behaves_like 'a failed exec'

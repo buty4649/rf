@@ -1,7 +1,7 @@
 describe 'Container internal methods' do
   using RSpec::Parameterized::TableSyntax
 
-  where(:method, :expect_output) do
+  where(:method, :output) do
     'gsub'  | %w[barbar foofoo].join("\n")
     'gsub!' | %w[barbar barbar].join("\n")
     'sub'   | %w[barfoo foofoo].join("\n")
@@ -11,11 +11,12 @@ describe 'Container internal methods' do
   with_them do
     let(:input) { 'foofoo' }
     let(:args) { %('puts #{method}(/foo/, "bar"); _') }
+    let(:expect_output) { "#{output}\n" }
 
     it_behaves_like 'a successful exec'
   end
 
-  where(:method, :expect_output) do
+  where(:method, :output) do
     'tr'  | %w[FOOFOO foofoo].join("\n")
     'tr!' | %w[FOOFOO FOOFOO].join("\n")
   end
@@ -23,11 +24,12 @@ describe 'Container internal methods' do
   with_them do
     let(:input) { 'foofoo' }
     let(:args) { %('puts #{method}("a-z", "A-Z"); _') }
+    let(:expect_output) { "#{output}\n" }
 
     it_behaves_like 'a successful exec'
   end
 
-  where(:command, :expect_output) do
+  where(:command, :output) do
     'grep(/foo/)'   | 'foo'
     'grep_v(/bar/)' | 'foo baz'
     'grep(/foo/){|i| i + "hoge" }' | 'foohoge'
@@ -37,6 +39,7 @@ describe 'Container internal methods' do
   with_them do
     let(:input) { %w[foo bar baz].join("\n") }
     let(:args) { %(-s '#{command}') }
+    let(:expect_output) { "#{output}\n" }
 
     it_behaves_like 'a successful exec'
   end
@@ -48,8 +51,8 @@ describe 'Container internal methods' do
           'String' => {
             condition: '"2 foo baz"',
             output: {
-              without_block: '2 foo baz',
-              with_block: '2'
+              without_block: "2 foo baz\n",
+              with_block: "2\n"
             }
           },
           'Regexp' => {
@@ -60,14 +63,14 @@ describe 'Container internal methods' do
                 2 foo baz
                 3 foo qux
               OUTPUT
-              with_block: %w[1 2 3].join("\n")
+              with_block: "1\n2\n3\n"
             }
           },
           'TrueClass' => {
             condition: '_1 == "3"',
             output: {
-              without_block: '3 foo qux',
-              with_block: '3'
+              without_block: "3 foo qux\n",
+              with_block: "3\n"
             }
           },
           'FalseClass' => {
@@ -85,7 +88,7 @@ describe 'Container internal methods' do
                 2 foo baz
                 3 foo qux
               OUTPUT
-              with_block: %w[1 2 3].join("\n")
+              with_block: "1\n2\n3\n"
             }
           },
           'NilClass' => {
@@ -131,9 +134,13 @@ describe 'Container internal methods' do
           'String' => {
             condition: '"2 foo baz"',
             output: {
-              without_block: '2 foo baz',
-              with_block: '2 foo baz',
-              return_value: %w[false true false].join("\n")
+              without_block: "2 foo baz\n",
+              with_block: "2 foo baz\n",
+              return_value: <<~VALUE
+                false
+                true
+                false
+              VALUE
             }
           },
           'Regexp' => {
@@ -149,15 +156,23 @@ describe 'Container internal methods' do
                 2 foo baz
                 3 foo qux
               OUTPUT
-              return_value: %w[true true true].join("\n")
+              return_value: <<~VALUE
+                true
+                true
+                true
+              VALUE
             }
           },
           'TrueClass' => {
             condition: '_1 == "3"',
             output: {
-              without_block: '3 foo qux',
-              with_block: '3 foo qux',
-              return_value: %w[false false true].join("\n")
+              without_block: "3 foo qux\n",
+              with_block: "3 foo qux\n",
+              return_value: <<~VALUE
+                false
+                false
+                true
+              VALUE
             }
           },
           'FalseClass' => {
@@ -165,7 +180,11 @@ describe 'Container internal methods' do
             output: {
               without_block: '',
               with_block: '',
-              return_value: %w[false false false].join("\n")
+              return_value: <<~VALUE
+                false
+                false
+                false
+              VALUE
             }
           },
           'Integer' => {
@@ -181,7 +200,11 @@ describe 'Container internal methods' do
                 2 foo baz
                 3 foo qux
               OUTPUT
-              return_value: %w[true true true].join("\n")
+              return_value: <<~VALUE
+                true
+                true
+                true
+              VALUE
             }
           },
           'NilClass' => {
@@ -189,7 +212,11 @@ describe 'Container internal methods' do
             output: {
               without_block: '',
               with_block: '',
-              return_value: %w[false false false].join("\n")
+              return_value: <<~VALUE
+                false
+                false
+                false
+              VALUE
             }
           }
         }

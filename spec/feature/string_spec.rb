@@ -10,7 +10,7 @@ describe 'String class features' do
         [
           "##{mark} with #{klass} argument",
           %(-q 'p #{statement}'),
-          answer.to_s
+          "#{answer}\n"
         ]
       end
     end

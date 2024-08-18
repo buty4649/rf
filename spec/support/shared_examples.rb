@@ -10,8 +10,12 @@ shared_examples 'a successful exec' do |_|
   end
 
   describe 'output' do
-    it 'is expected output' do
-      expect(last_command_started.output).to match expect_output
+    it 'is expected output' do # rubocop:disable RSpec/MultipleExpectations
+      if expect_output.is_a?(Regexp)
+        expect(last_command_started.output).to match expect_output
+      else
+        expect(last_command_started.output).to eq expect_output
+      end
     end
   end
 end
@@ -28,8 +32,12 @@ shared_examples 'a failed exec' do |_|
   end
 
   describe 'output' do
-    it 'is expected output' do
-      expect(last_command_started.output).to match expect_output
+    it 'is expected output' do # rubocop:disable RSpec/MultipleExpectations
+      if expect_output.is_a?(Regexp)
+        expect(last_command_started.output).to match expect_output
+      else
+        expect(last_command_started.output).to eq expect_output
+      end
     end
   end
 end

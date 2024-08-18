@@ -6,7 +6,7 @@ describe 'Array size' do
   end
 
   let(:args) { '-s _.size' }
-  let(:expect_output) { '140000' }
+  let(:expect_output) { "140000\n" }
 
   it_behaves_like 'a successful exec'
 end
