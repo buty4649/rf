@@ -9,14 +9,11 @@ MRuby::Gem::Specification.new('rf') do |spec|
 
   spec.add_dependency 'mruby-binding', core: 'mruby-binding'
 
-  %w[
-    mruby-optparse
-    mruby-tempfile
-  ].each do |mgem|
-    spec.add_dependency mgem, mgem:
-  end
+  spec.add_dependency 'mruby-optparse', mgem: 'mruby-optparse'
+
+  spec.add_dependency 'mruby-tempfile', github: 'mrbgems/mruby-tempfile'
   spec.add_dependency 'mruby-commit-id', github: 'buty4649/mruby-commit-id', branch: 'main'
-  spec.add_dependency 'mruby-yaml', github: 'buty4649/mruby-yaml'
   spec.add_dependency 'mruby-yyjson', github: 'buty4649/mruby-yyjson', branch: 'main'
+  spec.add_dependency 'mruby-rapidyaml', github: 'buty4649/mruby-rapidyaml', branch: 'main'
   spec.add_dependency 'mruby-onig-regexp', github: 'buty4649/mruby-onig-regexp'
 end

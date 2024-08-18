@@ -9,41 +9,6 @@ builds:
       branch: master
       commit: e6397a090d1efe04d5dab57c63897f0d79bbad89
       version: 0.0.0
-    https://github.com/IceDragon200/mruby-catch-throw:
-      url: https://github.com/IceDragon200/mruby-catch-throw
-      branch: master
-      commit: 2b6eaff4232b4a9473b864df53c2917080af5dcf
-      version: 1.1.0
-    https://github.com/iij/mruby-env.git:
-      url: https://github.com/iij/mruby-env.git
-      branch: master
-      commit: 056ae324451ef16a50c7887e117f0ea30921b71b
-      version: 0.0.0
-    https://github.com/iij/mruby-mtest.git:
-      url: https://github.com/iij/mruby-mtest.git
-      branch: master
-      commit: 34a477d249b0d21671058be33aa75d04c3e981ba
-      version: 0.0.0
-    https://github.com/buty4649/mruby-yaml.git:
-      url: https://github.com/buty4649/mruby-yaml.git
-      branch: master
-      commit: 61387b50f150626a1cab8833545847ccc3d993b6
-      version: 0.1.0
-    https://github.com/buty4649/mruby-onig-regexp.git:
-      url: https://github.com/buty4649/mruby-onig-regexp.git
-      branch: master
-      commit: 9342b100879fa711ba068a2c5c6fac528ca39d5a
-      version: 0.0.0
-    https://github.com/ksss/mruby-file-stat.git:
-      url: https://github.com/ksss/mruby-file-stat.git
-      branch: master
-      commit: bb773da39517f3ae7232538c7e9c476d45f3d9b7
-      version: 0.0.0
-    https://github.com/iij/mruby-tempfile.git:
-      url: https://github.com/iij/mruby-tempfile.git
-      branch: master
-      commit: 48073012c932f540dc3773b2dc6b079caf71a70d
-      version: 0.0.0
     https://github.com/buty4649/mruby-commit-id.git:
       url: https://github.com/buty4649/mruby-commit-id.git
       branch: main
@@ -54,11 +19,36 @@ builds:
       branch: main
       commit: e2cb1425cbfcb55768c8b20779ec88381112ef23
       version: 1.7.0
+    https://github.com/buty4649/mruby-onig-regexp.git:
+      url: https://github.com/buty4649/mruby-onig-regexp.git
+      branch: master
+      commit: 9342b100879fa711ba068a2c5c6fac528ca39d5a
+      version: 0.0.0
+    https://github.com/IceDragon200/mruby-catch-throw:
+      url: https://github.com/IceDragon200/mruby-catch-throw
+      branch: master
+      commit: 2b6eaff4232b4a9473b864df53c2917080af5dcf
+      version: 1.1.0
+    https://github.com/iij/mruby-env.git:
+      url: https://github.com/iij/mruby-env.git
+      branch: master
+      commit: 056ae324451ef16a50c7887e117f0ea30921b71b
+      version: 0.0.0
     https://github.com/buty4649/mruby-terminal-color.git:
       url: https://github.com/buty4649/mruby-terminal-color.git
       branch: main
       commit: 456ebc2761248ff23bf6ea7ec436310f6b325a0f
       version: 1.1.0
+    https://github.com/mrbgems/mruby-tempfile.git:
+      url: https://github.com/mrbgems/mruby-tempfile.git
+      branch: master
+      commit: 48073012c932f540dc3773b2dc6b079caf71a70d
+      version: 0.0.0
+    https://github.com/buty4649/mruby-rapidyaml.git:
+      url: https://github.com/buty4649/mruby-rapidyaml.git
+      branch: main
+      commit: 2761ba1648646f6fb30edd46099bacfda564e11b
+      version: 1.0.0
   linux-amd64:
     https://github.com/fastly/mruby-optparse.git:
       url: https://github.com/fastly/mruby-optparse.git
@@ -75,23 +65,13 @@ builds:
       branch: master
       commit: 056ae324451ef16a50c7887e117f0ea30921b71b
       version: 0.0.0
-    https://github.com/buty4649/mruby-yaml.git:
-      url: https://github.com/buty4649/mruby-yaml.git
-      branch: master
-      commit: 61387b50f150626a1cab8833545847ccc3d993b6
-      version: 0.1.0
-    https://github.com/buty4649/mruby-onig-regexp.git:
-      url: https://github.com/buty4649/mruby-onig-regexp.git
-      branch: master
-      commit: 9342b100879fa711ba068a2c5c6fac528ca39d5a
-      version: 0.0.0
-    https://github.com/ksss/mruby-file-stat.git:
-      url: https://github.com/ksss/mruby-file-stat.git
-      branch: master
-      commit: bb773da39517f3ae7232538c7e9c476d45f3d9b7
-      version: 0.0.0
-    https://github.com/iij/mruby-tempfile.git:
-      url: https://github.com/iij/mruby-tempfile.git
+    https://github.com/buty4649/mruby-terminal-color.git:
+      url: https://github.com/buty4649/mruby-terminal-color.git
+      branch: main
+      commit: 456ebc2761248ff23bf6ea7ec436310f6b325a0f
+      version: 1.1.0
+    https://github.com/mrbgems/mruby-tempfile.git:
+      url: https://github.com/mrbgems/mruby-tempfile.git
       branch: master
       commit: 48073012c932f540dc3773b2dc6b079caf71a70d
       version: 0.0.0
@@ -105,98 +85,16 @@ builds:
       branch: main
       commit: e2cb1425cbfcb55768c8b20779ec88381112ef23
       version: 1.7.0
-    https://github.com/buty4649/mruby-terminal-color.git:
-      url: https://github.com/buty4649/mruby-terminal-color.git
-      branch: main
-      commit: 456ebc2761248ff23bf6ea7ec436310f6b325a0f
-      version: 1.1.0
-  linux-arm64:
-    https://github.com/fastly/mruby-optparse.git:
-      url: https://github.com/fastly/mruby-optparse.git
-      branch: master
-      commit: e6397a090d1efe04d5dab57c63897f0d79bbad89
-      version: 0.0.0
-    https://github.com/IceDragon200/mruby-catch-throw:
-      url: https://github.com/IceDragon200/mruby-catch-throw
-      branch: master
-      commit: 2b6eaff4232b4a9473b864df53c2917080af5dcf
-      version: 1.1.0
-    https://github.com/iij/mruby-env.git:
-      url: https://github.com/iij/mruby-env.git
-      branch: master
-      commit: 056ae324451ef16a50c7887e117f0ea30921b71b
-      version: 0.0.0
-    https://github.com/buty4649/mruby-yaml.git:
-      url: https://github.com/buty4649/mruby-yaml.git
-      branch: master
-      commit: 61387b50f150626a1cab8833545847ccc3d993b6
-      version: 0.1.0
     https://github.com/buty4649/mruby-onig-regexp.git:
       url: https://github.com/buty4649/mruby-onig-regexp.git
       branch: master
       commit: 9342b100879fa711ba068a2c5c6fac528ca39d5a
       version: 0.0.0
-    https://github.com/ksss/mruby-file-stat.git:
-      url: https://github.com/ksss/mruby-file-stat.git
-      branch: master
-      commit: bb773da39517f3ae7232538c7e9c476d45f3d9b7
-      version: 0.0.0
-    https://github.com/iij/mruby-tempfile.git:
-      url: https://github.com/iij/mruby-tempfile.git
-      branch: master
-      commit: 48073012c932f540dc3773b2dc6b079caf71a70d
-      version: 0.0.0
-    https://github.com/buty4649/mruby-commit-id.git:
-      url: https://github.com/buty4649/mruby-commit-id.git
+    https://github.com/buty4649/mruby-rapidyaml.git:
+      url: https://github.com/buty4649/mruby-rapidyaml.git
       branch: main
-      commit: 2fa9d2fbd52c4cee2cb473321a7fbb451dacf103
-      version: 0.0.0
-    https://github.com/buty4649/mruby-yyjson.git:
-      url: https://github.com/buty4649/mruby-yyjson.git
-      branch: main
-      commit: e2cb1425cbfcb55768c8b20779ec88381112ef23
-      version: 1.7.0
-    https://github.com/buty4649/mruby-terminal-color.git:
-      url: https://github.com/buty4649/mruby-terminal-color.git
-      branch: main
-      commit: 456ebc2761248ff23bf6ea7ec436310f6b325a0f
-      version: 1.1.0
-  darwin-amd64:
-    https://github.com/fastly/mruby-optparse.git:
-      url: https://github.com/fastly/mruby-optparse.git
-      branch: master
-      commit: e6397a090d1efe04d5dab57c63897f0d79bbad89
-      version: 0.0.0
-    https://github.com/IceDragon200/mruby-catch-throw:
-      url: https://github.com/IceDragon200/mruby-catch-throw
-      branch: master
-      commit: 2b6eaff4232b4a9473b864df53c2917080af5dcf
-      version: 1.1.0
-    https://github.com/iij/mruby-env.git:
-      url: https://github.com/iij/mruby-env.git
-      branch: master
-      commit: 056ae324451ef16a50c7887e117f0ea30921b71b
-      version: 0.0.0
-    https://github.com/buty4649/mruby-yaml.git:
-      url: https://github.com/buty4649/mruby-yaml.git
-      branch: master
-      commit: 61387b50f150626a1cab8833545847ccc3d993b6
-      version: 0.1.0
-    https://github.com/buty4649/mruby-onig-regexp.git:
-      url: https://github.com/buty4649/mruby-onig-regexp.git
-      branch: master
-      commit: 9342b100879fa711ba068a2c5c6fac528ca39d5a
-      version: 0.0.0
-    https://github.com/ksss/mruby-file-stat.git:
-      url: https://github.com/ksss/mruby-file-stat.git
-      branch: master
-      commit: bb773da39517f3ae7232538c7e9c476d45f3d9b7
-      version: 0.0.0
-    https://github.com/iij/mruby-tempfile.git:
-      url: https://github.com/iij/mruby-tempfile.git
-      branch: master
-      commit: 48073012c932f540dc3773b2dc6b079caf71a70d
-      version: 0.0.0
+      commit: 2761ba1648646f6fb30edd46099bacfda564e11b
+      version: 1.0.0
   darwin-arm64:
     https://github.com/fastly/mruby-optparse.git:
       url: https://github.com/fastly/mruby-optparse.git
@@ -213,23 +111,44 @@ builds:
       branch: master
       commit: 056ae324451ef16a50c7887e117f0ea30921b71b
       version: 0.0.0
-    https://github.com/buty4649/mruby-yaml.git:
-      url: https://github.com/buty4649/mruby-yaml.git
+    https://github.com/buty4649/mruby-terminal-color.git:
+      url: https://github.com/buty4649/mruby-terminal-color.git
+      branch: main
+      commit: 456ebc2761248ff23bf6ea7ec436310f6b325a0f
+      version: 1.1.0
+    https://github.com/mrbgems/mruby-tempfile.git:
+      url: https://github.com/mrbgems/mruby-tempfile.git
       branch: master
-      commit: 61387b50f150626a1cab8833545847ccc3d993b6
-      version: 0.1.0
+      commit: 48073012c932f540dc3773b2dc6b079caf71a70d
+      version: 0.0.0
+    https://github.com/buty4649/mruby-commit-id.git:
+      url: https://github.com/buty4649/mruby-commit-id.git
+      branch: main
+      commit: 2fa9d2fbd52c4cee2cb473321a7fbb451dacf103
+      version: 0.0.0
+    https://github.com/buty4649/mruby-yyjson.git:
+      url: https://github.com/buty4649/mruby-yyjson.git
+      branch: main
+      commit: e2cb1425cbfcb55768c8b20779ec88381112ef23
+      version: 1.7.0
     https://github.com/buty4649/mruby-onig-regexp.git:
       url: https://github.com/buty4649/mruby-onig-regexp.git
       branch: master
       commit: 9342b100879fa711ba068a2c5c6fac528ca39d5a
       version: 0.0.0
-    https://github.com/ksss/mruby-file-stat.git:
-      url: https://github.com/ksss/mruby-file-stat.git
+    https://github.com/buty4649/mruby-rapidyaml.git:
+      url: https://github.com/buty4649/mruby-rapidyaml.git
+      branch: main
+      commit: 2761ba1648646f6fb30edd46099bacfda564e11b
+      version: 1.0.0
+  linux-arm64:
+    https://github.com/fastly/mruby-optparse.git:
+      url: https://github.com/fastly/mruby-optparse.git
       branch: master
-      commit: bb773da39517f3ae7232538c7e9c476d45f3d9b7
+      commit: e6397a090d1efe04d5dab57c63897f0d79bbad89
       version: 0.0.0
-    https://github.com/iij/mruby-tempfile.git:
-      url: https://github.com/iij/mruby-tempfile.git
+    https://github.com/mrbgems/mruby-tempfile.git:
+      url: https://github.com/mrbgems/mruby-tempfile.git
       branch: master
       commit: 48073012c932f540dc3773b2dc6b079caf71a70d
       version: 0.0.0
@@ -248,6 +167,26 @@ builds:
       branch: main
       commit: 456ebc2761248ff23bf6ea7ec436310f6b325a0f
       version: 1.1.0
+    https://github.com/buty4649/mruby-onig-regexp.git:
+      url: https://github.com/buty4649/mruby-onig-regexp.git
+      branch: master
+      commit: 9342b100879fa711ba068a2c5c6fac528ca39d5a
+      version: 0.0.0
+    https://github.com/IceDragon200/mruby-catch-throw:
+      url: https://github.com/IceDragon200/mruby-catch-throw
+      branch: master
+      commit: 2b6eaff4232b4a9473b864df53c2917080af5dcf
+      version: 1.1.0
+    https://github.com/iij/mruby-env.git:
+      url: https://github.com/iij/mruby-env.git
+      branch: master
+      commit: 056ae324451ef16a50c7887e117f0ea30921b71b
+      version: 0.0.0
+    https://github.com/buty4649/mruby-rapidyaml.git:
+      url: https://github.com/buty4649/mruby-rapidyaml.git
+      branch: main
+      commit: 2761ba1648646f6fb30edd46099bacfda564e11b
+      version: 1.0.0
   windows-amd64:
     https://github.com/fastly/mruby-optparse.git:
       url: https://github.com/fastly/mruby-optparse.git
@@ -299,3 +238,49 @@ builds:
       branch: main
       commit: 456ebc2761248ff23bf6ea7ec436310f6b325a0f
       version: 1.1.0
+    https://github.com/mrbgems/mruby-tempfile.git:
+      url: https://github.com/mrbgems/mruby-tempfile.git
+      branch: master
+      commit: 48073012c932f540dc3773b2dc6b079caf71a70d
+      version: 0.0.0
+    https://github.com/buty4649/mruby-rapidyaml.git:
+      url: https://github.com/buty4649/mruby-rapidyaml.git
+      branch: main
+      commit: 2761ba1648646f6fb30edd46099bacfda564e11b
+      version: 1.0.0
+  darwin-amd64:
+    https://github.com/fastly/mruby-optparse.git:
+      url: https://github.com/fastly/mruby-optparse.git
+      branch: master
+      commit: e6397a090d1efe04d5dab57c63897f0d79bbad89
+      version: 0.0.0
+    https://github.com/IceDragon200/mruby-catch-throw:
+      url: https://github.com/IceDragon200/mruby-catch-throw
+      branch: master
+      commit: 2b6eaff4232b4a9473b864df53c2917080af5dcf
+      version: 1.1.0
+    https://github.com/iij/mruby-env.git:
+      url: https://github.com/iij/mruby-env.git
+      branch: master
+      commit: 056ae324451ef16a50c7887e117f0ea30921b71b
+      version: 0.0.0
+    https://github.com/buty4649/mruby-yaml.git:
+      url: https://github.com/buty4649/mruby-yaml.git
+      branch: master
+      commit: 61387b50f150626a1cab8833545847ccc3d993b6
+      version: 0.1.0
+    https://github.com/buty4649/mruby-onig-regexp.git:
+      url: https://github.com/buty4649/mruby-onig-regexp.git
+      branch: master
+      commit: 9342b100879fa711ba068a2c5c6fac528ca39d5a
+      version: 0.0.0
+    https://github.com/ksss/mruby-file-stat.git:
+      url: https://github.com/ksss/mruby-file-stat.git
+      branch: master
+      commit: bb773da39517f3ae7232538c7e9c476d45f3d9b7
+      version: 0.0.0
+    https://github.com/iij/mruby-tempfile.git:
+      url: https://github.com/iij/mruby-tempfile.git
+      branch: master
+      commit: 48073012c932f540dc3773b2dc6b079caf71a70d
+      version: 0.0.0

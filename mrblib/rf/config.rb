@@ -97,7 +97,7 @@ module Rf
         end
       end
 
-      def global_options # rubocop:disable Metrics/AbcSize
+      def global_options
         @global_options ||= OptionMap.new do |opt|
           opt.on('-H', '--with-filename', 'print filename with output lines') { @config.with_filename = true }
           opt.on('--with-record-number', 'print record number with output lines') do
