@@ -37,21 +37,21 @@ module Rf
         def obj_to_yaml(val, record)
           case val
           when MatchData
-            record.to_yaml
+            record.to_yaml(colorize:)
           when Regexp
             val.match(record.to_s) { record.to_yaml }
           when true, false, nil
             boolean_or_nil_to_yaml(val, record)
           else
-            val.to_yaml
+            val.to_yaml(colorize:)
           end
         end
 
         def boolean_or_nil_to_yaml(boolean_or_nil, record)
           if boolean_mode?
-            record.to_yaml if boolean_or_nil == true
+            record.to_yaml(colorize:) if boolean_or_nil == true
           else
-            boolean_or_nil.to_yaml
+            boolean_or_nil.to_yaml(colorize:)
           end
         end
 
