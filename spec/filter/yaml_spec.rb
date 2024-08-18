@@ -224,23 +224,21 @@ describe 'YAML filter' do
 
     describe 'Output hash' do
       let(:input) { load_fixture('yaml/hash.yml') }
-      let(:output) do
+      let(:args) { '-y --doc _' }
+      let(:expect_output) do
         <<~OUTPUT
           ---
           foo: 1
           bar:
             baz:
-            - a
-            - b
-            - c
+              - a
+              - b
+              - c
           foo bar: foo bar
         OUTPUT
       end
 
-      before { run_rf('-y --doc _', input) }
-
-      it { expect(last_command_started).to be_successfully_executed }
-      it { expect(last_command_started).to have_output output_string_eq output }
+      it_behaves_like 'a successful exec'
     end
   end
 
@@ -251,28 +249,27 @@ describe 'YAML filter' do
       {
         'TrueClass' => {
           command: 'true',
-          output: 'true'
+          expect_output: 'true'
         },
         'FalseClass' => {
           command: 'false',
-          output: 'false'
+          expect_output: 'false'
         },
         'NilClass' => {
           command: 'nil',
-          output: 'null'
+          expect_output: 'null'
         },
         'Hash with null value' => {
           command: '{foo: nil}',
-          output: 'foo: null'
+          expect_output: ':foo: null'
         }
       }
     end
 
     with_them do
-      before { run_rf("-y --disable-boolean-mode '#{command}'", input) }
+      let(:args) { "-y --disable-boolean-mode '#{command}'" }
 
-      it { expect(last_command_started).to be_successfully_executed }
-      it { expect(last_command_started).to have_output output_string_eq output }
+      it_behaves_like 'a successful exec'
     end
   end
 
