@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/cucumber/aruba.git
-  revision: 1280b283eb8656b4752626ddd4abb5c1656e202a
+  revision: d98df76bb0d2a6a68034642653098db0e7888bf7
   branch: main
   specs:
     aruba (2.2.0)
@@ -19,7 +19,7 @@ GEM
       debug_inspector (>= 1.2.0)
     builder (3.3.0)
     coderay (1.1.3)
-    contracts (0.17)
+    contracts (0.17.2)
     cucumber (9.2.0)
       builder (~> 3.2)
       cucumber-ci-environment (> 9, < 11)
@@ -74,7 +74,7 @@ GEM
       rspec-mocks (~> 3.13.0)
     rspec-core (3.13.0)
       rspec-support (~> 3.13.0)
-    rspec-expectations (3.13.2)
+    rspec-expectations (3.13.3)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.13.0)
     rspec-mocks (3.13.0)
