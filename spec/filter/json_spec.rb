@@ -14,12 +14,19 @@ describe 'JSON filter' do
   context 'with -r option' do
     describe 'Output string' do
       let(:input) { load_fixture('json/string.json') }
-      let(:output) { 'test' }
+      let(:args) { '-j -r _' }
+      let(:expect_output) { "test\n" }
 
-      before { run_rf('-j -r _', input) }
+      it_behaves_like 'a successful exec'
+    end
 
-      it { expect(last_command_started).to be_successfully_executed }
-      it { expect(last_command_started).to have_output output_string_eq output }
+    # When using pipes, `--no-color` is implicitly applied internally, so we explicitly test for it.
+    context 'with --color option' do
+      let(:input) { load_fixture('json/string.json') }
+      let(:args) { '-j -r --color _' }
+      let(:expect_output) { "test\n" }
+
+      it_behaves_like 'a successful exec'
     end
   end
 
