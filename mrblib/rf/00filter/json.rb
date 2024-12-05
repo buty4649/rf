@@ -50,11 +50,7 @@ module Rf
 
         def string_to_json(str)
           if raw?
-            if colorize
-              JSON.colorize(str, JSON.color_string)
-            else
-              str
-            end
+            str
           else
             str.to_json(colorize:, pretty_print:)
           end
