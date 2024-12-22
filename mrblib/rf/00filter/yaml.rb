@@ -3,13 +3,17 @@ module Rf
     class Yaml < Base
       class << self
         def config
-          @config ||= Struct.new(:no_doc, :boolean_mode).new.tap do |config|
+          @config ||= Struct.new(:no_doc, :boolean_mode, :raw).new.tap do |config|
             config.no_doc = true
             config.boolean_mode = true
+            config.raw = false
           end
         end
 
         def configure(opt)
+          opt.on('-r', '--raw-string', 'output raw strings') do
+            config.raw = true
+          end
           opt.on('--disable-boolean-mode', 'consider true/false/null as yaml literal') do
             config.boolean_mode = false
           end
@@ -26,6 +30,10 @@ module Rf
           config.boolean_mode
         end
 
+        def raw?
+          config.raw
+        end
+
         def format(val, record)
           return unless yaml_obj = obj_to_yaml(val, record)
 
@@ -36,6 +44,12 @@ module Rf
 
         def obj_to_yaml(val, record)
           case val
+          when String
+            if raw?
+              val
+            else
+              val.to_yaml(colorize:)
+            end
           when MatchData
             record.to_yaml(colorize:)
           when Regexp
