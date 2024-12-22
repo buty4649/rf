@@ -31,6 +31,7 @@ describe 'Show help text' do
         -m, --minify                     minify json output
 
       yaml options:
+        -r, --raw-string                 output raw strings
             --disable-boolean-mode       consider true/false/null as yaml literal
             --[no-]doc                   [no] output document sperator (refers to ---) (default:--no-doc)
     TEXT

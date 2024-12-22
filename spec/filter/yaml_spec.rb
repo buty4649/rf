@@ -14,12 +14,32 @@ describe 'YAML filter' do
   context 'with -r option' do
     describe 'Output string' do
       let(:input) { load_fixture('yaml/multibyte_string.yml') }
-      let(:output) { '🍣🍣🍣' }
+      let(:args) { '-t yaml -r _' }
+      let(:expect_output) { "🍣🍣🍣\n" }
 
-      before { run_rf('-t yaml -r _', input) }
+      it_behaves_like 'a successful exec'
+    end
 
-      it { expect(last_command_started).to be_successfully_executed }
-      it { expect(last_command_started).to have_output output_string_eq output }
+    describe 'Ouput yaml to JSON string' do
+      let(:input) { load_fixture('json/hash.json') }
+      let(:args) { '-t yaml -r "_.to_json(pretty_print: true)"' }
+      let(:expect_output) do
+        <<~OUTPUT
+          {
+            "foo": 1,
+            "bar": {
+              "baz": [
+                "a",
+                "b",
+                "c"
+              ]
+            },
+            "foo bar": "foo bar"
+          }
+        OUTPUT
+      end
+
+      it_behaves_like 'a successful exec'
     end
   end
 
