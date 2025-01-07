@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/cucumber/aruba.git
-  revision: 89534dafe40fbc2f2151b717f1dda4ee790db4f7
+  revision: 6ea69582bd0cb61c00c3419a3ca81bc0d84a6e35
   branch: main
   specs:
     aruba (2.3.0)
