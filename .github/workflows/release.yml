@@ -34,7 +34,7 @@ jobs:
         echo "VERSION: ${VERSION}"
         gh release create $VERSION --generate-notes release/*.tar.gz release/*.zip release/checksums.txt
 
-    - uses: actions/create-github-app-token@v1
+    - uses: actions/create-github-app-token@v2
       id: app-token
       with:
         app-id: 831852
