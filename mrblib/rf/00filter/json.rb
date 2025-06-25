@@ -29,9 +29,10 @@ module Rf
           config.boolean_mode
         end
 
-        def pretty_print
+        def pretty_print?
           !config.minify
         end
+        alias pretty_print pretty_print?
 
         def format(val, record)
           case val
