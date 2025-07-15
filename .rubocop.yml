@@ -1,4 +1,5 @@
-require: rubocop-rspec
+plugins:
+  - rubocop-rspec
 
 AllCops:
   NewCops: enable
@@ -56,6 +57,7 @@ Naming/MemoizedInstanceVariableName:
 Naming/MethodName:
   Exclude:
     - mrblib/rf/container.rb
+    - mrblib/rf/features.rb
 
 Naming/VariableName:
   Exclude:
