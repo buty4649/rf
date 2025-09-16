@@ -1,7 +1,5 @@
-GIT
-  remote: https://github.com/cucumber/aruba.git
-  revision: 49143ac0a03a01bf89261f6c8cb798e95daebc9f
-  branch: main
+GEM
+  remote: https://rubygems.org/
   specs:
     aruba (2.3.2)
       bundler (>= 1.17, < 3.0)
@@ -9,10 +7,6 @@ GIT
       cucumber (>= 8.0, < 11.0)
       rspec-expectations (>= 3.4, < 5.0)
       thor (~> 1.0)
-
-GEM
-  remote: https://rubygems.org/
-  specs:
     ast (2.4.3)
     base64 (0.3.0)
     bigdecimal (3.2.3)
@@ -133,7 +127,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  aruba!
+  aruba
   ffi
   parallel_tests
   rake
