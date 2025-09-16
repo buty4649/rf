@@ -20,6 +20,7 @@ module Rf
       add_features_to_string
       add_features_to_hash
       add_features_to_nil_class
+      add_features_to_onigregexp_class
     end
 
     def add_features_to_integer
@@ -101,6 +102,18 @@ module Rf
 
       NilClass.define_method(:<<) do |other|
         [other]
+      end
+    end
+
+    def add_features_to_onigregexp_class
+      OnigRegexp.class_eval do
+        def on(str = $_)
+          m = match(str)
+          return m unless block_given?
+          return if m.nil?
+
+          yield(*$F)
+        end
       end
     end
   end

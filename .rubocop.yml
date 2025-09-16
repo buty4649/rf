@@ -33,8 +33,7 @@ Style/GlobalVars:
   AllowedVariables: [ $output, $F ]
 
 Style/SpecialGlobalVars:
-  Exclude:
-    - mrblib/rf/container.rb
+  Enabled: false
 
 Security/YAMLLoad:
   Enabled: false
