@@ -214,7 +214,7 @@ describe 'JSON filter' do
     describe 'Read all at once' do
       let(:input) { load_fixture('json/hash.json') }
       let(:output) do
-        '[{"foo"=>1, "bar"=>{"baz"=>["a", "b", "c"]}, "foo bar"=>"foo bar"}]'
+        '[{"foo" => 1, "bar" => {"baz" => ["a", "b", "c"]}, "foo bar" => "foo bar"}]'
       end
 
       before { run_rf("-j -s -q 'p _'", input) }

@@ -1,7 +1,7 @@
 ---
 mruby:
-  version: 3.3.0
-  release_no: 30300
+  version: 3.4.0
+  release_no: 30400
 builds:
   host:
     https://github.com/fastly/mruby-optparse.git:
@@ -19,11 +19,6 @@ builds:
       branch: main
       commit: e2cb1425cbfcb55768c8b20779ec88381112ef23
       version: 1.7.0
-    https://github.com/buty4649/mruby-onig-regexp.git:
-      url: https://github.com/buty4649/mruby-onig-regexp.git
-      branch: master
-      commit: 9342b100879fa711ba068a2c5c6fac528ca39d5a
-      version: 0.0.0
     https://github.com/IceDragon200/mruby-catch-throw:
       url: https://github.com/IceDragon200/mruby-catch-throw
       branch: master
@@ -49,6 +44,11 @@ builds:
       branch: main
       commit: 2761ba1648646f6fb30edd46099bacfda564e11b
       version: 1.0.0
+    https://github.com/buty4649/mruby-onig-regexp.git:
+      url: https://github.com/buty4649/mruby-onig-regexp.git
+      branch: master
+      commit: 700dd2e506260292881cdef1481120f085194aa3
+      version: 0.0.0
   linux-amd64:
     https://github.com/fastly/mruby-optparse.git:
       url: https://github.com/fastly/mruby-optparse.git
@@ -85,11 +85,6 @@ builds:
       branch: main
       commit: e2cb1425cbfcb55768c8b20779ec88381112ef23
       version: 1.7.0
-    https://github.com/buty4649/mruby-onig-regexp.git:
-      url: https://github.com/buty4649/mruby-onig-regexp.git
-      branch: master
-      commit: 9342b100879fa711ba068a2c5c6fac528ca39d5a
-      version: 0.0.0
     https://github.com/buty4649/mruby-rapidyaml.git:
       url: https://github.com/buty4649/mruby-rapidyaml.git
       branch: main
@@ -131,11 +126,6 @@ builds:
       branch: main
       commit: e2cb1425cbfcb55768c8b20779ec88381112ef23
       version: 1.7.0
-    https://github.com/buty4649/mruby-onig-regexp.git:
-      url: https://github.com/buty4649/mruby-onig-regexp.git
-      branch: master
-      commit: 9342b100879fa711ba068a2c5c6fac528ca39d5a
-      version: 0.0.0
     https://github.com/buty4649/mruby-rapidyaml.git:
       url: https://github.com/buty4649/mruby-rapidyaml.git
       branch: main
@@ -167,11 +157,6 @@ builds:
       branch: main
       commit: 456ebc2761248ff23bf6ea7ec436310f6b325a0f
       version: 1.1.0
-    https://github.com/buty4649/mruby-onig-regexp.git:
-      url: https://github.com/buty4649/mruby-onig-regexp.git
-      branch: master
-      commit: 9342b100879fa711ba068a2c5c6fac528ca39d5a
-      version: 0.0.0
     https://github.com/IceDragon200/mruby-catch-throw:
       url: https://github.com/IceDragon200/mruby-catch-throw
       branch: master
@@ -208,11 +193,6 @@ builds:
       branch: master
       commit: 61387b50f150626a1cab8833545847ccc3d993b6
       version: 0.1.0
-    https://github.com/buty4649/mruby-onig-regexp.git:
-      url: https://github.com/buty4649/mruby-onig-regexp.git
-      branch: master
-      commit: 9342b100879fa711ba068a2c5c6fac528ca39d5a
-      version: 0.0.0
     https://github.com/ksss/mruby-file-stat.git:
       url: https://github.com/ksss/mruby-file-stat.git
       branch: master
@@ -269,11 +249,6 @@ builds:
       branch: master
       commit: 61387b50f150626a1cab8833545847ccc3d993b6
       version: 0.1.0
-    https://github.com/buty4649/mruby-onig-regexp.git:
-      url: https://github.com/buty4649/mruby-onig-regexp.git
-      branch: master
-      commit: 9342b100879fa711ba068a2c5c6fac528ca39d5a
-      version: 0.0.0
     https://github.com/ksss/mruby-file-stat.git:
       url: https://github.com/ksss/mruby-file-stat.git
       branch: master

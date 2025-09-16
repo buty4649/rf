@@ -159,7 +159,7 @@ describe 'YAML filter' do
     describe 'Read all at once' do
       let(:input) { load_fixture('yaml/hash.yml') }
       let(:output) do
-        '[{"foo"=>1, "bar"=>{"baz"=>["a", "b", "c"]}, "foo bar"=>"foo bar"}]'
+        '[{"foo" => 1, "bar" => {"baz" => ["a", "b", "c"]}, "foo bar" => "foo bar"}]'
       end
 
       before { run_rf("-y -s -q 'p _'", input) }
