@@ -90,6 +90,11 @@ builds:
       branch: main
       commit: 2761ba1648646f6fb30edd46099bacfda564e11b
       version: 1.0.0
+    https://github.com/buty4649/mruby-onig-regexp.git:
+      url: https://github.com/buty4649/mruby-onig-regexp.git
+      branch: master
+      commit: 700dd2e506260292881cdef1481120f085194aa3
+      version: 0.0.0
   darwin-arm64:
     https://github.com/fastly/mruby-optparse.git:
       url: https://github.com/fastly/mruby-optparse.git
@@ -131,6 +136,11 @@ builds:
       branch: main
       commit: 2761ba1648646f6fb30edd46099bacfda564e11b
       version: 1.0.0
+    https://github.com/buty4649/mruby-onig-regexp.git:
+      url: https://github.com/buty4649/mruby-onig-regexp.git
+      branch: master
+      commit: 700dd2e506260292881cdef1481120f085194aa3
+      version: 0.0.0
   linux-arm64:
     https://github.com/fastly/mruby-optparse.git:
       url: https://github.com/fastly/mruby-optparse.git
@@ -172,6 +182,11 @@ builds:
       branch: main
       commit: 2761ba1648646f6fb30edd46099bacfda564e11b
       version: 1.0.0
+    https://github.com/buty4649/mruby-onig-regexp.git:
+      url: https://github.com/buty4649/mruby-onig-regexp.git
+      branch: master
+      commit: 700dd2e506260292881cdef1481120f085194aa3
+      version: 0.0.0
   windows-amd64:
     https://github.com/fastly/mruby-optparse.git:
       url: https://github.com/fastly/mruby-optparse.git
@@ -228,6 +243,11 @@ builds:
       branch: main
       commit: 2761ba1648646f6fb30edd46099bacfda564e11b
       version: 1.0.0
+    https://github.com/buty4649/mruby-onig-regexp.git:
+      url: https://github.com/buty4649/mruby-onig-regexp.git
+      branch: master
+      commit: 700dd2e506260292881cdef1481120f085194aa3
+      version: 0.0.0
   darwin-amd64:
     https://github.com/fastly/mruby-optparse.git:
       url: https://github.com/fastly/mruby-optparse.git
