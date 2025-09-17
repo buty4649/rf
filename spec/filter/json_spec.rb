@@ -4,7 +4,7 @@ describe 'JSON filter' do
       let(:input) { load_fixture('json/string.json') }
       let(:output) { '"test"' }
 
-      before { run_rf('-t json _', input) }
+      before { run_rf('json _', input) }
 
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output output_string_eq output }
@@ -14,7 +14,7 @@ describe 'JSON filter' do
   context 'with -r option' do
     describe 'Output string' do
       let(:input) { load_fixture('json/string.json') }
-      let(:args) { '-j -r _' }
+      let(:args) { 'json -r _' }
       let(:expect_output) { "test\n" }
 
       it_behaves_like 'a successful exec'
@@ -23,7 +23,7 @@ describe 'JSON filter' do
     # When using pipes, `--no-color` is implicitly applied internally, so we explicitly test for it.
     context 'with --color option' do
       let(:input) { load_fixture('json/string.json') }
-      let(:args) { '-j -r --color _' }
+      let(:args) { 'json -r --color _' }
       let(:expect_output) { "test\n" }
 
       it_behaves_like 'a successful exec'
@@ -51,7 +51,7 @@ describe 'JSON filter' do
     end
 
     with_them do
-      before { run_rf("-j --disable-boolean-mode '#{command}'", input) }
+      before { run_rf("json --disable-boolean-mode '#{command}'", input) }
 
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output output_string_eq output }
@@ -60,7 +60,7 @@ describe 'JSON filter' do
 
   context 'when use -H option' do
     let(:input) { '"foobar"' }
-    let(:args) { '-j -H --no-color true testfile' }
+    let(:args) { 'json -H --no-color true testfile' }
     let(:expect_output) do
       out = input.split("\n").map { |line| "testfile:#{line}" }.join("\n")
       "#{out}\n"
@@ -90,7 +90,7 @@ describe 'JSON filter' do
       write_file('foo/bar/notmatch.txt', '"not match"')
       write_file('foo/bar/notmatch.yml', '"not match"')
 
-      run_rf('-j -R _ .')
+      run_rf('json -R _ .')
     end
 
     it { expect(last_command_started).to be_successfully_executed }
@@ -106,7 +106,7 @@ describe 'JSON filter' do
     end
 
     with_them do
-      before { run_rf("-j #{command} .", input) }
+      before { run_rf("json #{command} .", input) }
 
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output_on_stdout output_string_eq output }
@@ -136,7 +136,7 @@ describe 'JSON filter' do
     end
 
     with_them do
-      let(:args) { "-j #{option} --no-color true testfile1 testfile2" }
+      let(:args) { "json #{option} --no-color true testfile1 testfile2" }
       before do
         write_file 'testfile1', input
         write_file 'testfile2', input
@@ -151,7 +151,7 @@ describe 'JSON filter' do
       let(:input) { load_fixture('json/string.json') }
       let(:output) { '"test"' }
 
-      before { run_rf('-j _', input) }
+      before { run_rf('json _', input) }
 
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output output_string_eq output }
@@ -167,7 +167,7 @@ describe 'JSON filter' do
         OUTPUT
       end
 
-      before { run_rf('-j _', input) }
+      before { run_rf('json _', input) }
 
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output output_string_eq output }
@@ -177,7 +177,7 @@ describe 'JSON filter' do
       let(:input) { load_fixture('json/array.json') }
       let(:output) { '"foo"' }
 
-      before { run_rf('-j /foo/', input) }
+      before { run_rf('json /foo/', input) }
 
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output output_string_eq output }
@@ -195,7 +195,7 @@ describe 'JSON filter' do
         OUTPUT
       end
 
-      before { run_rf('-j "_.bar.baz"', input) }
+      before { run_rf('json "_.bar.baz"', input) }
 
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output output_string_eq output }
@@ -205,7 +205,7 @@ describe 'JSON filter' do
       let(:input) { load_fixture('json/hash.json') }
       let(:output) { '"foo bar"' }
 
-      before { run_rf(%q(-j '_["foo bar"]'), input) }
+      before { run_rf(%q(json '_["foo bar"]'), input) }
 
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output output_string_eq output }
@@ -217,7 +217,7 @@ describe 'JSON filter' do
         '[{"foo" => 1, "bar" => {"baz" => ["a", "b", "c"]}, "foo bar" => "foo bar"}]'
       end
 
-      before { run_rf("-j -s -q 'p _'", input) }
+      before { run_rf("json -s -q 'p _'", input) }
 
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output output_string_eq output }
@@ -232,7 +232,7 @@ describe 'JSON filter' do
 
       before do
         write_file file, input
-        run_rf("-j _ #{file}")
+        run_rf("json _ #{file}")
       end
 
       it { expect(last_command_started).to be_successfully_executed }
@@ -245,7 +245,7 @@ describe 'JSON filter' do
       let(:input) { load_fixture('json/string.json') }
       let(:output) { '' }
 
-      before { run_rf('-j -q _', input) }
+      before { run_rf('json -q _', input) }
 
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output output_string_eq output }
@@ -257,7 +257,7 @@ describe 'JSON filter' do
       let(:input) { load_fixture('json/string.json') }
       let(:output) { '"test"' }
 
-      before { run_rf('-j /test/', input) }
+      before { run_rf('json /test/', input) }
 
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output output_string_eq output }
@@ -267,7 +267,7 @@ describe 'JSON filter' do
       let(:input) { load_fixture('json/number.json') }
       let(:output) { '123456789' }
 
-      before { run_rf('-j /123456789/', input) }
+      before { run_rf('json /123456789/', input) }
 
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output output_string_eq output }
@@ -283,7 +283,7 @@ describe 'JSON filter' do
         OUTPUT
       end
 
-      before { run_rf('-j /foo/', input) }
+      before { run_rf('json /foo/', input) }
 
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output output_string_eq output }
@@ -294,7 +294,7 @@ describe 'JSON filter' do
     describe 'Error message' do
       let(:input) { '{"foo": "bar"' }
 
-      let(:args) { '-j _' }
+      let(:args) { 'json _' }
       let(:expect_output) do
         "Error: failed to parse JSON: unexpected end of data position: 14\n"
       end
@@ -307,7 +307,7 @@ describe 'JSON filter' do
     describe 'Output string' do
       let(:input) { '{"foo": "bar", "foo": "baz"}' }
 
-      let(:args) { '-j _' }
+      let(:args) { 'json _' }
       let(:expect_output) do
         <<~JSON
           {

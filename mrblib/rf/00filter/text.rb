@@ -2,16 +2,6 @@ module Rf
   module Filter
     class Text < Base
       class << self
-        def config
-          @config ||= Struct.new(:fs).new
-        end
-
-        def configure(opt)
-          opt.on('-F VAL', '--filed-separator', 'set the field separator (allow regexp)') do |v|
-            config.fs = v
-          end
-        end
-
         def format(val, record)
           case val
           when String, false, nil
@@ -31,7 +21,7 @@ module Rf
           result = ''
           while m = regexp.match(record)
             result += m.pre_match
-            result += colorize ? m.to_s.red : m.to_s
+            result += colorize? ? m.to_s.red : m.to_s
             record = m.post_match
           end
 
@@ -39,14 +29,11 @@ module Rf
         end
       end
 
-      def config
-        self.class.config
-      end
-
       def initialize(io)
         super
 
-        $; = Regexp.new(config.fs) if config.fs
+        fs = self.class.config[:filed_separator]
+        $; = Regexp.new(fs) if fs
       end
 
       def gets

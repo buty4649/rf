@@ -10,14 +10,14 @@ module Rf
       color? command filter files grep_mode in_place include_filename
       slurp? quiet? recursive? with_record_number?
     ].each do |name|
-      n = name.delete_suffix('?')
-      define_method(name.to_sym) { config.send(n) }
+      sym = name.to_sym
+      define_method(sym) { config.send(sym) }
     end
 
     # Set 'default' to true for Filter::Text only when multiple files are specified,
     # or when the recursive (-r) option is specified along with a directory.
     def with_filename?
-      return true if config.with_filename
+      return true if config.with_filename?
       return false if filter != Filter::Text || in_place
 
       files.size > 1 || (recursive? && File.directory?(files.first))
@@ -28,7 +28,7 @@ module Rf
     def initialize(cfg)
       @config = cfg
       @inputs = recursive? ? Directory.open(files, include_filename || filter.filename_extension) : files
-      filter.colorize = color?
+      filter.config = @config
       setup_container
     end
 

@@ -4,7 +4,7 @@ describe 'YAML filter' do
       let(:input) { load_fixture('yaml/string.yml') }
       let(:output) { 'test' }
 
-      before { run_rf('-t yaml _', input) }
+      before { run_rf('yaml _', input) }
 
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output output_string_eq output }
@@ -14,7 +14,7 @@ describe 'YAML filter' do
   context 'with -r option' do
     describe 'Output string' do
       let(:input) { load_fixture('yaml/multibyte_string.yml') }
-      let(:args) { '-t yaml -r _' }
+      let(:args) { 'yaml -r _' }
       let(:expect_output) { "🍣🍣🍣\n" }
 
       it_behaves_like 'a successful exec'
@@ -22,7 +22,7 @@ describe 'YAML filter' do
 
     describe 'Ouput yaml to JSON string' do
       let(:input) { load_fixture('json/hash.json') }
-      let(:args) { '-t yaml -r "_.to_json(pretty_print: true)"' }
+      let(:args) { 'yaml -r "_.to_json(pretty_print: true)"' }
       let(:expect_output) do
         <<~OUTPUT
           {
@@ -62,7 +62,7 @@ describe 'YAML filter' do
       write_file('foo/bar/notmatch.txt', 'not match')
       write_file('foo/bar/notmatch.json', '"not match"')
 
-      run_rf('-y -R _ .')
+      run_rf('yaml -R _ .')
     end
 
     it { expect(last_command_started).to be_successfully_executed }
@@ -70,19 +70,19 @@ describe 'YAML filter' do
   end
 
   context 'with -g option' do
-    let(:input) { 'foo' }
-    let(:output) { 'foo' }
+   let(:input) { 'foo' }
+   let(:output) { 'foo' }
 
-    where(:command) do
-      %w[-g --grep]
-    end
+   where(:command) do
+     %w[-g --grep]
+   end
 
-    with_them do
-      before { run_rf("-y #{command} .", input) }
+   with_them do
+     before { run_rf("yaml #{command} .", input) }
 
-      it { expect(last_command_started).to be_successfully_executed }
-      it { expect(last_command_started).to have_output_on_stdout output_string_eq output }
-    end
+     it { expect(last_command_started).to be_successfully_executed }
+     it { expect(last_command_started).to have_output_on_stdout output_string_eq output }
+   end
   end
 
   context 'when input from stdin' do
@@ -90,7 +90,7 @@ describe 'YAML filter' do
       let(:input) { load_fixture('yaml/string.yml') }
       let(:output) { 'test' }
 
-      before { run_rf('-y _', input) }
+      before { run_rf('yaml _', input) }
 
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output output_string_eq output }
@@ -98,7 +98,7 @@ describe 'YAML filter' do
 
     describe 'Output UTF-8 string' do
       let(:input) { 'あいうえお🍣' }
-      let(:args) { '-y _' }
+      let(:args) { 'yaml _' }
       let(:expect_output) { "あいうえお🍣\n" }
 
       it_behaves_like 'a successful exec'
@@ -114,7 +114,7 @@ describe 'YAML filter' do
         OUTPUT
       end
 
-      before { run_rf('-y _', input) }
+      before { run_rf('yaml _', input) }
 
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output output_string_eq output }
@@ -124,7 +124,7 @@ describe 'YAML filter' do
       let(:input) { load_fixture('yaml/array.yml') }
       let(:output) { 'foo' }
 
-      before { run_rf('-y /foo/', input) }
+      before { run_rf('yaml /foo/', input) }
 
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output output_string_eq output }
@@ -140,7 +140,7 @@ describe 'YAML filter' do
         OUTPUT
       end
 
-      before { run_rf('-y "_.bar.baz"', input) }
+      before { run_rf('yaml "_.bar.baz"', input) }
 
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output output_string_eq output }
@@ -150,7 +150,7 @@ describe 'YAML filter' do
       let(:input) { load_fixture('yaml/hash.yml') }
       let(:output) { 'foo bar' }
 
-      before { run_rf(%q(-y '_["foo bar"]'), input) }
+      before { run_rf(%q(yaml '_["foo bar"]'), input) }
 
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output output_string_eq output }
@@ -162,7 +162,7 @@ describe 'YAML filter' do
         '[{"foo" => 1, "bar" => {"baz" => ["a", "b", "c"]}, "foo bar" => "foo bar"}]'
       end
 
-      before { run_rf("-y -s -q 'p _'", input) }
+      before { run_rf("yaml -s -q 'p _'", input) }
 
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output output_string_eq output }
@@ -177,7 +177,7 @@ describe 'YAML filter' do
 
       before do
         write_file file, input
-        run_rf("-y _ #{file}")
+        run_rf("yaml _ #{file}")
       end
 
       it { expect(last_command_started).to be_successfully_executed }
@@ -190,7 +190,7 @@ describe 'YAML filter' do
       let(:input) { load_fixture('yaml/string.yml') }
       let(:output) { '' }
 
-      before { run_rf('-y -q _', input) }
+      before { run_rf('yaml -q _', input) }
 
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output output_string_eq output }
@@ -202,7 +202,7 @@ describe 'YAML filter' do
       let(:input) { load_fixture('yaml/string.yml') }
       let(:output) { 'test' }
 
-      before { run_rf('-y /test/', input) }
+      before { run_rf('yaml /test/', input) }
 
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output output_string_eq output }
@@ -212,7 +212,7 @@ describe 'YAML filter' do
       let(:input) { load_fixture('yaml/number.yml') }
       let(:output) { '123456789' }
 
-      before { run_rf('-y /123456789/', input) }
+      before { run_rf('yaml /123456789/', input) }
 
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output output_string_eq output }
@@ -222,7 +222,7 @@ describe 'YAML filter' do
       let(:input) { 'foo: bar' }
       let(:output) { input }
 
-      before { run_rf('-y /foo/', input) }
+      before { run_rf('yaml /foo/', input) }
 
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output output_string_eq output }
@@ -234,7 +234,7 @@ describe 'YAML filter' do
       let(:input) { load_fixture('yaml/string.yml') }
       let(:output) { '--- test' }
 
-      before { run_rf('-y --doc _', input) }
+      before { run_rf('yaml --doc _', input) }
 
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output output_string_eq output }
@@ -242,7 +242,7 @@ describe 'YAML filter' do
 
     describe 'Output hash' do
       let(:input) { load_fixture('yaml/hash.yml') }
-      let(:args) { '-y --doc _' }
+      let(:args) { 'yaml --doc _' }
       let(:expect_output) do
         <<~OUTPUT
           ---
@@ -285,7 +285,7 @@ describe 'YAML filter' do
     end
 
     with_them do
-      let(:args) { "-y --disable-boolean-mode '#{command}'" }
+      let(:args) { "yaml --disable-boolean-mode '#{command}'" }
 
       it_behaves_like 'a successful exec'
     end
@@ -293,7 +293,7 @@ describe 'YAML filter' do
 
   context 'when use -H option' do
     let(:input) { 'foobar' }
-    let(:args) { '-y -H --no-color true testfile' }
+    let(:args) { 'yaml -H --no-color true testfile' }
     let(:expect_output) do
       out = input.split("\n").map { |line| "testfile:#{line}" }.join("\n")
       "#{out}\n"
@@ -329,7 +329,7 @@ describe 'YAML filter' do
     end
 
     with_them do
-      let(:args) { "-y #{option} --no-color true testfile1 testfile2" }
+      let(:args) { "yaml #{option} --no-color true testfile1 testfile2" }
       before do
         write_file 'testfile1', input
         write_file 'testfile2', input
@@ -343,7 +343,7 @@ describe 'YAML filter' do
     let(:input) { 'foobar' }
     let(:output) { '' }
 
-    before { run_rf('-y nil', input) }
+    before { run_rf('yaml nil', input) }
 
     it { expect(last_command_started).to be_successfully_executed }
     it { expect(last_command_started).to have_output output_string_eq output }

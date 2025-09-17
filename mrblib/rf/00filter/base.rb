@@ -2,7 +2,11 @@ module Rf
   module Filter
     class Base
       class << self
-        attr_accessor :colorize
+        attr_accessor :config
+
+        def colorize?
+          config.color?
+        end
       end
 
       def gets

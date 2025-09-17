@@ -2,43 +2,23 @@ module Rf
   module Filter
     class Yaml < Base
       class << self
-        def config
-          @config ||= Struct.new(:no_doc, :boolean_mode, :raw).new.tap do |config|
-            config.no_doc = true
-            config.boolean_mode = true
-            config.raw = false
-          end
-        end
-
-        def configure(opt)
-          opt.on('-r', '--raw-string', 'output raw strings') do
-            config.raw = true
-          end
-          opt.on('--disable-boolean-mode', 'consider true/false/null as yaml literal') do
-            config.boolean_mode = false
-          end
-          opt.on('--[no-]doc', '[no] output document sperator (refers to ---) (default:--no-doc)') do |v|
-            config.no_doc = !v
-          end
-        end
-
-        def no_doc?
-          config.no_doc
+        def doc?
+          config[:doc?]
         end
 
         def boolean_mode?
-          config.boolean_mode
+          !config[:disable_boolean_mode?]
         end
 
         def raw?
-          config.raw
+          config[:raw?]
         end
 
         def format(val, record)
           return unless yaml_obj = obj_to_yaml(val, record)
 
           unpack_unicode_escape(
-            no_doc? ? remove_doc_header(yaml_obj) : yaml_obj
+            doc? ? yaml_obj : remove_doc_header(yaml_obj)
           )
         end
 
@@ -48,24 +28,24 @@ module Rf
             if raw?
               val
             else
-              val.to_yaml(colorize:)
+              val.to_yaml(colorize: colorize?)
             end
           when MatchData
-            record.to_yaml(colorize:)
+            record.to_yaml(colorize: colorize?)
           when Regexp
             val.match(record.to_s) { record.to_yaml }
           when true, false, nil
             boolean_or_nil_to_yaml(val, record)
           else
-            val.to_yaml(colorize:)
+            val.to_yaml(colorize: colorize?)
           end
         end
 
         def boolean_or_nil_to_yaml(boolean_or_nil, record)
           if boolean_mode?
-            record.to_yaml(colorize:) if boolean_or_nil == true
+            record.to_yaml(colorize: colorize?) if boolean_or_nil == true
           else
-            boolean_or_nil.to_yaml(colorize:)
+            boolean_or_nil.to_yaml(colorize: colorize?)
           end
         end
 

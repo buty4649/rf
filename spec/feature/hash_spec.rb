@@ -2,11 +2,11 @@ describe 'Automatic accessor addition to Hash' do
   where do
     {
       'key is exist' => {
-        args: '-j _.foo',
+        args: 'json _.foo',
         expect_output: "\"bar\"\n"
       },
       'key is not exist' => {
-        args: '-j _.piyo.class.to_s',
+        args: 'json _.piyo.class.to_s',
         expect_output: "\"NilClass\"\n"
       }
     }

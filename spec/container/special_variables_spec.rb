@@ -43,7 +43,7 @@ describe 'Special Variables' do
             }
           JSON
         end
-        let(:args) { "-j -q 'p #{name}[0],#{name}[1],#{name}[2]'" }
+        let(:args) { "json -q 'p #{name}[0],#{name}[1],#{name}[2]'" }
         let(:expect_output) do
           <<~OUTPUT
             ["a", 1]
@@ -57,7 +57,7 @@ describe 'Special Variables' do
 
       context 'when record is Other class' do
         let(:input) { '1' }
-        let(:args) { "-j -q 'p #{name}[0],#{name}[1],#{name}[2]'" }
+        let(:args) { "json -q 'p #{name}[0],#{name}[1],#{name}[2]'" }
         let(:expect_output) do
           <<~OUTPUT
             1

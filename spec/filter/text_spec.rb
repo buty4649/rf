@@ -12,7 +12,7 @@ describe 'Text filter' do
     describe 'Output all lines' do
       let(:output) { input }
 
-      before { run_rf('-t text true', input) }
+      before { run_rf('text true', input) }
 
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output_on_stdout output_string_eq output }
@@ -25,7 +25,7 @@ describe 'Text filter' do
 
       before do
         write_file 'program.rf', 'true'
-        run_rf('-f program.rf', input)
+        run_rf('text -f program.rf', input)
       end
 
       it { expect(last_command_started).to be_successfully_executed }
@@ -34,7 +34,7 @@ describe 'Text filter' do
   end
 
   context 'when use -H option' do
-    let(:args) { '-H --no-color true testfile' }
+    let(:args) { 'text -H --no-color true testfile' }
     let(:expect_output) do
       out = input.split("\n").map { |line| "testfile:#{line}" }.join("\n")
       "#{out}\n"
@@ -48,7 +48,7 @@ describe 'Text filter' do
   end
 
   context 'with -R option' do
-    let(:args) { '-R --no-color _ .' }
+    let(:args) { 'text -R --no-color _ .' }
     let(:expect_output) do
       <<~OUTPUT
         ./a/b/c:abc
@@ -68,14 +68,14 @@ describe 'Text filter' do
 
   context 'with -g option' do
     let(:input) { 'foo' }
-    let(:output) { "\e[31mf\e[0m\e[31mo\e[0m\e[31mo\e[0m" }
+    let(:output) { "\e[31mf\e[m\e[31mo\e[m\e[31mo\e[m" }
 
     where(:command) do
       %w[-g --grep]
     end
 
     with_them do
-      before { run_rf("#{command} --color .", input) }
+      before { run_rf("text #{command} --color .", input) }
 
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output_on_stdout output_string_eq output }
@@ -83,7 +83,7 @@ describe 'Text filter' do
   end
 
   context 'when multiple files' do
-    let(:args) { '--no-color true testfile1 testfile2' }
+    let(:args) { 'text --no-color true testfile1 testfile2' }
     let(:expect_output) do
       out = [
         input.split("\n").map { |line| "testfile1:#{line}" }.join("\n"),
@@ -104,7 +104,7 @@ describe 'Text filter' do
     describe 'Output all lines' do
       let(:output) { input }
 
-      before { run_rf('true', input) }
+      before { run_rf('text true', input) }
 
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output_on_stdout output_string_eq output }
@@ -120,7 +120,7 @@ describe 'Text filter' do
         OUTPUT
       end
 
-      before { run_rf('_2', input) }
+      before { run_rf('text _2', input) }
 
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output_on_stdout output_string_eq output }
@@ -139,8 +139,8 @@ describe 'Text filter' do
           '--color' => {
             option: '--color',
             output: <<~OUTPUT
-              1 \e[31mfoo\e[0m
-              4 \e[31mfoo\e[0mbar
+              1 \e[31mfoo\e[m
+              4 \e[31mfoo\e[mbar
             OUTPUT
           },
           '--no-color' => {
@@ -153,7 +153,7 @@ describe 'Text filter' do
         }
       end
       with_them do
-        before { run_rf("#{option} /foo/", input) }
+        before { run_rf("text #{option} /foo/", input) }
 
         it { expect(last_command_started).to be_successfully_executed }
         it { expect(last_command_started).to have_output_on_stdout output_string_eq output }
@@ -168,7 +168,7 @@ describe 'Text filter' do
         OUTPUT
       end
 
-      before { run_rf('_.match(/foo/)', input) }
+      before { run_rf('text _.match(/foo/)', input) }
 
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output_on_stdout output_string_eq output }
@@ -181,7 +181,7 @@ describe 'Text filter' do
         OUTPUT
       end
 
-      before { run_rf('-q "s||=0; s+=_1; at_exit{ puts s }"', input) }
+      before { run_rf('text -q "s||=0; s+=_1; at_exit{ puts s }"', input) }
 
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output_on_stdout output_string_eq output }
@@ -197,7 +197,7 @@ describe 'Text filter' do
         OUTPUT
       end
 
-      before { run_rf('_.upcase', input) }
+      before { run_rf('text _.upcase', input) }
 
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output_on_stdout output_string_eq output }
@@ -206,7 +206,7 @@ describe 'Text filter' do
     describe 'Read all at once' do
       let(:output) { '1 foo 2 bar 3 baz 4 foobar' }
 
-      before { run_rf('-s "_"', input) }
+      before { run_rf('text -s "_"', input) }
 
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output_on_stdout output_string_eq output }
@@ -220,7 +220,7 @@ describe 'Text filter' do
 
       before do
         write_file file, input
-        run_rf("true #{file}")
+        run_rf("text true #{file}")
       end
 
       it { expect(last_command_started).to be_successfully_executed }
@@ -232,7 +232,7 @@ describe 'Text filter' do
     describe 'Output all lines' do
       let(:output) { '' }
 
-      before { run_rf('-q true', input) }
+      before { run_rf('text -q true', input) }
 
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output_on_stdout output_string_eq output }
@@ -258,7 +258,7 @@ describe 'Text filter' do
         OUTPUT
       end
 
-      before { run_rf('-F, _2', input) }
+      before { run_rf('text -F, _2', input) }
 
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output_on_stdout output_string_eq output }
@@ -269,7 +269,7 @@ describe 'Text filter' do
     let(:input) { 'foo,bar,baz' }
     let(:output) { 'foo bar baz' }
 
-    before { run_rf('-F, $F', input) }
+    before { run_rf('text -F, $F', input) }
 
     it { expect(last_command_started).to be_successfully_executed }
     it { expect(last_command_started).to have_output_on_stdout output_string_eq output }
