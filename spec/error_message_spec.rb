@@ -11,8 +11,8 @@ describe 'Show error message' do
     '-f program_file'      | 'Error: No such file or directory - open program_file'
     '-R -i _'              | 'Error: -R, -i: conflict options'
     'if'                   | 'Error: line 1: syntax error, unexpected end of file'
-    '_.very_useful_method' | "Error: undefined method 'very_useful_method'"
-    'unknown_method'       | "Error: undefined method 'unknown_method'"
+    '_.very_useful_method' | "Error: undefined method 'very_useful_method' for String"
+    'unknown_method'       | "Error: undefined method 'unknown_method' for Rf::Container"
   end
 
   with_them do
@@ -49,7 +49,7 @@ describe 'Show error message' do
     let(:args) { 'if' }
     let(:expect_output) do
       Regexp.new(Regexp.escape(<<~OUTPUT))
-        Error: line 1: syntax error, unexpected end of file (Rf::SyntaxError)
+        Error: #<Rf::SyntaxError: line 1: syntax error, unexpected end of file>
 
         trace (most recent call last):
       OUTPUT

@@ -14,6 +14,7 @@ end
 
 def build_targets
   %w[
+    host
     linux-amd64 linux-arm64
     darwin-arm64
     windows-amd64
@@ -56,6 +57,11 @@ namespace :build do
   build_targets.each do |target|
     desc "Build the project for #{target}"
     task target do
+      # NOTE: Host build must precede cross-compilation to prevent chdir conflicts.
+      # The cross-build process contains nested directory changes that conflict with
+      # the main build's chdir block, causing "conflicting chdir during another chdir block" errors.
+      Rake::Task['build:host'].invoke
+
       env = ["MRUBY_BUILD_TARGETS=#{target}"]
       docker_run(env:)
     end

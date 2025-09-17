@@ -118,7 +118,7 @@ describe 'Container internal methods' do
         end
 
         context 'with block' do
-          let(:args) { %('#{method} #{condition} { _1 }') }
+          let(:args) { %('#{method}(#{condition}) { _1 }') }
           let(:expect_output) { output[:with_block] }
 
           it_behaves_like 'a successful exec'
@@ -239,14 +239,14 @@ describe 'Container internal methods' do
         end
 
         context 'with block' do
-          let(:args) { "'#{method} #{condition} { _1 }'" }
+          let(:args) { "'#{method}(#{condition}) { _1 }'" }
           let(:expect_output) { output[:with_block] }
 
           it_behaves_like 'a successful exec'
         end
 
         describe 'return value' do
-          let(:args) { "-q 'p #{method} #{condition} { _1 }'" }
+          let(:args) { "-q 'p #{method}(#{condition}) { _1 }'" }
           let(:expect_output) { output[:return_value] }
 
           it_behaves_like 'a successful exec'

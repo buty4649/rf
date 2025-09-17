@@ -72,13 +72,13 @@ if build_targets.include?('darwin-arm64')
     macos_sdk = ENV.fetch('MACOSX_SDK_PATH').shellescape
 
     build_config(conf, 'aarch64-macos', strip: true)
-    cc_flags = ['-Wno-overriding-t-option', '-mmacosx-version-min=11.1',
+    cc_flags = ['-Wno-overriding-option', '-mmacosx-version-min=11.1',
                 '-isysroot', macos_sdk, '-iwithsysroot', '/usr/include',
                 '-iframeworkwithsysroot', '/System/Library/Frameworks']
     conf.cc.flags += cc_flags
     conf.cxx.flags += cc_flags
 
-    conf.linker.flags += ['-Wno-overriding-t-option', '-mmacosx-version-min=11.1',
+    conf.linker.flags += ['-Wno-overriding-option', '-mmacosx-version-min=11.1',
                           '--sysroot', macos_sdk, '-F/System/Library/Frameworks', '-L/usr/lib']
 
     conf.archiver.command = 'zig ar'

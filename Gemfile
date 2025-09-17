@@ -5,7 +5,7 @@ ruby file: '.ruby-version'
 gem 'rake'
 
 group 'test' do
-  gem 'aruba', github: 'cucumber/aruba', branch: 'main'
+  gem 'aruba'
   gem 'ffi'
   gem 'parallel_tests'
   gem 'rspec'
