@@ -1,30 +1,109 @@
 module Rf
-  class Cli
-    def run(argv)
-      Runner.run(Config.parse(argv))
-    rescue NotFound => e
-      print_exception_and_exit(e, false)
-    rescue StandardError => e
-      print_exception_and_exit(e)
+  class Cli < Magni
+    app_name 'rf'
+    default_command :text
+
+    class_option :color, type: :boolean, default: $stdout.tty?,
+                         desc: '[no] colorized output (default: --color in TTY)'
+    class_option :grep_mode, type: :flag, aliases: :g, display_name: 'grep',
+                             desc: 'Interpret command as a regex pattern for searching (like grep)'
+    class_option :include_filename, desc: 'searches for files matching a regex pattern'
+    class_option :in_place, type: :string, aliases: :i, banner: '[=SUFFIX]',
+                            desc: 'edit files in place (makes backup if SUFFIX supplied)'
+    class_option :recursive, type: :flag, aliases: :R,
+                             desc: 'read all files under each directory recursively'
+    class_option :script_file, type: :string, aliases: :f, display_name: 'file',
+                               desc: 'executed the contents of program_file'
+    class_option :slurp, type: :flag, aliases: :s,
+                         desc: 'read all reacords into an array'
+    class_option :quiet, type: :flag, aliases: :q,
+                         desc: 'suppress automatic printing'
+    class_option :with_filename, type: :flag, aliases: :H,
+                                 desc: 'print filename with output lines'
+    class_option :with_record_number, type: :flag,
+                                      desc: 'print record number with output lines'
+
+    option :filed_separator, aliases: :F
+    desc 'text', 'use Text filter'
+    order 0
+    def text(*argv)
+      run :text, argv
     end
 
-    def debug?
-      ENV.fetch('RF_DEBUG', nil)
+    option :disable_boolean_mode?, display_name: 'disable-boolean-mode', type: :flag
+    option :raw?, aliases: :r, display_name: 'raw-string', type: :flag
+    option :minify?, display_name: 'minify', type: :flag
+    desc 'json', 'use JSON filter'
+    order 1
+    def json(*argv)
+      run :json, argv
     end
 
-    def print_exception_and_exit(exc, backtrace = debug?)
-      if backtrace
-        warn "Error: #{exc.inspect}"
-        warn
-        warn 'trace (most recent call last):'
-        exc.backtrace.each_with_index do |line, index|
-          i = exc.backtrace.size - index
-          warn "  [#{i}] #{line}"
-        end
-      else
-        warn "Error: #{exc}"
+    option :disable_boolean_mode?, display_name: 'disable-boolean-mode', type: :flag
+    option :raw?, aliases: :r, display_name: 'raw-string', type: :flag
+    option :doc?, display_name: 'doc', type: :boolean
+    desc 'yaml', 'use YAML filter'
+    order 2
+    def yaml(*argv)
+      run :yaml, argv
+    end
+
+    desc 'version', 'show version'
+    order 90
+    def version
+      print_version_and_exit
+    end
+
+    class << self
+      def usage(name, command)
+        c = command || '[command]'
+        <<~USAGE
+          #{name} #{c} [options] 'command' file ...
+          #{name} #{c} [options] -f program_file file ...
+        USAGE
       end
-      exit 1
+
+      def show_help_on_failure? = false
+    end
+
+    no_commands do # rubocop:disable Metrics/BlockLength
+      def run(type, argv)
+        print_version_and_exit if options[:version]
+
+        config = Config.new(type, options, argv)
+
+        Runner.run(config)
+      rescue ArgumentError
+        help
+      rescue NotFound => e
+        print_exception_and_exit(e, false)
+      rescue StandardError => e
+        print_exception_and_exit(e)
+      end
+
+      def print_version_and_exit
+        puts "rf #{Rf::VERSION} (mruby #{MRUBY_VERSION} #{MRUBY_COMMIT_ID[0..6]})"
+        exit
+      end
+
+      def debug?
+        ENV.fetch('RF_DEBUG', nil)
+      end
+
+      def print_exception_and_exit(exc, backtrace = debug?)
+        if backtrace
+          warn "Error: #{exc.inspect}"
+          warn
+          warn 'trace (most recent call last):'
+          exc.backtrace.each_with_index do |line, index|
+            i = exc.backtrace.size - index
+            warn "  [#{i}] #{line}"
+          end
+        else
+          warn "Error: #{exc}"
+        end
+        exit 1
+      end
     end
   end
 end

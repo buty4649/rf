@@ -2,7 +2,17 @@ require 'shellwords'
 
 def gem_config(conf)
   conf.gembox 'default'
-  conf.gem File.expand_path(__dir__)
+
+  conf.gem mgem: 'mruby-env'
+  conf.gem github: 'mrbgems/mruby-tempfile'
+
+  conf.gem github: 'buty4649/magni', branch: 'main' do |g|
+    g.bins = %w[rf]
+  end
+  conf.gem github: 'buty4649/mruby-commit-id', branch: 'main'
+  conf.gem github: 'buty4649/mruby-yyjson', branch: 'main'
+  conf.gem github: 'buty4649/mruby-rapidyaml', branch: 'main'
+  conf.gem github: 'buty4649/mruby-onig-regexp'
 end
 
 def debug_config(conf)

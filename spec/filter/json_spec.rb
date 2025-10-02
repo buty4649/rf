@@ -2,19 +2,17 @@ describe 'JSON filter' do
   context 'with -t option' do
     describe 'Output string' do
       let(:input) { load_fixture('json/string.json') }
-      let(:output) { '"test"' }
+      let(:args) { 'json _' }
+      let(:expect_output) { "\"test\"\n" }
 
-      before { run_rf('-t json _', input) }
-
-      it { expect(last_command_started).to be_successfully_executed }
-      it { expect(last_command_started).to have_output output_string_eq output }
+      it_behaves_like 'a successful exec'
     end
   end
 
   context 'with -r option' do
     describe 'Output string' do
       let(:input) { load_fixture('json/string.json') }
-      let(:args) { '-j -r _' }
+      let(:args) { 'json -r _' }
       let(:expect_output) { "test\n" }
 
       it_behaves_like 'a successful exec'
@@ -23,7 +21,7 @@ describe 'JSON filter' do
     # When using pipes, `--no-color` is implicitly applied internally, so we explicitly test for it.
     context 'with --color option' do
       let(:input) { load_fixture('json/string.json') }
-      let(:args) { '-j -r --color _' }
+      let(:args) { 'json -r --color _' }
       let(:expect_output) { "test\n" }
 
       it_behaves_like 'a successful exec'
@@ -51,7 +49,7 @@ describe 'JSON filter' do
     end
 
     with_them do
-      before { run_rf("-j --disable-boolean-mode '#{command}'", input) }
+      before { run_rf("json --disable-boolean-mode '#{command}'", input) }
 
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output output_string_eq output }
@@ -60,7 +58,7 @@ describe 'JSON filter' do
 
   context 'when use -H option' do
     let(:input) { '"foobar"' }
-    let(:args) { '-j -H --no-color true testfile' }
+    let(:args) { 'json -H --no-color true testfile' }
     let(:expect_output) do
       out = input.split("\n").map { |line| "testfile:#{line}" }.join("\n")
       "#{out}\n"
@@ -74,7 +72,8 @@ describe 'JSON filter' do
   end
 
   context 'with -R option' do
-    let(:output) do
+    let(:args) { 'json -R _ .' }
+    let(:expect_output) do
       <<~OUTPUT
         "foobarbaz"
         "foo"
@@ -89,12 +88,9 @@ describe 'JSON filter' do
       write_file('foo/bar/baz.json', '"foobarbaz"')
       write_file('foo/bar/notmatch.txt', '"not match"')
       write_file('foo/bar/notmatch.yml', '"not match"')
-
-      run_rf('-j -R _ .')
     end
 
-    it { expect(last_command_started).to be_successfully_executed }
-    it { expect(last_command_started).to have_output output_string_eq output }
+    it_behaves_like 'a successful exec'
   end
 
   context 'with -g option' do
@@ -106,7 +102,7 @@ describe 'JSON filter' do
     end
 
     with_them do
-      before { run_rf("-j #{command} .", input) }
+      before { run_rf("json #{command} .", input) }
 
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output_on_stdout output_string_eq output }
@@ -136,7 +132,7 @@ describe 'JSON filter' do
     end
 
     with_them do
-      let(:args) { "-j #{option} --no-color true testfile1 testfile2" }
+      let(:args) { "json #{option} --no-color true testfile1 testfile2" }
       before do
         write_file 'testfile1', input
         write_file 'testfile2', input
@@ -149,17 +145,16 @@ describe 'JSON filter' do
   context 'when input from stdin' do
     describe 'Output string' do
       let(:input) { load_fixture('json/string.json') }
-      let(:output) { '"test"' }
+      let(:args) { 'json _' }
+      let(:expect_output) { "\"test\"\n" }
 
-      before { run_rf('-j _', input) }
-
-      it { expect(last_command_started).to be_successfully_executed }
-      it { expect(last_command_started).to have_output output_string_eq output }
+      it_behaves_like 'a successful exec'
     end
 
     describe 'Output each object of the array one by one' do
       let(:input) { load_fixture('json/array.json') }
-      let(:output) do
+      let(:args) { 'json _' }
+      let(:expect_output) do
         <<~OUTPUT
           "foo"
           "bar"
@@ -167,25 +162,21 @@ describe 'JSON filter' do
         OUTPUT
       end
 
-      before { run_rf('-j _', input) }
-
-      it { expect(last_command_started).to be_successfully_executed }
-      it { expect(last_command_started).to have_output output_string_eq output }
+      it_behaves_like 'a successful exec'
     end
 
     describe 'Output only the filtered objects' do
       let(:input) { load_fixture('json/array.json') }
-      let(:output) { '"foo"' }
+      let(:args) { 'json /foo/' }
+      let(:expect_output) { "\"foo\"\n" }
 
-      before { run_rf('-j /foo/', input) }
-
-      it { expect(last_command_started).to be_successfully_executed }
-      it { expect(last_command_started).to have_output output_string_eq output }
+      it_behaves_like 'a successful exec'
     end
 
     describe 'Output the value of the selected Hash key' do
       let(:input) { load_fixture('json/hash.json') }
-      let(:output) do
+      let(:args) { 'json "_.bar.baz"' }
+      let(:expect_output) do
         <<~OUTPUT
           [
             "a",
@@ -195,32 +186,25 @@ describe 'JSON filter' do
         OUTPUT
       end
 
-      before { run_rf('-j "_.bar.baz"', input) }
-
-      it { expect(last_command_started).to be_successfully_executed }
-      it { expect(last_command_started).to have_output output_string_eq output }
+      it_behaves_like 'a successful exec'
     end
 
     describe 'Output the value of the selected Hash space included key' do
       let(:input) { load_fixture('json/hash.json') }
-      let(:output) { '"foo bar"' }
+      let(:args) { %q(json '_["foo bar"]') }
+      let(:expect_output) { "\"foo bar\"\n" }
 
-      before { run_rf(%q(-j '_["foo bar"]'), input) }
-
-      it { expect(last_command_started).to be_successfully_executed }
-      it { expect(last_command_started).to have_output output_string_eq output }
+      it_behaves_like 'a successful exec'
     end
 
     describe 'Read all at once' do
       let(:input) { load_fixture('json/hash.json') }
-      let(:output) do
-        '[{"foo" => 1, "bar" => {"baz" => ["a", "b", "c"]}, "foo bar" => "foo bar"}]'
+      let(:args) { "json -s -q 'p _'" }
+      let(:expect_output) do
+        "[{\"foo\" => 1, \"bar\" => {\"baz\" => [\"a\", \"b\", \"c\"]}, \"foo bar\" => \"foo bar\"}]\n"
       end
 
-      before { run_rf("-j -s -q 'p _'", input) }
-
-      it { expect(last_command_started).to be_successfully_executed }
-      it { expect(last_command_started).to have_output output_string_eq output }
+      it_behaves_like 'a successful exec'
     end
   end
 
@@ -228,54 +212,48 @@ describe 'JSON filter' do
     describe 'Output string' do
       let(:file) { 'test.json' }
       let(:input) { load_fixture('json/string.json') }
-      let(:output) { '"test"' }
+      let(:args) { "json _ #{file}" }
+      let(:expect_output) { "\"test\"\n" }
 
       before do
         write_file file, input
-        run_rf("-j _ #{file}")
       end
 
-      it { expect(last_command_started).to be_successfully_executed }
-      it { expect(last_command_started).to have_output output_string_eq output }
+      it_behaves_like 'a successful exec'
     end
   end
 
   context 'when suppress automatic printing' do
     describe 'Output string' do
       let(:input) { load_fixture('json/string.json') }
-      let(:output) { '' }
+      let(:args) { 'json -q _' }
+      let(:expect_output) { '' }
 
-      before { run_rf('-j -q _', input) }
-
-      it { expect(last_command_started).to be_successfully_executed }
-      it { expect(last_command_started).to have_output output_string_eq output }
+      it_behaves_like 'a successful exec'
     end
   end
 
   context 'when use regexp' do
     describe 'Input as String' do
       let(:input) { load_fixture('json/string.json') }
-      let(:output) { '"test"' }
+      let(:args) { 'json /test/' }
+      let(:expect_output) { "\"test\"\n" }
 
-      before { run_rf('-j /test/', input) }
-
-      it { expect(last_command_started).to be_successfully_executed }
-      it { expect(last_command_started).to have_output output_string_eq output }
+      it_behaves_like 'a successful exec'
     end
 
     describe 'Input as Number' do
       let(:input) { load_fixture('json/number.json') }
-      let(:output) { '123456789' }
+      let(:args) { 'json /123456789/' }
+      let(:expect_output) { "123456789\n" }
 
-      before { run_rf('-j /123456789/', input) }
-
-      it { expect(last_command_started).to be_successfully_executed }
-      it { expect(last_command_started).to have_output output_string_eq output }
+      it_behaves_like 'a successful exec'
     end
 
     describe 'Input as Hash' do
       let(:input) { '{"foo": "bar"}' }
-      let(:output) do
+      let(:args) { 'json /foo/' }
+      let(:expect_output) do
         <<~OUTPUT
           {
             "foo": "bar"
@@ -283,10 +261,7 @@ describe 'JSON filter' do
         OUTPUT
       end
 
-      before { run_rf('-j /foo/', input) }
-
-      it { expect(last_command_started).to be_successfully_executed }
-      it { expect(last_command_started).to have_output output_string_eq output }
+      it_behaves_like 'a successful exec'
     end
   end
 
@@ -294,7 +269,7 @@ describe 'JSON filter' do
     describe 'Error message' do
       let(:input) { '{"foo": "bar"' }
 
-      let(:args) { '-j _' }
+      let(:args) { 'json _' }
       let(:expect_output) do
         "Error: failed to parse JSON: unexpected end of data position: 14\n"
       end
@@ -307,7 +282,7 @@ describe 'JSON filter' do
     describe 'Output string' do
       let(:input) { '{"foo": "bar", "foo": "baz"}' }
 
-      let(:args) { '-j _' }
+      let(:args) { 'json _' }
       let(:expect_output) do
         <<~JSON
           {

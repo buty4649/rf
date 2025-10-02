@@ -2,19 +2,17 @@ describe 'YAML filter' do
   context 'with -t option' do
     describe 'Output string' do
       let(:input) { load_fixture('yaml/string.yml') }
-      let(:output) { 'test' }
+      let(:args) { 'yaml _' }
+      let(:expect_output) { "test\n" }
 
-      before { run_rf('-t yaml _', input) }
-
-      it { expect(last_command_started).to be_successfully_executed }
-      it { expect(last_command_started).to have_output output_string_eq output }
+      it_behaves_like 'a successful exec'
     end
   end
 
   context 'with -r option' do
     describe 'Output string' do
       let(:input) { load_fixture('yaml/multibyte_string.yml') }
-      let(:args) { '-t yaml -r _' }
+      let(:args) { 'yaml -r _' }
       let(:expect_output) { "🍣🍣🍣\n" }
 
       it_behaves_like 'a successful exec'
@@ -22,7 +20,7 @@ describe 'YAML filter' do
 
     describe 'Ouput yaml to JSON string' do
       let(:input) { load_fixture('json/hash.json') }
-      let(:args) { '-t yaml -r "_.to_json(pretty_print: true)"' }
+      let(:args) { 'yaml -r "_.to_json(pretty_print: true)"' }
       let(:expect_output) do
         <<~OUTPUT
           {
@@ -44,7 +42,8 @@ describe 'YAML filter' do
   end
 
   context 'with -R option' do
-    let(:output) do
+    let(:args) { 'yaml -R _ .' }
+    let(:expect_output) do
       <<~OUTPUT
         bar
         foobarbaz
@@ -61,12 +60,9 @@ describe 'YAML filter' do
       write_file('foo/bar/baz.yml', 'foobarbaz')
       write_file('foo/bar/notmatch.txt', 'not match')
       write_file('foo/bar/notmatch.json', '"not match"')
-
-      run_rf('-y -R _ .')
     end
 
-    it { expect(last_command_started).to be_successfully_executed }
-    it { expect(last_command_started).to have_output output_string_eq output }
+    it_behaves_like 'a successful exec'
   end
 
   context 'with -g option' do
@@ -78,7 +74,7 @@ describe 'YAML filter' do
     end
 
     with_them do
-      before { run_rf("-y #{command} .", input) }
+      before { run_rf("yaml #{command} .", input) }
 
       it { expect(last_command_started).to be_successfully_executed }
       it { expect(last_command_started).to have_output_on_stdout output_string_eq output }
@@ -88,17 +84,15 @@ describe 'YAML filter' do
   context 'when input from stdin' do
     describe 'Output string' do
       let(:input) { load_fixture('yaml/string.yml') }
-      let(:output) { 'test' }
+      let(:args) { 'yaml _' }
+      let(:expect_output) { "test\n" }
 
-      before { run_rf('-y _', input) }
-
-      it { expect(last_command_started).to be_successfully_executed }
-      it { expect(last_command_started).to have_output output_string_eq output }
+      it_behaves_like 'a successful exec'
     end
 
     describe 'Output UTF-8 string' do
       let(:input) { 'あいうえお🍣' }
-      let(:args) { '-y _' }
+      let(:args) { 'yaml _' }
       let(:expect_output) { "あいうえお🍣\n" }
 
       it_behaves_like 'a successful exec'
@@ -106,7 +100,8 @@ describe 'YAML filter' do
 
     describe 'Output each object of the array one by one' do
       let(:input) { load_fixture('yaml/array.yml') }
-      let(:output) do
+      let(:args) { 'yaml _' }
+      let(:expect_output) do
         <<~OUTPUT
           foo
           bar
@@ -114,25 +109,21 @@ describe 'YAML filter' do
         OUTPUT
       end
 
-      before { run_rf('-y _', input) }
-
-      it { expect(last_command_started).to be_successfully_executed }
-      it { expect(last_command_started).to have_output output_string_eq output }
+      it_behaves_like 'a successful exec'
     end
 
     describe 'Output only the filtered objects' do
       let(:input) { load_fixture('yaml/array.yml') }
-      let(:output) { 'foo' }
+      let(:args) { 'yaml /foo/' }
+      let(:expect_output) { "foo\n" }
 
-      before { run_rf('-y /foo/', input) }
-
-      it { expect(last_command_started).to be_successfully_executed }
-      it { expect(last_command_started).to have_output output_string_eq output }
+      it_behaves_like 'a successful exec'
     end
 
     describe 'Output the value of the selected Hash key' do
       let(:input) { load_fixture('yaml/hash.yml') }
-      let(:output) do
+      let(:args) { 'yaml "_.bar.baz"' }
+      let(:expect_output) do
         <<~OUTPUT
           - a
           - b
@@ -140,32 +131,25 @@ describe 'YAML filter' do
         OUTPUT
       end
 
-      before { run_rf('-y "_.bar.baz"', input) }
-
-      it { expect(last_command_started).to be_successfully_executed }
-      it { expect(last_command_started).to have_output output_string_eq output }
+      it_behaves_like 'a successful exec'
     end
 
     describe 'Output the value of the selected Hash space included key' do
       let(:input) { load_fixture('yaml/hash.yml') }
-      let(:output) { 'foo bar' }
+      let(:args) { %q(yaml '_["foo bar"]') }
+      let(:expect_output) { "foo bar\n" }
 
-      before { run_rf(%q(-y '_["foo bar"]'), input) }
-
-      it { expect(last_command_started).to be_successfully_executed }
-      it { expect(last_command_started).to have_output output_string_eq output }
+      it_behaves_like 'a successful exec'
     end
 
     describe 'Read all at once' do
       let(:input) { load_fixture('yaml/hash.yml') }
-      let(:output) do
-        '[{"foo" => 1, "bar" => {"baz" => ["a", "b", "c"]}, "foo bar" => "foo bar"}]'
+      let(:args) { "yaml -s -q 'p _'" }
+      let(:expect_output) do
+        "[{\"foo\" => 1, \"bar\" => {\"baz\" => [\"a\", \"b\", \"c\"]}, \"foo bar\" => \"foo bar\"}]\n"
       end
 
-      before { run_rf("-y -s -q 'p _'", input) }
-
-      it { expect(last_command_started).to be_successfully_executed }
-      it { expect(last_command_started).to have_output output_string_eq output }
+      it_behaves_like 'a successful exec'
     end
   end
 
@@ -173,76 +157,65 @@ describe 'YAML filter' do
     describe 'Output string' do
       let(:file) { 'test.yml' }
       let(:input) { load_fixture('yaml/string.yml') }
-      let(:output) { 'test' }
+      let(:args) { "yaml _ #{file}" }
+      let(:expect_output) { "test\n" }
 
       before do
         write_file file, input
-        run_rf("-y _ #{file}")
       end
 
-      it { expect(last_command_started).to be_successfully_executed }
-      it { expect(last_command_started).to have_output output_string_eq output }
+      it_behaves_like 'a successful exec'
     end
   end
 
   context 'when suppress automatic printing' do
     describe 'Output string' do
       let(:input) { load_fixture('yaml/string.yml') }
-      let(:output) { '' }
+      let(:args) { 'yaml -q _' }
+      let(:expect_output) { '' }
 
-      before { run_rf('-y -q _', input) }
-
-      it { expect(last_command_started).to be_successfully_executed }
-      it { expect(last_command_started).to have_output output_string_eq output }
+      it_behaves_like 'a successful exec'
     end
   end
 
   context 'when use regexp' do
     describe 'Input as String' do
       let(:input) { load_fixture('yaml/string.yml') }
-      let(:output) { 'test' }
+      let(:args) { 'yaml /test/' }
+      let(:expect_output) { "test\n" }
 
-      before { run_rf('-y /test/', input) }
-
-      it { expect(last_command_started).to be_successfully_executed }
-      it { expect(last_command_started).to have_output output_string_eq output }
+      it_behaves_like 'a successful exec'
     end
 
     describe 'Input as Number' do
       let(:input) { load_fixture('yaml/number.yml') }
-      let(:output) { '123456789' }
+      let(:args) { 'yaml /123456789/' }
+      let(:expect_output) { "123456789\n" }
 
-      before { run_rf('-y /123456789/', input) }
-
-      it { expect(last_command_started).to be_successfully_executed }
-      it { expect(last_command_started).to have_output output_string_eq output }
+      it_behaves_like 'a successful exec'
     end
 
     describe 'Input as Hash' do
       let(:input) { 'foo: bar' }
-      let(:output) { input }
+      let(:args) { 'yaml /foo/' }
+      let(:expect_output) { "foo: bar\n" }
 
-      before { run_rf('-y /foo/', input) }
-
-      it { expect(last_command_started).to be_successfully_executed }
-      it { expect(last_command_started).to have_output output_string_eq output }
+      it_behaves_like 'a successful exec'
     end
   end
 
   context 'with --doc option' do
     describe 'Output string' do
       let(:input) { load_fixture('yaml/string.yml') }
-      let(:output) { '--- test' }
+      let(:args) { 'yaml --doc _' }
+      let(:expect_output) { "--- test\n" }
 
-      before { run_rf('-y --doc _', input) }
-
-      it { expect(last_command_started).to be_successfully_executed }
-      it { expect(last_command_started).to have_output output_string_eq output }
+      it_behaves_like 'a successful exec'
     end
 
     describe 'Output hash' do
       let(:input) { load_fixture('yaml/hash.yml') }
-      let(:args) { '-y --doc _' }
+      let(:args) { 'yaml --doc _' }
       let(:expect_output) do
         <<~OUTPUT
           ---
@@ -285,7 +258,7 @@ describe 'YAML filter' do
     end
 
     with_them do
-      let(:args) { "-y --disable-boolean-mode '#{command}'" }
+      let(:args) { "yaml --disable-boolean-mode '#{command}'" }
 
       it_behaves_like 'a successful exec'
     end
@@ -293,7 +266,7 @@ describe 'YAML filter' do
 
   context 'when use -H option' do
     let(:input) { 'foobar' }
-    let(:args) { '-y -H --no-color true testfile' }
+    let(:args) { 'yaml -H --no-color true testfile' }
     let(:expect_output) do
       out = input.split("\n").map { |line| "testfile:#{line}" }.join("\n")
       "#{out}\n"
@@ -329,7 +302,7 @@ describe 'YAML filter' do
     end
 
     with_them do
-      let(:args) { "-y #{option} --no-color true testfile1 testfile2" }
+      let(:args) { "yaml #{option} --no-color true testfile1 testfile2" }
       before do
         write_file 'testfile1', input
         write_file 'testfile2', input
@@ -341,11 +314,9 @@ describe 'YAML filter' do
 
   describe 'Output nil value' do
     let(:input) { 'foobar' }
-    let(:output) { '' }
+    let(:args) { 'yaml nil' }
+    let(:expect_output) { '' }
 
-    before { run_rf('-y nil', input) }
-
-    it { expect(last_command_started).to be_successfully_executed }
-    it { expect(last_command_started).to have_output output_string_eq output }
+    it_behaves_like 'a successful exec'
   end
 end

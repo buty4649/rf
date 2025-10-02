@@ -21,9 +21,9 @@ describe 'Behavior with --with-record-number option' do
     let(:args) { '--with-record-number --color _' }
     let(:expect_output) do
       <<~OUTPUT
-        \e[35m1\e[0m\e[36m:\e[0mfoo
-        \e[35m2\e[0m\e[36m:\e[0mbar
-        \e[35m3\e[0m\e[36m:\e[0mbaz
+        \e[35m1\e[m\e[36m:\e[mfoo
+        \e[35m2\e[m\e[36m:\e[mbar
+        \e[35m3\e[m\e[36m:\e[mbaz
       OUTPUT
     end
 
@@ -50,9 +50,9 @@ describe 'Behavior with --with-record-number option' do
       let(:args) { '--with-record-number --with-filename --color _ testfile' }
       let(:expect_output) do
         <<~OUTPUT
-          \e[35mtestfile\e[0m\e[36m:\e[0m\e[35m1\e[0m\e[36m:\e[0mfoo
-          \e[35mtestfile\e[0m\e[36m:\e[0m\e[35m2\e[0m\e[36m:\e[0mbar
-          \e[35mtestfile\e[0m\e[36m:\e[0m\e[35m3\e[0m\e[36m:\e[0mbaz
+          \e[35mtestfile\e[m\e[36m:\e[m\e[35m1\e[m\e[36m:\e[mfoo
+          \e[35mtestfile\e[m\e[36m:\e[m\e[35m2\e[m\e[36m:\e[mbar
+          \e[35mtestfile\e[m\e[36m:\e[m\e[35m3\e[m\e[36m:\e[mbaz
         OUTPUT
       end
 

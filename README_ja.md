@@ -9,7 +9,7 @@ rfはRubyのコードでテキスト/JSON/YAMLをフィルタできるCLIのツ�
 rfでは同等の処理をRubyのコードで記述できるため、Rubyistにとって手になじむツールとなっています。
 
 rfは[mruby](https://github.com/mruby/mruby)を使って作られていて、単独のバイナリファイルで構成されています。
-rfを使うために追加でRubyをインストール必要はありません。
+rfを使うために追加でRubyをインストールする必要はありません。
 バイナリファイルをダウンロードすればすぐに使い始められるのも特徴です。
 
 ## クイック使用ガイド
@@ -41,19 +41,19 @@ rf '/🍣/' example.txt
 カンマで区切られたファイルの2カラム目を足し合わせる
 
 ```sh
-rf -F, 's||=0;s+=_2; at_exit{putts s}' example.csv
+rf -F, 's||=0;s+=_2; at_exit{puts s}' example.csv
 ```
 
 JSONファイルの特定のキーを出力する
 
 ```sh
-rf -j '.a.b' example.json
+rf json '.a.b' example.json
 ```
 
 YAMLファイルの特定のキーを出力する
 
 ```sh
-rf -y '.a.b' example.json
+rf yaml '.a.b' example.yaml
 ```
 
 ## インストール方法
@@ -65,7 +65,7 @@ rf -y '.a.b' example.json
 |     | amd64 | arm64|
 |-----|-------|------|
 |Linux|✅    |✅    |
-|MacOS|✅    |✅    |
+|MacOS|-     |✅    |
 |Windows|✅  |-     |
 
 別の方法として各パッケージマネージャを使ってインストールすることもできます。
@@ -101,20 +101,33 @@ gh extension install k1LoW/gh-setup
 gh setup --repo buty4649/rf --bin-dir ~/.local/bin
 ```
 
-## オプション
+## 使用方法とオプション
 
 ```sh
-Usage: rf [options] 'command' file ...
-  -t, --type={text|json|yaml}      set the type of input (default:text)
-  -j, --json                       equivalent to -tjson
-  -y, --yaml                       equivalent to -tyaml
-      --debug                      enable debug mode
-  -n, --quiet                      suppress automatic priting
-  -h, --help                       show this message
-  -v, --version                    show version
+Usage:
+  rf [command] [options] 'command' file ...
+  rf [command] [options] -e program_file file ...
 
-text options:
-  -F, --filed-separator VAL        set the field separator(regexp)
+Commands:
+  text       use Text filter (default)
+  json       use JSON filter
+  yaml       use YAML filter
+  version    show version
+  help       show this message
+
+Options:
+  -F, --filed-separator string
+      --[no-]color                  [no] colorized output (default: --color in TTY)
+  -g, --grep                        Interpret command as a regex pattern for searching (like grep)
+      --include-filename string     searches for files matching a regex pattern
+  -i, --in-place[=SUFFIX]           edit files in place (makes backup if SUFFIX supplied)
+  -R, --recursive                   read all files under each directory recursively
+  -f, --file string                 executed the contents of program_file
+  -s, --slurp                       read all reacords into an array
+  -q, --quiet                       suppress automatic printing
+  -H, --with-filename               print filename with output lines
+      --with-record-number          print record number with output lines
+  -h, --help                        show this message and exit
 ```
 
 *file*を指定しなかった場合は標準入力から読み込みます。
@@ -195,8 +208,8 @@ rfではRubyで定義されている[特殊変数](https://docs.ruby-lang.org/ja
 
 | メソッド名 | 説明 |
 |-----------|------|
-| gsub | `_.gusb`と等価です |
-| gsub! | `_.gusb!`と等価です |
+| gsub | `_.gsub`と等価です |
+| gsub! | `_.gsub!`と等価です |
 | match | `_.match`と等価です |
 | match? | `_.match?`と等価です |
 | sub | `_.sub`と等価です |

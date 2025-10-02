@@ -41,19 +41,19 @@ rf '/🍣/' example.txt
 Add the second column of comma-separated files
 
 ```sh
-rf -F, 's||=0;s+=_2; at_exit{putts s}' example.csv
+rf -F, 's||=0;s+=_2; at_exit{puts s}' example.csv
 ```
 
 Output a specific key in a JSON file
 
 ```sh
-rf -j '.a.b' example.json
+rf json '.a.b' example.json
 ```
 
 Output a specific key in a YAML file
 
 ```sh
-rf -y '.a.b' example.json
+rf yaml '.a.b' example.yaml
 ```
 
 ## Installation
@@ -62,11 +62,11 @@ You can download rf from the [Release page](https://github.com/buty4649/rf/relea
 Binary files are provided for each platform and architecture.
 Please refer to the following table for each corresponding status.
 
-|       | amd64 | arm64|
-|-------|-------|------|
-|Linux  |✅     |✅    |
-|MacOS  |-      |✅    |
-|Windows|✅     |-     |
+|     | amd64 | arm64|
+|-----|-------|------|
+|Linux|✅    |✅    |
+|MacOS|-     |✅    |
+|Windows|✅  |-     |
 
 You can also install it using each package manager as another method.
 
@@ -101,20 +101,33 @@ gh extension install k1LoW/gh-setup
 gh setup --repo buty4649/rf --bin-dir ~/.local/bin
 ```
 
-## Options
+## Usage and Options
 
 ```sh
-Usage: rf [options] 'command' file ...
-  -t, --type={text|json|yaml}      set the type of input (default:text)
-  -j, --json                       equivalent to -tjson
-  -y, --yaml                       equivalent to -tyaml
-      --debug                      enable debug mode
-  -n, --quiet                      suppress automatic priting
-  -h, --help                       show this message
-  -v, --version                    show version
+Usage:
+  rf [command] [options] 'command' file ...
+  rf [command] [options] -e program_file file ...
 
-text options:
-  -F, --filed-separator VAL        set the field separator(regexp)
+Commands:
+  text       use Text filter (default)
+  json       use JSON filter
+  yaml       use YAML filter
+  version    show version
+  help       show this message
+
+Options:
+  -F, --filed-separator string
+      --[no-]color                  [no] colorized output (default: --color in TTY)
+  -g, --grep                        Interpret command as a regex pattern for searching (like grep)
+      --include-filename string     searches for files matching a regex pattern
+  -i, --in-place[=SUFFIX]           edit files in place (makes backup if SUFFIX supplied)
+  -R, --recursive                   read all files under each directory recursively
+  -f, --file string                 executed the contents of program_file
+  -s, --slurp                       read all reacords into an array
+  -q, --quiet                       suppress automatic printing
+  -H, --with-filename               print filename with output lines
+      --with-record-number          print record number with output lines
+  -h, --help                        show this message and exit
 ```
 
 If you don't specify *file*, it will be read from standard input.

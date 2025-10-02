@@ -3,9 +3,7 @@ describe 'Show error message' do
 
   where(:args, :output) do
     '--invalid-option'     | 'Error: invalid option: --invalid-option'
-    '-t test'              | 'Error: "test" is invalid type. possible values: text,json,yaml'
-    '-t'                   | 'Error: missing argument: -t'
-    '-F'                   | 'Error: missing argument: -F'
+    '-F'                   | 'Error: option requires an argument: -F'
     '_ not_found_file'     | 'Error: file not found: not_found_file'
     '_ .'                  | 'Error: .: is a directory'
     '-f program_file'      | 'Error: No such file or directory - open program_file'
