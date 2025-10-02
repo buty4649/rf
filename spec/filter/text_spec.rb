@@ -8,6 +8,84 @@ describe 'Text filter' do
     INPUT
   end
 
+  context 'when text command is default (no explicit command)' do
+    describe 'Output all lines' do
+      let(:output) { input }
+
+      before { run_rf('true', input) }
+
+      it { expect(last_command_started).to be_successfully_executed }
+      it { expect(last_command_started).to have_output_on_stdout output_string_eq output }
+    end
+
+    describe 'Output only the second field' do
+      let(:output) do
+        <<~OUTPUT
+          foo
+          bar
+          baz
+          foobar
+        OUTPUT
+      end
+
+      before { run_rf('_2', input) }
+
+      it { expect(last_command_started).to be_successfully_executed }
+      it { expect(last_command_started).to have_output_on_stdout output_string_eq output }
+    end
+
+    describe 'Use field separator option without text command' do
+      let(:csv_input) do
+        <<~INPUT
+          1,foo
+          2,bar
+          3,baz
+          4,foobar
+        INPUT
+      end
+      let(:output) do
+        <<~OUTPUT
+          foo
+          bar
+          baz
+          foobar
+        OUTPUT
+      end
+
+      before { run_rf('-F, _2', csv_input) }
+
+      it { expect(last_command_started).to be_successfully_executed }
+      it { expect(last_command_started).to have_output_on_stdout output_string_eq output }
+    end
+
+    describe 'Use grep option without text command' do
+      let(:output) do
+        <<~OUTPUT
+          1 foo
+          4 foobar
+        OUTPUT
+      end
+
+      before { run_rf('-g --no-color foo', input) }
+
+      it { expect(last_command_started).to be_successfully_executed }
+      it { expect(last_command_started).to have_output_on_stdout output_string_eq output }
+    end
+
+    describe 'Use quiet option without text command' do
+      let(:output) do
+        <<~OUTPUT
+          10
+        OUTPUT
+      end
+
+      before { run_rf('-q "s||=0; s+=_1; at_exit{ puts s }"', input) }
+
+      it { expect(last_command_started).to be_successfully_executed }
+      it { expect(last_command_started).to have_output_on_stdout output_string_eq output }
+    end
+  end
+
   context 'when use -t option' do
     describe 'Output all lines' do
       let(:output) { input }
