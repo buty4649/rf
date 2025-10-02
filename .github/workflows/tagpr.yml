@@ -36,3 +36,6 @@ jobs:
         if: steps.tagpr.outputs.tag != ''
         with:
           github_token: ${{ steps.generate_token.outputs.token }}
+          dockerhub_username: ${{ secrets.DOCKERHUB_USERNAME }}
+          dockerhub_token: ${{ secrets.DOCKERHUB_TOKEN }}
+          version: ${{ steps.tagpr.outputs.tag }}
