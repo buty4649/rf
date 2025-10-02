@@ -51,3 +51,4 @@
 	versionFile = mrblib/rf/version.rb
 	majorLabels = tagpr:major
 	minorLabels = tagpr:minor
+	release = false
