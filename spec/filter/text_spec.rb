@@ -10,16 +10,15 @@ describe 'Text filter' do
 
   context 'when text command is default (no explicit command)' do
     describe 'Output all lines' do
-      let(:output) { input }
+      let(:args) { 'true' }
+      let(:expect_output) { input }
 
-      before { run_rf('true', input) }
-
-      it { expect(last_command_started).to be_successfully_executed }
-      it { expect(last_command_started).to have_output_on_stdout output_string_eq output }
+      it_behaves_like 'a successful exec'
     end
 
     describe 'Output only the second field' do
-      let(:output) do
+      let(:args) { '_2' }
+      let(:expect_output) do
         <<~OUTPUT
           foo
           bar
@@ -28,14 +27,11 @@ describe 'Text filter' do
         OUTPUT
       end
 
-      before { run_rf('_2', input) }
-
-      it { expect(last_command_started).to be_successfully_executed }
-      it { expect(last_command_started).to have_output_on_stdout output_string_eq output }
+      it_behaves_like 'a successful exec'
     end
 
     describe 'Use field separator option without text command' do
-      let(:csv_input) do
+      let(:input) do
         <<~INPUT
           1,foo
           2,bar
@@ -43,7 +39,8 @@ describe 'Text filter' do
           4,foobar
         INPUT
       end
-      let(:output) do
+      let(:args) { '-F, _2' }
+      let(:expect_output) do
         <<~OUTPUT
           foo
           bar
@@ -52,62 +49,52 @@ describe 'Text filter' do
         OUTPUT
       end
 
-      before { run_rf('-F, _2', csv_input) }
-
-      it { expect(last_command_started).to be_successfully_executed }
-      it { expect(last_command_started).to have_output_on_stdout output_string_eq output }
+      it_behaves_like 'a successful exec'
     end
 
     describe 'Use grep option without text command' do
-      let(:output) do
+      let(:args) { '-g --no-color foo' }
+      let(:expect_output) do
         <<~OUTPUT
           1 foo
           4 foobar
         OUTPUT
       end
 
-      before { run_rf('-g --no-color foo', input) }
-
-      it { expect(last_command_started).to be_successfully_executed }
-      it { expect(last_command_started).to have_output_on_stdout output_string_eq output }
+      it_behaves_like 'a successful exec'
     end
 
     describe 'Use quiet option without text command' do
-      let(:output) do
+      let(:args) { '-q "s||=0; s+=_1; at_exit{ puts s }"' }
+      let(:expect_output) do
         <<~OUTPUT
           10
         OUTPUT
       end
 
-      before { run_rf('-q "s||=0; s+=_1; at_exit{ puts s }"', input) }
-
-      it { expect(last_command_started).to be_successfully_executed }
-      it { expect(last_command_started).to have_output_on_stdout output_string_eq output }
+      it_behaves_like 'a successful exec'
     end
   end
 
   context 'when use -t option' do
     describe 'Output all lines' do
-      let(:output) { input }
+      let(:args) { 'text true' }
+      let(:expect_output) { input }
 
-      before { run_rf('text true', input) }
-
-      it { expect(last_command_started).to be_successfully_executed }
-      it { expect(last_command_started).to have_output_on_stdout output_string_eq output }
+      it_behaves_like 'a successful exec'
     end
   end
 
   context 'when use -f option' do
     describe 'Output all lines' do
-      let(:output) { input }
+      let(:args) { 'text -f program.rf' }
+      let(:expect_output) { input }
 
       before do
         write_file 'program.rf', 'true'
-        run_rf('text -f program.rf', input)
       end
 
-      it { expect(last_command_started).to be_successfully_executed }
-      it { expect(last_command_started).to have_output_on_stdout output_string_eq output }
+      it_behaves_like 'a successful exec'
     end
   end
 
@@ -180,16 +167,15 @@ describe 'Text filter' do
 
   context 'when input from stdin' do
     describe 'Output all lines' do
-      let(:output) { input }
+      let(:args) { 'text true' }
+      let(:expect_output) { input }
 
-      before { run_rf('text true', input) }
-
-      it { expect(last_command_started).to be_successfully_executed }
-      it { expect(last_command_started).to have_output_on_stdout output_string_eq output }
+      it_behaves_like 'a successful exec'
     end
 
     describe 'Output only the second filed' do
-      let(:output) do
+      let(:args) { 'text _2' }
+      let(:expect_output) do
         <<~OUTPUT
           foo
           bar
@@ -198,10 +184,7 @@ describe 'Text filter' do
         OUTPUT
       end
 
-      before { run_rf('text _2', input) }
-
-      it { expect(last_command_started).to be_successfully_executed }
-      it { expect(last_command_started).to have_output_on_stdout output_string_eq output }
+      it_behaves_like 'a successful exec'
     end
 
     describe 'Output only the lines that match the regexp' do
@@ -239,34 +222,31 @@ describe 'Text filter' do
     end
 
     describe 'Output only the substring that matches the regexp' do
-      let(:output) do
+      let(:args) { 'text _.match(/foo/)' }
+      let(:expect_output) do
         <<~OUTPUT
           foo
           foo
         OUTPUT
       end
 
-      before { run_rf('text _.match(/foo/)', input) }
-
-      it { expect(last_command_started).to be_successfully_executed }
-      it { expect(last_command_started).to have_output_on_stdout output_string_eq output }
+      it_behaves_like 'a successful exec'
     end
 
     describe 'Output the sum of all the values in the first column' do
-      let(:output) do
+      let(:args) { 'text -q "s||=0; s+=_1; at_exit{ puts s }"' }
+      let(:expect_output) do
         <<~OUTPUT
           10
         OUTPUT
       end
 
-      before { run_rf('text -q "s||=0; s+=_1; at_exit{ puts s }"', input) }
-
-      it { expect(last_command_started).to be_successfully_executed }
-      it { expect(last_command_started).to have_output_on_stdout output_string_eq output }
+      it_behaves_like 'a successful exec'
     end
 
     describe 'Output the uppercase letters' do
-      let(:output) do
+      let(:args) { 'text _.upcase' }
+      let(:expect_output) do
         <<~OUTPUT
           1 FOO
           2 BAR
@@ -275,45 +255,37 @@ describe 'Text filter' do
         OUTPUT
       end
 
-      before { run_rf('text _.upcase', input) }
-
-      it { expect(last_command_started).to be_successfully_executed }
-      it { expect(last_command_started).to have_output_on_stdout output_string_eq output }
+      it_behaves_like 'a successful exec'
     end
 
     describe 'Read all at once' do
-      let(:output) { '1 foo 2 bar 3 baz 4 foobar' }
+      let(:args) { 'text -s "_"' }
+      let(:expect_output) { "1 foo 2 bar 3 baz 4 foobar\n" }
 
-      before { run_rf('text -s "_"', input) }
-
-      it { expect(last_command_started).to be_successfully_executed }
-      it { expect(last_command_started).to have_output_on_stdout output_string_eq output }
+      it_behaves_like 'a successful exec'
     end
   end
 
   context 'when input from file' do
     describe 'Output all lines' do
       let(:file) { 'test.txt' }
-      let(:output) { input }
+      let(:args) { "text true #{file}" }
+      let(:expect_output) { input }
 
       before do
         write_file file, input
-        run_rf("text true #{file}")
       end
 
-      it { expect(last_command_started).to be_successfully_executed }
-      it { expect(last_command_started).to have_output_on_stdout output_string_eq output }
+      it_behaves_like 'a successful exec'
     end
   end
 
   context 'when suppress automatic printing' do
     describe 'Output all lines' do
-      let(:output) { '' }
+      let(:args) { 'text -q true' }
+      let(:expect_output) { '' }
 
-      before { run_rf('text -q true', input) }
-
-      it { expect(last_command_started).to be_successfully_executed }
-      it { expect(last_command_started).to have_output_on_stdout output_string_eq output }
+      it_behaves_like 'a successful exec'
     end
   end
 
@@ -327,7 +299,8 @@ describe 'Text filter' do
           4,foobar
         INPUT
       end
-      let(:output) do
+      let(:args) { 'text -F, _2' }
+      let(:expect_output) do
         <<~OUTPUT
           foo
           bar
@@ -336,20 +309,15 @@ describe 'Text filter' do
         OUTPUT
       end
 
-      before { run_rf('text -F, _2', input) }
-
-      it { expect(last_command_started).to be_successfully_executed }
-      it { expect(last_command_started).to have_output_on_stdout output_string_eq output }
+      it_behaves_like 'a successful exec'
     end
   end
 
   describe 'Output the array is automatically joined with the spaces' do
     let(:input) { 'foo,bar,baz' }
-    let(:output) { 'foo bar baz' }
+    let(:args) { 'text -F, $F' }
+    let(:expect_output) { "foo bar baz\n" }
 
-    before { run_rf('text -F, $F', input) }
-
-    it { expect(last_command_started).to be_successfully_executed }
-    it { expect(last_command_started).to have_output_on_stdout output_string_eq output }
+    it_behaves_like 'a successful exec'
   end
 end
