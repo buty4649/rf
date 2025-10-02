@@ -18,16 +18,16 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
       with:
         submodules: true
     - name: Login to Docker Hub
-      uses: docker/login-action@v3
+      uses: docker/login-action@5e57cd118135c172c3672efd75eb46360885c0ef # v3.6.0
       with:
         username: ${{ inputs.dockerhub_username }}
         password: ${{ inputs.dockerhub_token }}
     - name: Set up Ruby
-      uses: ruby/setup-ruby@v1
+      uses: ruby/setup-ruby@0481980f17b760ef6bca5e8c55809102a0af1e5a # v1.263.0
       with:
         bundler-cache: true
     - name: Build assets
