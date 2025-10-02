@@ -1,0 +1,38 @@
+name: tagpr
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  tagpr:
+    name: tagpr
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: read
+    steps:
+      - name: Generate token
+        id: generate_token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.WORKFLOW_KICKER_APP_ID }}
+          private-key: ${{ secrets.WORKFLOW_KICKER_PRIVATE_KEY }}
+          permission-contents: write
+          permission-pull-requests: write
+          permission-issues: read
+
+      - uses: actions/checkout@v5
+        with:
+          token: ${{ steps.generate_token.outputs.token }}
+
+      - uses: Songmu/tagpr@v1
+        id: tagpr
+        env:
+          GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
+      - uses: ./.github/actions/release
+        if: steps.tagpr.outputs.tag != ''
+        with:
+          github_token: ${{ steps.generate_token.outputs.token }}
