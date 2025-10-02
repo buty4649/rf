@@ -9,6 +9,8 @@
 - Rename workflow by @buty4649 in https://github.com/buty4649/rf/pull/314
 - Release for v1.26.0 by @wokflow-kicker[bot] in https://github.com/buty4649/rf/pull/315
 - Fix Docker Hub authentication in release workflow by @buty4649 in https://github.com/buty4649/rf/pull/316
+- Release for v1.26.0 by @wokflow-kicker[bot] in https://github.com/buty4649/rf/pull/317
+- Disable release for tagpr by @buty4649 in https://github.com/buty4649/rf/pull/318
 ### 👒 Dependencies
 - Bump lewagon/wait-on-check-action from 1.4.0 to 1.4.1 by @dependabot[bot] in https://github.com/buty4649/rf/pull/308
 - Bump rubocop from 1.80.2 to 1.81.1 by @dependabot[bot] in https://github.com/buty4649/rf/pull/309
