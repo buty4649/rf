@@ -1,5 +1,10 @@
 # Changelog
 
+## [v2.0.0](https://github.com/buty4649/rf/compare/v1.26.0...v2.0.0) - 2025-10-03
+### 🏕 Features
+- Pin GitHub Actions to commit hashes for security by @buty4649 in https://github.com/buty4649/rf/pull/320
+- Improve error handling and help display by @buty4649 in https://github.com/buty4649/rf/pull/322
+
 ## [v1.26.0](https://github.com/buty4649/rf/compare/v1.25.0...v1.26.0) - 2025-10-02
 ### 🏕 Features
 - Use buty4649/magni by @buty4649 in https://github.com/buty4649/rf/pull/310
