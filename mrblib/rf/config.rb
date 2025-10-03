@@ -1,6 +1,6 @@
 module Rf
   class Config
-    attr_reader :command, :filter, :files
+    attr_reader :expressions, :filter, :files
 
     %w[
       color? grep_mode include_filename in_place recursive? script_file slurp?
@@ -15,18 +15,16 @@ module Rf
     def initialize(type, options, argv)
       @filter = Filter.load(type)
       @options = options
+      @expressions = options[:expression] || []
 
       validate
 
       argv = argv.dup
 
-      @command = if script_file
-                   File.read(script_file)
-                 else
-                   argv.shift
-                 end
+      @expressions << File.read(script_file) if script_file
+      @expressions << argv.shift if @expressions.empty? && argv.any?
 
-      raise NoExpression unless @command
+      raise NoExpression if @expressions.empty?
 
       @files = argv
       @files << '-' if @files.empty?

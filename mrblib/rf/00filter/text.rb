@@ -2,14 +2,12 @@ module Rf
   module Filter
     class Text < Base
       class << self
-        def format(val, record)
+        def format(val)
           case val
-          when String, false, nil
+          when String
             val
-          when true
-            record
-          when Regexp
-            regexp_to_text(val, record)
+          when MatchResult
+            matchresult_to_text(val)
           when Array
             val.map(&:to_s).join(' ')
           else
@@ -17,15 +15,12 @@ module Rf
           end
         end
 
-        def regexp_to_text(regexp, record)
-          result = ''
-          while m = regexp.match(record)
-            result += m.pre_match
-            result += colorize? ? m.to_s.red : m.to_s
-            record = m.post_match
-          end
+        def matchresult_to_text(match)
+          return match.to_s if match.match_only?
 
-          result.empty? ? nil : "#{result}#{record}"
+          match.format_string do |s|
+            colorize? ? s.red : s
+          end
         end
       end
 

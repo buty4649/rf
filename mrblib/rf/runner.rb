@@ -7,7 +7,7 @@ module Rf
     attr_reader :config, :bind, :container, :inputs
 
     %w[
-      color? command filter files grep_mode in_place include_filename
+      color? expressions filter files grep_mode in_place include_filename
       slurp? quiet? recursive? with_record_number?
     ].each do |name|
       sym = name.to_sym
@@ -59,11 +59,7 @@ module Rf
         records = Record.read(reader)
         records = [records.to_a] if slurp?
 
-        records.each_with_index do |record, index|
-          index += 1
-          result = do_action(record, index, split(record))
-          render result, record, reader.binary?
-        end
+        apply_expressions(records, reader)
         post_action
 
         next unless tempfile
@@ -109,24 +105,57 @@ module Rf
       end
     end
 
-    def do_action(record, index, fields)
+    def apply_expressions(records, reader)
+      indexes = [0] * expressions.size
+
+      records.each do |record|
+        _, result = expressions.each_with_object([0, record]) do |expr, memo|
+          index, record = memo
+
+          next unless record
+
+          record = record.record if record.is_a?(MatchResult)
+          i = indexes[index] += 1
+
+          result = do_action(record, i, expr)
+
+          memo[0] += 1
+          memo[1] = result
+        end
+
+        render result, reader.binary? if result
+      end
+    end
+
+    def do_action(record, index, expr)
       container.record = record
-      container.fields = fields
+      container.fields = split(record)
       bind.eval("NR = $. = #{index}") # index is Integer
 
-      if grep_mode
-        Regexp.new(command)
+      result = if grep_mode
+                 Regexp.new(expr)
+               else
+                 bind.eval(expr)
+               end
+
+      case result
+      when Regexp
+        MatchResult.from_regexp(record, result)
+      when MatchData
+        MatchResult.from_match_data(record, result)
+      when true
+        record
       else
-        bind.eval(command)
+        result
       end
     rescue ::SyntaxError => e
       msg = e.message.delete_prefix('file (eval) ')
       raise Rf::SyntaxError, msg
     end
 
-    def render(val, record, binary_match)
+    def render(val, binary_match)
       return if quiet?
-      return unless output = filter.format(val, record)
+      return unless output = filter.format(val)
 
       if binary_match
         puts 'Binary file matches.'
