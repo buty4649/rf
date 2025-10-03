@@ -19,13 +19,14 @@ module Rf
       validate
 
       argv = argv.dup
-      raise ArgumentError if argv.empty? && script_file.nil?
 
       @command = if script_file
                    File.read(script_file)
                  else
                    argv.shift
                  end
+
+      raise NoExpression unless @command
 
       @files = argv
       @files << '-' if @files.empty?
