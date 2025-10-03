@@ -1,6 +1,9 @@
 module Rf
   class Error < StandardError; end
 
+  class SyntaxError < Error; end
+  class NoExpression < Error; end
+
   class NotFound < Error
     def initialize(file)
       super("file not found: #{file}")
@@ -31,6 +34,4 @@ module Rf
       super("#{path}: not a regular file")
     end
   end
-
-  class SyntaxError < Error; end
 end

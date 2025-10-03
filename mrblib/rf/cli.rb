@@ -68,14 +68,12 @@ module Rf
 
     no_commands do # rubocop:disable Metrics/BlockLength
       def run(type, argv)
-        print_version_and_exit if options[:version]
-
         config = Config.new(type, options, argv)
 
         Runner.run(config)
-      rescue ArgumentError
+      rescue Rf::NoExpression
         help
-      rescue NotFound => e
+      rescue Rf::Error => e
         print_exception_and_exit(e, false)
       rescue StandardError => e
         print_exception_and_exit(e)

@@ -44,10 +44,10 @@ describe 'Show error message' do
 
   context 'when enable debug mode' do
     let(:input) { "test\n" }
-    let(:args) { 'if' }
+    let(:args) { %q('raise RuntimeError, "test"') }
     let(:expect_output) do
       Regexp.new(Regexp.escape(<<~OUTPUT))
-        Error: #<Rf::SyntaxError: line 1: syntax error, unexpected end of file>
+        Error: #<RuntimeError: test>
 
         trace (most recent call last):
       OUTPUT
