@@ -73,11 +73,15 @@ module Rf
 
     class << self
       def usage(name, command)
-        c = command || '[command]'
-        <<~USAGE
-          #{name} #{c} [options] 'code' file ...
-          #{name} #{c} [options] -f program_file file ...
-        USAGE
+        if command == :grep
+          "#{name} grep [options] pattern [file ...]"
+        else
+          c = command || '[command]'
+          <<~USAGE
+            #{name} #{c} [options] 'code' [file ...]
+            #{name} #{c} [options] -f program_file [file ...]
+          USAGE
+        end
       end
 
       def show_help_on_failure? = false
