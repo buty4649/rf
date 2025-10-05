@@ -65,7 +65,6 @@ describe 'JSON filter' do
     it_behaves_like 'a successful exec'
   end
 
-
   context 'when multiple files' do
     let(:input) { '"foobar"' }
 

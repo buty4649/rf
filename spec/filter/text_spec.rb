@@ -45,7 +45,6 @@ describe 'Text filter' do
       it_behaves_like 'a successful exec'
     end
 
-
     describe 'Use quiet option without text command' do
       let(:args) { '-q "s||=0; s+=_1; at_exit{ puts s }"' }
       let(:expect_output) do
@@ -112,7 +111,6 @@ describe 'Text filter' do
 
     it_behaves_like 'a successful exec'
   end
-
 
   context 'when multiple files' do
     let(:args) { 'text --no-color true testfile1 testfile2' }

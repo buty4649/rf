@@ -65,7 +65,6 @@ describe 'YAML filter' do
     it_behaves_like 'a successful exec'
   end
 
-
   context 'when input from stdin' do
     describe 'Output string' do
       let(:input) { load_fixture('yaml/string.yml') }

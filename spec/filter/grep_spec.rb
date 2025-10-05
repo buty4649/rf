@@ -141,5 +141,4 @@ describe 'Text filter with grep mode' do
 
     it_behaves_like 'a successful exec'
   end
-
 end

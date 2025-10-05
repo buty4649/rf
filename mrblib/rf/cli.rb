@@ -1,5 +1,5 @@
 module Rf
-  class Cli < Magni
+  class Cli < Magni # rubocop:disable Metrics/ClassLength
     app_name 'rf'
     default_command :text
 
