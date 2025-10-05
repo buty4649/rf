@@ -28,34 +28,6 @@ describe 'JSON filter' do
     end
   end
 
-  context 'with --disable-boolean-mode option' do
-    let(:input) { '"foobar"' }
-
-    where do
-      {
-        'TrueClass' => {
-          command: 'true',
-          output: 'true'
-        },
-        'FalseClass' => {
-          command: 'false',
-          output: 'false'
-        },
-        'NilClass' => {
-          command: 'nil',
-          output: 'null'
-        }
-      }
-    end
-
-    with_them do
-      before { run_rf("json --disable-boolean-mode '#{command}'", input) }
-
-      it { expect(last_command_started).to be_successfully_executed }
-      it { expect(last_command_started).to have_output output_string_eq output }
-    end
-  end
-
   context 'when use -H option' do
     let(:input) { '"foobar"' }
     let(:args) { 'json -H --no-color true testfile' }

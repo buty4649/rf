@@ -5,9 +5,11 @@ module Rf
 
     class_option :color, type: :boolean, default: $stdout.tty?,
                          desc: '[no] colorized output (default: --color in TTY)'
+    class_option :expression, type: :string, display_name: 'e', banner: "'code'", repeatable: true,
+                              desc: 'evaluate the expression (can be specified multiple times)'
     class_option :grep_mode, type: :flag, aliases: :g, display_name: 'grep',
                              desc: 'Interpret command as a regex pattern for searching (like grep)'
-    class_option :include_filename, desc: 'searches for files matching a regex pattern'
+    class_option :include_filename, banner: 'pattern', desc: 'searches for files matching a regex pattern'
     class_option :in_place, type: :string, aliases: :i, banner: '[=SUFFIX]',
                             desc: 'edit files in place (makes backup if SUFFIX supplied)'
     class_option :recursive, type: :flag, aliases: :R,
@@ -30,7 +32,6 @@ module Rf
       run :text, argv
     end
 
-    option :disable_boolean_mode?, display_name: 'disable-boolean-mode', type: :flag
     option :raw?, aliases: :r, display_name: 'raw-string', type: :flag
     option :minify?, display_name: 'minify', type: :flag
     desc 'json', 'use JSON filter'
@@ -39,7 +40,6 @@ module Rf
       run :json, argv
     end
 
-    option :disable_boolean_mode?, display_name: 'disable-boolean-mode', type: :flag
     option :raw?, aliases: :r, display_name: 'raw-string', type: :flag
     option :doc?, display_name: 'doc', type: :boolean
     desc 'yaml', 'use YAML filter'
@@ -58,7 +58,7 @@ module Rf
       def usage(name, command)
         c = command || '[command]'
         <<~USAGE
-          #{name} #{c} [options] 'command' file ...
+          #{name} #{c} [options] 'code' file ...
           #{name} #{c} [options] -f program_file file ...
         USAGE
       end

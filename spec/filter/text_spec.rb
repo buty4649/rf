@@ -1,12 +1,5 @@
 describe 'Text filter' do
-  let(:input) do
-    <<~INPUT
-      1 foo
-      2 bar
-      3 baz
-      4 foobar
-    INPUT
-  end
+  let(:input) { load_fixture('text/test.txt') }
 
   context 'when text command is default (no explicit command)' do
     describe 'Output all lines' do

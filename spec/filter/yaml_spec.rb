@@ -233,37 +233,6 @@ describe 'YAML filter' do
     end
   end
 
-  context 'with --disable-boolean-mode option' do
-    let(:input) { 'foobar' }
-
-    where do
-      {
-        'TrueClass' => {
-          command: 'true',
-          expect_output: "true\n"
-        },
-        'FalseClass' => {
-          command: 'false',
-          expect_output: "false\n"
-        },
-        'NilClass' => {
-          command: 'nil',
-          expect_output: "null\n"
-        },
-        'Hash with null value' => {
-          command: '{foo: nil}',
-          expect_output: ":foo: null\n"
-        }
-      }
-    end
-
-    with_them do
-      let(:args) { "yaml --disable-boolean-mode '#{command}'" }
-
-      it_behaves_like 'a successful exec'
-    end
-  end
-
   context 'when use -H option' do
     let(:input) { 'foobar' }
     let(:args) { 'yaml -H --no-color true testfile' }

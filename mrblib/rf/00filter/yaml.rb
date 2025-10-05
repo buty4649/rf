@@ -6,23 +6,19 @@ module Rf
           config[:doc?]
         end
 
-        def boolean_mode?
-          !config[:disable_boolean_mode?]
-        end
-
         def raw?
           config[:raw?]
         end
 
-        def format(val, record)
-          return unless yaml_obj = obj_to_yaml(val, record)
+        def format(val)
+          return unless yaml_obj = obj_to_yaml(val)
 
           unpack_unicode_escape(
             doc? ? yaml_obj : remove_doc_header(yaml_obj)
           )
         end
 
-        def obj_to_yaml(val, record)
+        def obj_to_yaml(val)
           case val
           when String
             if raw?
@@ -30,22 +26,10 @@ module Rf
             else
               val.to_yaml(colorize: colorize?)
             end
-          when MatchData
-            record.to_yaml(colorize: colorize?)
-          when Regexp
-            val.match(record.to_s) { record.to_yaml }
-          when true, false, nil
-            boolean_or_nil_to_yaml(val, record)
+          when MatchResult
+            val.record.to_yaml(colorize: colorize?)
           else
             val.to_yaml(colorize: colorize?)
-          end
-        end
-
-        def boolean_or_nil_to_yaml(boolean_or_nil, record)
-          if boolean_mode?
-            record.to_yaml(colorize: colorize?) if boolean_or_nil == true
-          else
-            boolean_or_nil.to_yaml(colorize: colorize?)
           end
         end
 
