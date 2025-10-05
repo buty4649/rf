@@ -7,8 +7,6 @@ module Rf
                          desc: '[no] colorized output (default: --color in TTY)'
     class_option :expression, type: :string, display_name: 'e', banner: "'code'", repeatable: true,
                               desc: 'evaluate the expression (can be specified multiple times)'
-    class_option :grep_mode, type: :flag, aliases: :g, display_name: 'grep',
-                             desc: 'Interpret command as a regex pattern for searching (like grep)'
     class_option :include_filename, banner: 'pattern', desc: 'searches for files matching a regex pattern'
     class_option :in_place, type: :string, aliases: :i, banner: '[=SUFFIX]',
                             desc: 'edit files in place (makes backup if SUFFIX supplied)'
@@ -32,10 +30,16 @@ module Rf
       run :text, argv
     end
 
+    desc 'grep', 'use Text filter with grep mode'
+    order 1
+    def grep(*argv)
+      run :grep, argv
+    end
+
     option :raw?, aliases: :r, display_name: 'raw-string', type: :flag
     option :minify?, display_name: 'minify', type: :flag
     desc 'json', 'use JSON filter'
-    order 1
+    order 2
     def json(*argv)
       run :json, argv
     end
@@ -43,7 +47,7 @@ module Rf
     option :raw?, aliases: :r, display_name: 'raw-string', type: :flag
     option :doc?, display_name: 'doc', type: :boolean
     desc 'yaml', 'use YAML filter'
-    order 2
+    order 3
     def yaml(*argv)
       run :yaml, argv
     end
@@ -68,7 +72,9 @@ module Rf
 
     no_commands do # rubocop:disable Metrics/BlockLength
       def run(type, argv)
-        config = Config.new(type, options, argv)
+        t = type == :grep ? :text : type
+        config = Config.new(t, options, argv)
+        config.grep_mode = type == :grep
 
         Runner.run(config)
       rescue Rf::NoExpression
