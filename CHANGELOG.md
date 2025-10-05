@@ -1,5 +1,12 @@
 # Changelog
 
+## [v1.27.0](https://github.com/buty4649/rf/compare/v1.26.0...v1.27.0) - 2025-10-05
+### 🏕 Features
+- Pin GitHub Actions to commit hashes for security by @buty4649 in https://github.com/buty4649/rf/pull/320
+- Improve error handling and help display by @buty4649 in https://github.com/buty4649/rf/pull/322
+- Add -e option (multiple expr support) and remove --disable-boolean-mode by @buty4649 in https://github.com/buty4649/rf/pull/323
+- Replace --grep option with grep command by @buty4649 in https://github.com/buty4649/rf/pull/324
+
 ## [v1.26.0](https://github.com/buty4649/rf/compare/v1.25.0...v1.26.0) - 2025-10-02
 ### 🏕 Features
 - Use buty4649/magni by @buty4649 in https://github.com/buty4649/rf/pull/310
