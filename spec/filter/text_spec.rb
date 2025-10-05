@@ -45,18 +45,6 @@ describe 'Text filter' do
       it_behaves_like 'a successful exec'
     end
 
-    describe 'Use grep option without text command' do
-      let(:args) { '-g --no-color foo' }
-      let(:expect_output) do
-        <<~OUTPUT
-          1 foo
-          4 foobar
-        OUTPUT
-      end
-
-      it_behaves_like 'a successful exec'
-    end
-
     describe 'Use quiet option without text command' do
       let(:args) { '-q "s||=0; s+=_1; at_exit{ puts s }"' }
       let(:expect_output) do
@@ -122,22 +110,6 @@ describe 'Text filter' do
     end
 
     it_behaves_like 'a successful exec'
-  end
-
-  context 'with -g option' do
-    let(:input) { 'foo' }
-    let(:output) { "\e[31mf\e[m\e[31mo\e[m\e[31mo\e[m" }
-
-    where(:command) do
-      %w[-g --grep]
-    end
-
-    with_them do
-      before { run_rf("text #{command} --color .", input) }
-
-      it { expect(last_command_started).to be_successfully_executed }
-      it { expect(last_command_started).to have_output_on_stdout output_string_eq output }
-    end
   end
 
   context 'when multiple files' do

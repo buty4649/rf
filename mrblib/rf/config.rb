@@ -1,9 +1,10 @@
 module Rf
   class Config
     attr_reader :expressions, :filter, :files
+    attr_accessor :grep_mode
 
     %w[
-      color? grep_mode include_filename in_place recursive? script_file slurp?
+      color? include_filename in_place recursive? script_file slurp?
       quiet? with_filename? with_record_number?
     ].each do |name|
       s = name.delete_suffix('?').to_sym
