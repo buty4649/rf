@@ -103,6 +103,58 @@ describe 'Text filter with grep mode' do
     it_behaves_like 'a successful exec'
   end
 
+  context 'with invert match (-v) option' do
+    let(:args) { 'grep -v foo' }
+    let(:expect_output) do
+      <<~OUTPUT
+        2 bar
+        3 baz
+      OUTPUT
+    end
+
+    it_behaves_like 'a successful exec'
+  end
+
+  context 'with invert match (-v) and line number option' do
+    let(:args) { 'grep -v --with-record-number foo' }
+    let(:expect_output) do
+      <<~OUTPUT
+        2:2 bar
+        3:3 baz
+      OUTPUT
+    end
+
+    it_behaves_like 'a successful exec'
+  end
+
+  context 'with invert match (-v) and filename option' do
+    let(:args) { 'grep -v -H foo testfile' }
+    let(:expect_output) do
+      <<~OUTPUT
+        testfile:2 bar
+        testfile:3 baz
+      OUTPUT
+    end
+
+    before do
+      write_file 'testfile', input
+    end
+
+    it_behaves_like 'a successful exec'
+  end
+
+  context 'with invert match (-v) and color output' do
+    let(:args) { 'grep -v --color foo' }
+    let(:expect_output) do
+      <<~OUTPUT
+        2 bar
+        3 baz
+      OUTPUT
+    end
+
+    it_behaves_like 'a successful exec'
+  end
+
   context 'with recursive option' do
     let(:args) { 'grep -R foo .' }
     let(:expect_output) do

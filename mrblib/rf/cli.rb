@@ -29,6 +29,7 @@ module Rf
       run :text, argv
     end
 
+    option :invert_match, type: :flag, aliases: :v, desc: 'select non-matching records'
     desc 'grep', 'use Text filter with grep mode'
     order 1
     def grep(*argv)

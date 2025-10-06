@@ -8,7 +8,7 @@ module Rf
 
     %w[
       color? expressions filter files grep_mode in_place include_filename
-      slurp? quiet? recursive? with_record_number?
+      invert_match? slurp? quiet? recursive? with_record_number?
     ].each do |name|
       sym = name.to_sym
       define_method(sym) { config.send(sym) }
@@ -118,6 +118,7 @@ module Rf
           i = indexes[index] += 1
 
           result = do_action(record, i, expr)
+          result = filter_result(result, record)
 
           memo[0] += 1
           memo[1] = result
@@ -132,15 +133,25 @@ module Rf
       container.fields = split(record)
       bind.eval("NR = $. = #{index}") # index is Integer
 
-      result = if grep_mode
-                 Regexp.new(expr)
-               else
-                 bind.eval(expr)
-               end
+      if grep_mode
+        Regexp.new(expr)
+      else
+        bind.eval(expr)
+      end
+    rescue ::SyntaxError => e
+      msg = e.message.delete_prefix('file (eval) ')
+      raise Rf::SyntaxError, msg
+    end
 
+    def filter_result(result, record)
       case result
       when Regexp
-        MatchResult.from_regexp(record, result)
+        result = MatchResult.from_regexp(record, result)
+        if invert_match?
+          record if result.nil?
+        else
+          result
+        end
       when MatchData
         MatchResult.from_match_data(record, result)
       when true
@@ -148,9 +159,6 @@ module Rf
       else
         result
       end
-    rescue ::SyntaxError => e
-      msg = e.message.delete_prefix('file (eval) ')
-      raise Rf::SyntaxError, msg
     end
 
     def render(val, binary_match)
