@@ -14,11 +14,6 @@ builds:
       branch: master
       commit: 48073012c932f540dc3773b2dc6b079caf71a70d
       version: 0.0.0
-    https://github.com/buty4649/magni.git:
-      url: https://github.com/buty4649/magni.git
-      branch: main
-      commit: 53ced5dd09b6f503728ddf65e7b033752d3e0d6d
-      version: 1.2.1
     https://github.com/buty4649/mruby-commit-id.git:
       url: https://github.com/buty4649/mruby-commit-id.git
       branch: main
@@ -49,6 +44,11 @@ builds:
       branch: main
       commit: 5814e24c091aa3106a7fe0a51c38b0330219ff9e
       version: 1.1.2
+    https://github.com/buty4649/magni.git:
+      url: https://github.com/buty4649/magni.git
+      branch: main
+      commit: 1218c1ed4e6e2a371c5f1873a84d954d391c066a
+      version: 1.3.0
   linux-amd64:
     https://github.com/iij/mruby-env.git:
       url: https://github.com/iij/mruby-env.git
@@ -60,11 +60,6 @@ builds:
       branch: master
       commit: 48073012c932f540dc3773b2dc6b079caf71a70d
       version: 0.0.0
-    https://github.com/buty4649/magni.git:
-      url: https://github.com/buty4649/magni.git
-      branch: main
-      commit: 53ced5dd09b6f503728ddf65e7b033752d3e0d6d
-      version: 1.2.1
     https://github.com/buty4649/mruby-commit-id.git:
       url: https://github.com/buty4649/mruby-commit-id.git
       branch: main
@@ -95,6 +90,11 @@ builds:
       branch: main
       commit: 5814e24c091aa3106a7fe0a51c38b0330219ff9e
       version: 1.1.2
+    https://github.com/buty4649/magni.git:
+      url: https://github.com/buty4649/magni.git
+      branch: main
+      commit: 1218c1ed4e6e2a371c5f1873a84d954d391c066a
+      version: 1.3.0
   linux-arm64:
     https://github.com/iij/mruby-env.git:
       url: https://github.com/iij/mruby-env.git
@@ -106,11 +106,6 @@ builds:
       branch: master
       commit: 48073012c932f540dc3773b2dc6b079caf71a70d
       version: 0.0.0
-    https://github.com/buty4649/magni.git:
-      url: https://github.com/buty4649/magni.git
-      branch: main
-      commit: 53ced5dd09b6f503728ddf65e7b033752d3e0d6d
-      version: 1.2.1
     https://github.com/buty4649/mruby-commit-id.git:
       url: https://github.com/buty4649/mruby-commit-id.git
       branch: main
@@ -141,6 +136,11 @@ builds:
       branch: main
       commit: 5814e24c091aa3106a7fe0a51c38b0330219ff9e
       version: 1.1.2
+    https://github.com/buty4649/magni.git:
+      url: https://github.com/buty4649/magni.git
+      branch: main
+      commit: 1218c1ed4e6e2a371c5f1873a84d954d391c066a
+      version: 1.3.0
   darwin-arm64:
     https://github.com/iij/mruby-env.git:
       url: https://github.com/iij/mruby-env.git
@@ -152,11 +152,6 @@ builds:
       branch: master
       commit: 48073012c932f540dc3773b2dc6b079caf71a70d
       version: 0.0.0
-    https://github.com/buty4649/magni.git:
-      url: https://github.com/buty4649/magni.git
-      branch: main
-      commit: 53ced5dd09b6f503728ddf65e7b033752d3e0d6d
-      version: 1.2.1
     https://github.com/buty4649/mruby-commit-id.git:
       url: https://github.com/buty4649/mruby-commit-id.git
       branch: main
@@ -187,6 +182,11 @@ builds:
       branch: main
       commit: 5814e24c091aa3106a7fe0a51c38b0330219ff9e
       version: 1.1.2
+    https://github.com/buty4649/magni.git:
+      url: https://github.com/buty4649/magni.git
+      branch: main
+      commit: 1218c1ed4e6e2a371c5f1873a84d954d391c066a
+      version: 1.3.0
   windows-amd64:
     https://github.com/iij/mruby-env.git:
       url: https://github.com/iij/mruby-env.git
@@ -198,11 +198,6 @@ builds:
       branch: master
       commit: 48073012c932f540dc3773b2dc6b079caf71a70d
       version: 0.0.0
-    https://github.com/buty4649/magni.git:
-      url: https://github.com/buty4649/magni.git
-      branch: main
-      commit: 53ced5dd09b6f503728ddf65e7b033752d3e0d6d
-      version: 1.2.1
     https://github.com/buty4649/mruby-commit-id.git:
       url: https://github.com/buty4649/mruby-commit-id.git
       branch: main
@@ -233,3 +228,8 @@ builds:
       branch: main
       commit: 5814e24c091aa3106a7fe0a51c38b0330219ff9e
       version: 1.1.2
+    https://github.com/buty4649/magni.git:
+      url: https://github.com/buty4649/magni.git
+      branch: main
+      commit: 1218c1ed4e6e2a371c5f1873a84d954d391c066a
+      version: 1.3.0
