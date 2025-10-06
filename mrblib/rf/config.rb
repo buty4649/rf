@@ -4,8 +4,8 @@ module Rf
     attr_accessor :grep_mode
 
     %w[
-      color? include_filename in_place recursive? script_file slurp?
-      quiet? with_filename? with_record_number?
+      color? include_filename in_place recursive? invert_match?
+      script_file slurp? quiet? with_filename? with_record_number?
     ].each do |name|
       s = name.delete_suffix('?').to_sym
       define_method(name.to_sym) do
