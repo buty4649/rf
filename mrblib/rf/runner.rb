@@ -59,8 +59,8 @@ module Rf
         records = Record.read(reader)
         records = [records.to_a] if slurp?
 
-        apply_expressions(records, reader)
-        post_action
+        binary_match = apply_expressions(records)
+        warn_binary_match(filename) if binary_match
 
         next unless tempfile
 
@@ -73,7 +73,11 @@ module Rf
     def read_open(file)
       raise IsDirectory, file if File.directory?(file)
 
-      Reader.new(file)
+      if file == '-'
+        $stdin
+      else
+        File.open(file, 'r+')
+      end
     rescue Errno::ENOENT
       raise NotFound, file
     rescue Errno::EACCES
@@ -105,8 +109,9 @@ module Rf
       end
     end
 
-    def apply_expressions(records, reader)
+    def apply_expressions(records)
       indexes = [0] * expressions.size
+      binary_match = false
 
       records.each do |record|
         _, result = expressions.each_with_object([0, record]) do |expr, memo|
@@ -124,8 +129,12 @@ module Rf
           memo[1] = result
         end
 
-        render result, reader.binary? if result
+        binary_match = render(result) || binary_match if result
       end
+
+      post_action
+
+      binary_match
     end
 
     def do_action(record, index, expr)
@@ -161,21 +170,30 @@ module Rf
       end
     end
 
-    def render(val, binary_match)
+    def render(val)
       return if quiet?
       return unless output = filter.format(val)
 
-      if binary_match
-        puts 'Binary file matches.'
-      else
-        @container.puts output
-      end
+      binary_match = binary?(output)
+      @container.puts output unless binary_match
+
+      binary_match
+    end
+
+    def binary?(str)
+      !!str.index("\x00") || !str.force_encoding('UTF-8').valid_encoding?
     end
 
     def post_action
       container.instance_eval do
         @__at_exit__&.call
       end
+    end
+
+    def warn_binary_match(filename)
+      f = filename == '-' ? '(stdin)' : filename
+
+      warn "Warning: #{f}: binary file matches" unless quiet?
     end
   end
 end

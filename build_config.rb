@@ -2,6 +2,7 @@ require 'shellwords'
 
 def gem_config(conf)
   conf.gembox 'default'
+  conf.gem core: 'mruby-encoding'
 
   conf.gem mgem: 'mruby-env'
   conf.gem github: 'mrbgems/mruby-tempfile'
