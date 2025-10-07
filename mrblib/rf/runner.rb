@@ -73,7 +73,11 @@ module Rf
     def read_open(file)
       raise IsDirectory, file if File.directory?(file)
 
-      Reader.new(file)
+      if file == '-'
+        $stdin
+      else
+        File.open(file, 'r+')
+      end
     rescue Errno::ENOENT
       raise NotFound, file
     rescue Errno::EACCES
