@@ -66,22 +66,6 @@ module Rf
       end.join
     end
 
-    %i[grep grep_v gsub gsub! sub sub!].each do |sym|
-      define_method(sym) do |*args, &block|
-        raise NoMethodError, sym unless _.respond_to?(sym)
-
-        _.__send__(sym, *args, &block)
-      end
-    end
-
-    %i[dig tr tr!].each do |sym|
-      define_method(sym) do |*args|
-        raise NoMethodError, sym unless _.respond_to?(sym)
-
-        _.__send__(sym, *args)
-      end
-    end
-
     def match(condition)
       regexp = if condition.is_a?(Regexp)
                  condition
@@ -105,10 +89,12 @@ module Rf
 
     def respond_to_missing?(sym, *)
       # check for _0, _1, _2, _3, ...
-      sym.to_s =~ /\A_(0|[1-9]\d*)\z/ || super
+      sym.to_s =~ /\A_(0|[1-9]\d*)\z/ ||
+        _.respond_to?(sym) ||
+        super
     end
 
-    def method_missing(sym, *)
+    def method_missing(sym, *, &)
       s = sym.to_s
       # check for _0, _1, _2, _3, ...
       if sym == :_0
@@ -116,7 +102,7 @@ module Rf
       elsif s =~ /\A_[1-9]\d*\z/
         $F[s[1..].to_i - 1]
       else
-        super
+        _.__send__(sym, *, &)
       end
     end
 

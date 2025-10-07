@@ -10,7 +10,7 @@ describe 'Show error message' do
     '-R -i _'              | 'Error: -R, -i: conflict options'
     'if'                   | 'Error: line 1: syntax error, unexpected end of file'
     '_.very_useful_method' | "Error: undefined method 'very_useful_method' for String"
-    'unknown_method'       | "Error: undefined method 'unknown_method' for Rf::Container"
+    'unknown_method'       | "Error: undefined method 'unknown_method' for String"
   end
 
   with_them do
