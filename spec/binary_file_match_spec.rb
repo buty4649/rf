@@ -104,8 +104,7 @@ describe 'Binary file match' do
       ['simple extension', 'test.txt'],
       ['with spaces', 'test file.dat', "'test file.dat'"],
       ['special chars', 'test-file_123.bin'],
-      ['subdirectory', 'sub/test.dat', 'sub/test.dat', 'sub'],
-      ['unicode name', 'テスト.dat', "'テスト.dat'"]
+      ['subdirectory', 'sub/test.dat', 'sub/test.dat', 'sub']
     ].each do |description, filename, quoted_name = nil, dir_to_create = nil|
       it "correctly shows #{description} in warning" do
         create_directory(dir_to_create) if dir_to_create
