@@ -43,8 +43,10 @@ module Rf
     option :script_file, type: :string, aliases: :f, display_name: 'file',
                          desc: 'executed the contents of program_file'
     option :slurp, type: :flag, aliases: :s, desc: 'read all reacords into an array'
-    option :raw?, aliases: :r, display_name: 'raw-string', type: :flag
-    option :minify?, display_name: 'minify', type: :flag
+    option :raw?, aliases: :r, display_name: 'raw-output', type: :flag,
+                  desc: 'output raw strings without JSON encoding'
+    option :minify?, display_name: 'minify', type: :flag,
+                     desc: 'output compact JSON without pretty printing'
     desc 'json', 'use JSON filter'
     order 2
     def json(*argv)
@@ -58,8 +60,10 @@ module Rf
     option :script_file, type: :string, aliases: :f, display_name: 'file',
                          desc: 'executed the contents of program_file'
     option :slurp, type: :flag, aliases: :s, desc: 'read all reacords into an array'
-    option :raw?, aliases: :r, display_name: 'raw-string', type: :flag
-    option :doc?, display_name: 'doc', type: :boolean
+    option :raw?, aliases: :r, display_name: 'raw-output', type: :flag,
+                  desc: 'output raw strings without YAML encoding'
+    option :doc?, display_name: 'doc', type: :boolean,
+                  desc: '[no] include YAML document header (---)'
     desc 'yaml', 'use YAML filter'
     order 3
     def yaml(*argv)
@@ -74,7 +78,7 @@ module Rf
 
     class << self
       def usage(name, command)
-        if command == :grep
+        if command == 'grep'
           "#{name} grep [options] pattern [file ...]"
         else
           c = command || '[command]'
