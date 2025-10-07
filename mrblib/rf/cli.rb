@@ -74,7 +74,7 @@ module Rf
 
     class << self
       def usage(name, command)
-        if command == :grep
+        if command == 'grep'
           "#{name} grep [options] pattern [file ...]"
         else
           c = command || '[command]'

@@ -40,4 +40,19 @@ describe 'Show help text' do
       it_behaves_like 'a successful exec'
     end
   end
+
+  context 'when use grep command' do
+    let(:expect_output) do
+      pattern = Regexp.escape(<<~USAGE)
+        Usage:
+          rf grep [options] pattern [file ...]
+
+        Options:
+      USAGE
+      Regexp.new("^#{pattern}.+$", Regexp::MULTILINE)
+    end
+    let(:args) { 'grep' }
+
+    it_behaves_like 'a successful exec'
+  end
 end
