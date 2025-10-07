@@ -1,5 +1,16 @@
 # Changelog
 
+## [v1.28.0](https://github.com/buty4649/rf/compare/v1.27.0...v1.28.0) - 2025-10-07
+### 🏕 Features
+- Update magni by @buty4649 in https://github.com/buty4649/rf/pull/325
+- Add invert match (-v) option to grep mode by @buty4649 in https://github.com/buty4649/rf/pull/327
+- Fix binary match processing and add comprehensive tests by @buty4649 in https://github.com/buty4649/rf/pull/330
+- Implement dynamic method delegation in Container by @buty4649 in https://github.com/buty4649/rf/pull/331
+- Improve help message by @buty4649 in https://github.com/buty4649/rf/pull/332
+### 👒 Dependencies
+- Bump Songmu/tagpr from 1.8.4 to 1.9.0 by @dependabot[bot] in https://github.com/buty4649/rf/pull/328
+- Bump actions/create-github-app-token from 1.12.0 to 2.1.4 by @dependabot[bot] in https://github.com/buty4649/rf/pull/329
+
 ## [v1.27.0](https://github.com/buty4649/rf/compare/v1.26.0...v1.27.0) - 2025-10-05
 ### 🏕 Features
 - Pin GitHub Actions to commit hashes for security by @buty4649 in https://github.com/buty4649/rf/pull/320
