@@ -1,5 +1,9 @@
 # Changelog
 
+## [v1.28.1](https://github.com/buty4649/rf/compare/v1.28.0...v1.28.1) - 2025-10-08
+### 🏕 Features
+- Fix file open mode to prevent permission errors by @buty4649 in https://github.com/buty4649/rf/pull/333
+
 ## [v1.28.0](https://github.com/buty4649/rf/compare/v1.27.0...v1.28.0) - 2025-10-07
 ### 🏕 Features
 - Update magni by @buty4649 in https://github.com/buty4649/rf/pull/325
