@@ -76,7 +76,7 @@ module Rf
       if file == '-'
         $stdin
       else
-        File.open(file, 'r+')
+        File.open(file, 'r')
       end
     rescue Errno::ENOENT
       raise NotFound, file
