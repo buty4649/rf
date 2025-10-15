@@ -19,7 +19,7 @@ module Rf
         @io.binary?
       end
 
-      def self.format(val, record)
+      def self.format(val)
         raise NotImplementedError
       end
 
