@@ -19,8 +19,7 @@ describe 'YAML filter' do
     end
 
     describe 'Ouput yaml to JSON string' do
-      let(:input) { load_fixture('json/hash.json') }
-      let(:args) { 'yaml -r "_.to_json(pretty_print: true)"' }
+      let(:input) { load_fixture('yaml/hash.yml') }
       let(:expect_output) do
         <<~OUTPUT
           {
@@ -37,7 +36,16 @@ describe 'YAML filter' do
         OUTPUT
       end
 
-      it_behaves_like 'a successful exec'
+      where(:args) do
+        [
+          'yaml -r "_.to_json"',
+          'yaml -r "_.to_json"'
+        ]
+      end
+
+      with_them do
+        it_behaves_like 'a successful exec'
+      end
     end
   end
 

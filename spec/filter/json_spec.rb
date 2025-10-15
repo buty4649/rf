@@ -18,6 +18,32 @@ describe 'JSON filter' do
       it_behaves_like 'a successful exec'
     end
 
+    describe 'Ouput json to YAML string' do
+      let(:input) { load_fixture('json/hash.json') }
+      let(:expect_output) do
+        <<~OUTPUT
+          foo: 1
+          bar:
+            baz:
+              - a
+              - b
+              - c
+          foo bar: foo bar
+        OUTPUT
+      end
+
+      where(:args) do
+        [
+          'json -r "_.to_yaml"',
+          'json -r "_.to_yaml"'
+        ]
+      end
+
+      with_them do
+        it_behaves_like 'a successful exec'
+      end
+    end
+
     # When using pipes, `--no-color` is implicitly applied internally, so we explicitly test for it.
     context 'with --color option' do
       let(:input) { load_fixture('json/string.json') }

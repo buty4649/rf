@@ -28,7 +28,6 @@ module Rf
     def initialize(cfg)
       @config = cfg
       @inputs = recursive? ? Directory.open(files, include_filename || filter.filename_extension) : files
-      filter.config = @config
       setup_container
     end
 
@@ -172,7 +171,13 @@ module Rf
 
     def render(val)
       return if quiet?
-      return unless output = filter.format(val)
+
+      output = if val.is_a?(FormattedString)
+                 val
+               else
+                 filter.format(val)
+               end
+      return unless output
 
       binary_match = binary?(output)
       @container.puts output unless binary_match

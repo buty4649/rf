@@ -95,7 +95,7 @@ module Rf
     no_commands do # rubocop:disable Metrics/BlockLength
       def run(type, argv)
         t = type == :grep ? :text : type
-        config = Config.new(t, options, argv)
+        config = Config.from(t, options, argv)
         config.grep_mode = type == :grep
 
         Runner.run(config)
