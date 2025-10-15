@@ -85,7 +85,7 @@ module Rf
       end
 
       Hash.define_method(:respond_to_missing?) do |sym, include_private|
-        fetch(sym.to_s, super)
+        fetch(sym.to_s, super(sym, include_private))
       end
     end
 
