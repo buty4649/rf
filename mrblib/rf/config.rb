@@ -1,5 +1,15 @@
 module Rf
   class Config
+    class << self
+      def current
+        @__current
+      end
+
+      def from(type, options, argv)
+        @__current = new(type, options, argv)
+      end
+    end
+
     attr_reader :expressions, :filter, :files
     attr_accessor :grep_mode
 

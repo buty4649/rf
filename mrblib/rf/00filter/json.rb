@@ -16,9 +16,9 @@ module Rf
           when String
             string_to_json(val)
           when MatchResult
-            val.record.to_json(colorize: colorize?, pretty_print: pretty_print?)
+            JSON.generate(val.record, colorize: colorize?, pretty_print: pretty_print?)
           else
-            val.to_json(colorize: colorize?, pretty_print: pretty_print?)
+            JSON.generate(val, colorize: colorize?, pretty_print: pretty_print?)
           end
         end
 
@@ -26,7 +26,7 @@ module Rf
           if raw?
             str
           else
-            str.to_json(colorize: colorize?, pretty_print: pretty_print?)
+            JSON.generate(str, colorize: colorize?, pretty_print: pretty_print?)
           end
         end
 

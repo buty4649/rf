@@ -24,12 +24,12 @@ module Rf
             if raw?
               val
             else
-              val.to_yaml(colorize: colorize?)
+              YAML.dump(val, colorize: colorize?)
             end
           when MatchResult
-            val.record.to_yaml(colorize: colorize?)
+            YAML.dump(val.record, colorize: colorize?)
           else
-            val.to_yaml(colorize: colorize?)
+            YAML.dump(val, colorize: colorize?)
           end
         end
 
