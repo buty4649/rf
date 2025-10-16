@@ -1,6 +1,8 @@
 module Rf
   module Filter
     class Base
+      include Enumerable
+
       class << self
         def config
           Config.current
@@ -9,33 +11,39 @@ module Rf
         def colorize?
           config.color?
         end
+
+        def format(val)
+          raise NotImplementedError
+        end
+
+        def match(regexp, record)
+          regexp.match(record.to_s)
+        end
+
+        def filename_extension; end
+      end
+
+      def initialize(io)
+        return if io.is_a?(IO)
+
+        raise ArgumentError
+      end
+
+      def each
+        return to_enum(:each) { size } unless block_given?
+
+        while record = gets
+          yield record
+        end
+
+        self
       end
 
       def gets
         raise NotImplementedError
       end
 
-      def binary?
-        @io.binary?
-      end
-
-      def self.format(val)
-        raise NotImplementedError
-      end
-
-      def self.match(regexp, record)
-        regexp.match(record.to_s)
-      end
-
-      def self.filename_extension; end
-
-      def initialize(io)
-        @io = io
-      end
-
-      protected
-
-      attr_reader :io
+      def size; end
     end
   end
 end

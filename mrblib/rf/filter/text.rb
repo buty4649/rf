@@ -27,12 +27,13 @@ module Rf
       def initialize(io)
         super
 
+        @io = io
         fs = self.class.config[:filed_separator]
         $; = Regexp.new(fs) if fs
       end
 
       def gets
-        io.gets&.chomp
+        @io.gets&.chomp
       end
     end
   end

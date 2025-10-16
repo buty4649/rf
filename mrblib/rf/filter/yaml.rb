@@ -61,6 +61,10 @@ module Rf
       def gets
         @data.shift
       end
+
+      def size
+        @data.size
+      end
     end
   end
 end

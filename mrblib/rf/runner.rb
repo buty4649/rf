@@ -54,8 +54,7 @@ module Rf
           tempfile = write_file if in_place.empty?
         end
 
-        reader = filter.new(input)
-        records = Record.read(reader)
+        records = filter.new(input)
         records = [records.to_a] if slurp?
 
         binary_match = apply_expressions(records)
