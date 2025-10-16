@@ -178,14 +178,12 @@ module Rf
                end
       return unless output
 
-      binary_match = binary?(output)
-      @container.puts output unless binary_match
+      unless output.binary?
+        @container.puts output
+        return
+      end
 
-      binary_match
-    end
-
-    def binary?(str)
-      !!str.index("\x00") || !str.force_encoding('UTF-8').valid_encoding?
+      true
     end
 
     def post_action
