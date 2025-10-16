@@ -7,7 +7,7 @@ module Rf
     attr_reader :config, :bind, :container, :inputs
 
     %w[
-      color? expressions filter files grep_mode in_place include_filename
+      color? expressions filter files formatter grep_mode in_place include_filename
       invert_match? slurp? quiet? recursive? with_record_number?
     ].each do |name|
       sym = name.to_sym
@@ -54,8 +54,7 @@ module Rf
           tempfile = write_file if in_place.empty?
         end
 
-        reader = filter.new(input)
-        records = Record.read(reader)
+        records = filter.new(input)
         records = [records.to_a] if slurp?
 
         binary_match = apply_expressions(records)
@@ -175,18 +174,16 @@ module Rf
       output = if val.is_a?(FormattedString)
                  val
                else
-                 filter.format(val)
+                 formatter.format(val)
                end
       return unless output
 
-      binary_match = binary?(output)
-      @container.puts output unless binary_match
+      unless output.binary?
+        @container.puts output
+        return
+      end
 
-      binary_match
-    end
-
-    def binary?(str)
-      !!str.index("\x00") || !str.force_encoding('UTF-8').valid_encoding?
+      true
     end
 
     def post_action

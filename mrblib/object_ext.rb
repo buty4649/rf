@@ -4,7 +4,7 @@ class Object
     define_method(method_name) do
       val = respond_to?(:record) ? record : self
 
-      filter_class = Rf::Filter.const_get(type.capitalize)
+      filter_class = Rf::Formatter.load(type.to_sym)
       Rf::FormattedString.new(filter_class.format(val))
     end
   end

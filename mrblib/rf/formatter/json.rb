@@ -1,5 +1,5 @@
 module Rf
-  module Filter
+  module Formatter
     class Json < Base
       class << self
         def raw?
@@ -33,21 +33,6 @@ module Rf
         def filename_extension
           'json'
         end
-      end
-
-      def initialize(io)
-        super
-
-        json = JSON.parse(io.read)
-        @data = if json.instance_of?(Array)
-                  json
-                else
-                  [json]
-                end
-      end
-
-      def gets
-        @data.shift
       end
     end
   end

@@ -1,5 +1,5 @@
 module Rf
-  module Filter
+  module Formatter
     class Text < Base
       class << self
         def format(val)
@@ -22,17 +22,6 @@ module Rf
             colorize? ? s.red : s
           end
         end
-      end
-
-      def initialize(io)
-        super
-
-        fs = self.class.config[:filed_separator]
-        $; = Regexp.new(fs) if fs
-      end
-
-      def gets
-        io.gets&.chomp
       end
     end
   end

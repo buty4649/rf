@@ -1,4 +1,8 @@
 class String
+  def binary?
+    !!index("\x00") || !force_encoding('UTF-8').valid_encoding?
+  end
+
   def try_to_i
     Integer(self)
   rescue ArgumentError
