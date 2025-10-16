@@ -3,26 +3,6 @@ module Rf
     class Base
       include Enumerable
 
-      class << self
-        def config
-          Config.current
-        end
-
-        def colorize?
-          config.color?
-        end
-
-        def format(val)
-          raise NotImplementedError
-        end
-
-        def match(regexp, record)
-          regexp.match(record.to_s)
-        end
-
-        def filename_extension; end
-      end
-
       def initialize(io)
         return if io.is_a?(IO)
 
@@ -44,6 +24,8 @@ module Rf
       end
 
       def size; end
+
+      def self.filename_extension; end
     end
   end
 end

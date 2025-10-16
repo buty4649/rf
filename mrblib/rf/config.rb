@@ -10,7 +10,7 @@ module Rf
       end
     end
 
-    attr_reader :expressions, :filter, :files
+    attr_reader :expressions, :filter, :files, :formatter
     attr_accessor :grep_mode
 
     %w[
@@ -25,6 +25,7 @@ module Rf
 
     def initialize(type, options, argv)
       @filter = Filter.load(type)
+      @formatter = Formatter.load(type)
       @options = options
       @expressions = options[:expression] || []
 
