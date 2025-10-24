@@ -1,5 +1,13 @@
 # Changelog
 
+## [v1.29.0](https://github.com/buty4649/rf/compare/v1.28.1...v1.29.0) - 2025-10-24
+### 🏕 Features
+- feat: add cross-format data conversion capabilities by @buty4649 in https://github.com/buty4649/rf/pull/336
+- Refactor Rf::Filter class by @buty4649 in https://github.com/buty4649/rf/pull/338
+- feat: implement to_table formatter for Array and Hash by @buty4649 in https://github.com/buty4649/rf/pull/339
+### 👒 Dependencies
+- Bump ruby/setup-ruby from 1.263.0 to 1.265.0 by @dependabot[bot] in https://github.com/buty4649/rf/pull/335
+
 ## [v1.28.1](https://github.com/buty4649/rf/compare/v1.28.0...v1.28.1) - 2025-10-08
 ### 🏕 Features
 - Fix file open mode to prevent permission errors by @buty4649 in https://github.com/buty4649/rf/pull/333
