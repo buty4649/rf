@@ -5,6 +5,8 @@ module Rf
 
     class_option :color, type: :boolean, default: $stdout.tty?,
                          desc: '[no] colorized output (default: --color in TTY)'
+    class_option :expression, type: :string, display_name: 'e', banner: "'code'", repeatable: true,
+                              desc: 'evaluate the expression (can be specified multiple times)'
     class_option :include_filename, banner: 'pattern', desc: 'searches for files matching a regex pattern'
     class_option :quiet, type: :flag, aliases: :q,
                          desc: 'suppress automatic printing'
@@ -15,8 +17,6 @@ module Rf
     class_option :with_record_number, type: :flag,
                                       desc: 'print record number with output lines'
 
-    option :expression, type: :string, display_name: 'e', banner: "'code'", repeatable: true,
-                        desc: 'evaluate the expression (can be specified multiple times)'
     option :in_place, type: :string, aliases: :i, banner: '[=SUFFIX]',
                       desc: 'edit files in place (makes backup if SUFFIX supplied)'
     option :script_file, type: :string, aliases: :f, display_name: 'file',
@@ -36,8 +36,6 @@ module Rf
       run :grep, argv
     end
 
-    option :expression, type: :string, display_name: 'e', banner: "'code'", repeatable: true,
-                        desc: 'evaluate the expression (can be specified multiple times)'
     option :in_place, type: :string, aliases: :i, banner: '[=SUFFIX]',
                       desc: 'edit files in place (makes backup if SUFFIX supplied)'
     option :script_file, type: :string, aliases: :f, display_name: 'file',
@@ -53,8 +51,6 @@ module Rf
       run :json, argv
     end
 
-    option :expression, type: :string, display_name: 'e', banner: "'code'", repeatable: true,
-                        desc: 'evaluate the expression (can be specified multiple times)'
     option :in_place, type: :string, aliases: :i, banner: '[=SUFFIX]',
                       desc: 'edit files in place (makes backup if SUFFIX supplied)'
     option :script_file, type: :string, aliases: :f, display_name: 'file',
@@ -96,7 +92,8 @@ module Rf
       def run(type, argv)
         t = type == :grep ? :text : type
         config = Config.from(t, options, argv)
-        config.grep_mode = type == :grep
+
+        config.expressions = [Regexp.new(config.expressions.join('|'))] if type == :grep
 
         Runner.run(config)
       rescue Rf::NoExpression

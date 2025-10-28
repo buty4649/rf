@@ -7,7 +7,7 @@ module Rf
     attr_reader :config, :bind, :container, :inputs
 
     %w[
-      color? expressions filter files formatter grep_mode in_place include_filename
+      color? expressions filter files formatter in_place include_filename
       invert_match? slurp? quiet? recursive? with_record_number?
     ].each do |name|
       sym = name.to_sym
@@ -140,8 +140,8 @@ module Rf
       container.fields = split(record)
       bind.eval("NR = $. = #{index}") # index is Integer
 
-      if grep_mode
-        Regexp.new(expr)
+      if expr.is_a?(Regexp)
+        expr
       else
         bind.eval(expr)
       end
