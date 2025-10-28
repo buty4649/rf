@@ -10,8 +10,8 @@ module Rf
       end
     end
 
-    attr_reader :expressions, :filter, :files, :formatter
-    attr_accessor :grep_mode
+    attr_accessor :expressions
+    attr_reader :filter, :files, :formatter
 
     %w[
       color? include_filename in_place recursive? invert_match?
