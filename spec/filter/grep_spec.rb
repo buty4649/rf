@@ -194,6 +194,118 @@ describe 'Text filter with grep mode' do
     it_behaves_like 'a successful exec'
   end
 
+  context 'with expression option (-e)' do
+    context 'when using single -e option' do
+      let(:args) { 'grep -e foo' }
+      let(:expect_output) do
+        <<~OUTPUT
+          1 foo
+          4 foobar
+        OUTPUT
+      end
+
+      it_behaves_like 'a successful exec'
+    end
+
+    context 'when using multiple -e options' do
+      let(:args) { 'grep -e foo -e bar' }
+      let(:expect_output) do
+        <<~OUTPUT
+          1 foo
+          2 bar
+          4 foobar
+        OUTPUT
+      end
+
+      it_behaves_like 'a successful exec'
+    end
+
+    context 'when using multiple -e options with regex patterns' do
+      let(:args) { 'grep -e "ba[rz]" -e foo' }
+      let(:expect_output) do
+        <<~OUTPUT
+          1 foo
+          2 bar
+          3 baz
+          4 foobar
+        OUTPUT
+      end
+
+      it_behaves_like 'a successful exec'
+    end
+
+    context 'with line number option' do
+      let(:args) { 'grep -e foo --with-record-number' }
+      let(:expect_output) do
+        <<~OUTPUT
+          1:1 foo
+          4:4 foobar
+        OUTPUT
+      end
+
+      it_behaves_like 'a successful exec'
+    end
+
+    context 'with color output' do
+      let(:args) { 'grep -e foo --color' }
+      let(:expect_output) do
+        <<~OUTPUT
+          1 \e[31mfoo\e[m
+          4 \e[31mfoo\e[mbar
+        OUTPUT
+      end
+
+      it_behaves_like 'a successful exec'
+    end
+
+    context 'with filename option and multiple -e' do
+      let(:args) { 'grep -H -e foo -e bar testfile' }
+      let(:expect_output) do
+        <<~OUTPUT
+          testfile:1 foo
+          testfile:2 bar
+          testfile:4 foobar
+        OUTPUT
+      end
+
+      before do
+        write_file 'testfile', input
+      end
+
+      it_behaves_like 'a successful exec'
+    end
+
+    context 'with invert match (-v) option' do
+      let(:args) { 'grep -v -e foo' }
+      let(:expect_output) do
+        <<~OUTPUT
+          2 bar
+          3 baz
+        OUTPUT
+      end
+
+      it_behaves_like 'a successful exec'
+    end
+
+    context 'with invert match (-v) and multiple -e' do
+      let(:args) { 'grep -v -e foo -e bar' }
+      let(:expect_output) do
+        <<~OUTPUT
+          3 baz
+        OUTPUT
+      end
+
+      it_behaves_like 'a successful exec'
+    end
+
+    context 'when no matches found' do
+      let(:args) { 'grep -e xyz' }
+      let(:expect_output) { '' }
+
+      it_behaves_like 'a successful exec'
+    end
+  end
+
   context 'with case insensitive option (-i)' do
     let(:input_with_mixed_case) do
       <<~INPUT
