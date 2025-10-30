@@ -14,7 +14,7 @@ module Rf
     attr_reader :filter, :files, :formatter
 
     %w[
-      color? include_filename in_place recursive? invert_match?
+      color? include_filename ignore_case in_place recursive? invert_match?
       script_file slurp? quiet? with_filename? with_record_number?
     ].each do |name|
       s = name.delete_suffix('?').to_sym
