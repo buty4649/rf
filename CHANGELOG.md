@@ -1,5 +1,16 @@
 # Changelog
 
+## [v1.30.0](https://github.com/buty4649/rf/compare/v1.29.0...v1.30.0) - 2025-10-30
+### 🏕 Features
+- feat: add -e option to grep mode by @buty4649 in https://github.com/buty4649/rf/pull/346
+- feat: add case-insensitive pattern matching to grep mode by @buty4649 in https://github.com/buty4649/rf/pull/347
+### 👒 Dependencies
+- Bump rspec from 3.13.1 to 3.13.2 by @dependabot[bot] in https://github.com/buty4649/rf/pull/342
+- Bump rubocop from 1.81.1 to 1.81.6 by @dependabot[bot] in https://github.com/buty4649/rf/pull/341
+- Bump ruby/setup-ruby from 1.265.0 to 1.267.0 by @dependabot[bot] in https://github.com/buty4649/rf/pull/344
+- Bump actions/upload-artifact from 4.6.2 to 5.0.0 by @dependabot[bot] in https://github.com/buty4649/rf/pull/343
+- Bump actions/download-artifact from 5.0.0 to 6.0.0 by @dependabot[bot] in https://github.com/buty4649/rf/pull/340
+
 ## [v1.29.0](https://github.com/buty4649/rf/compare/v1.28.1...v1.29.0) - 2025-10-24
 ### 🏕 Features
 - feat: add cross-format data conversion capabilities by @buty4649 in https://github.com/buty4649/rf/pull/336
