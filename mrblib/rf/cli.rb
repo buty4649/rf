@@ -30,6 +30,7 @@ module Rf
     end
 
     option :invert_match, type: :flag, aliases: :v, desc: 'select non-matching records'
+    option :ignore_case, type: :boolean, aliases: :i, desc: 'ignore case distinctions in pattern matching'
     desc 'grep', 'use Text filter with grep mode'
     order 1
     def grep(*argv)
@@ -93,7 +94,10 @@ module Rf
         t = type == :grep ? :text : type
         config = Config.from(t, options, argv)
 
-        config.expressions = [Regexp.new(config.expressions.join('|'))] if type == :grep
+        if type == :grep
+          opt = config.ignore_case ? Regexp::IGNORECASE : nil
+          config.expressions = [Regexp.new(config.expressions.join('|'), opt)]
+        end
 
         Runner.run(config)
       rescue Rf::NoExpression
