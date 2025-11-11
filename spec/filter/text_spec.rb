@@ -225,7 +225,7 @@ describe 'Text filter' do
 
     describe 'Read all at once' do
       let(:args) { 'text -s "_"' }
-      let(:expect_output) { "1 foo 2 bar 3 baz 4 foobar\n" }
+      let(:expect_output) { "1 foo\n2 bar\n3 baz\n4 foobar\n" }
 
       it_behaves_like 'a successful exec'
     end
@@ -281,7 +281,7 @@ describe 'Text filter' do
   describe 'Output the array is automatically joined with the spaces' do
     let(:input) { 'foo,bar,baz' }
     let(:args) { 'text -F, $F' }
-    let(:expect_output) { "foo bar baz\n" }
+    let(:expect_output) { "foo\nbar\nbaz\n" }
 
     it_behaves_like 'a successful exec'
   end

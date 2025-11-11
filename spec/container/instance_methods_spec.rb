@@ -31,9 +31,9 @@ describe 'Container internal methods' do
 
   where(:command, :output) do
     'grep(/foo/)'   | 'foo'
-    'grep_v(/bar/)' | 'foo baz'
+    'grep_v(/bar/)' | "foo\nbaz"
     'grep(/foo/){|i| i + "hoge" }' | 'foohoge'
-    'grep_v(/bar/){|i| i+ "hoge" }' | 'foohoge bazhoge'
+    'grep_v(/bar/){|i| i+ "hoge" }' | "foohoge\nbazhoge"
   end
 
   with_them do
