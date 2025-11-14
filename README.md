@@ -244,6 +244,28 @@ h.b
 
 You cannot call keys that contain whitespace characters, symbols or multibyte characters in this way. Use `Hash#[]`.
 
+### Regex Template Patterns
+
+Template patterns are provided to simplify regular expression syntax for commonly used patterns.
+
+#### IPv4 Address Pattern
+
+By writing `(?&ipv4)`, it will be replaced with a regular expression that matches valid IPv4 addresses.
+
+```ruby
+# Extract lines containing IPv4 addresses
+/(?&ipv4)/
+
+# Extract server IP addresses from logs
+/Server: (?&ipv4)/
+
+# Search for IP address and port number pairs
+/(?&ipv4):\d+/
+
+# Capture multiple IP addresses
+/from (?&ipv4) to (?&ipv4)/.match("from 192.168.1.1 to 10.0.0.1")
+```
+
 ## License
 
 See [LICENSE](LICENSE) © [buty4649](https://github.com/buty4649/)
