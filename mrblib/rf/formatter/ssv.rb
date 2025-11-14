@@ -1,10 +1,3 @@
-class Array
-  def to_ssv
-    Rf::FormattedString.new(Rf::Formatter::Ssv.format(self))
-  end
-  alias to_v to_ssv
-end
-
 module Rf
   module Formatter
     class Ssv < Base

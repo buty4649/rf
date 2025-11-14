@@ -1,4 +1,4 @@
-describe 'Automatic accessor addition to Hash' do
+describe 'HashMashable features' do
   where do
     {
       'key is exist' => {
