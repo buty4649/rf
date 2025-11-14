@@ -1,15 +1,3 @@
-class Array
-  def to_table
-    Rf::FormattedString.new(Rf::Formatter::Table.format(self))
-  end
-end
-
-class Hash
-  def to_table
-    Rf::FormattedString.new(Rf::Formatter::Table.format(self))
-  end
-end
-
 module Rf
   module Formatter
     class Table < Base

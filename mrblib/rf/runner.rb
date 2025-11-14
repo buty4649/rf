@@ -42,7 +42,7 @@ module Rf
     end
 
     def run
-      Rf.add_features
+      Rf::Features.enable
 
       inputs.each do |filename|
         @container.filename = filename
