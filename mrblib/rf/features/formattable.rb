@@ -8,7 +8,7 @@ module Rf
       end
 
       module Object
-        %w[json yaml].each do |type|
+        %w[base64 json yaml].each do |type|
           method_name = :"to_#{type}"
           define_method(method_name) do
             val = respond_to?(:record) ? record : self

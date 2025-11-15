@@ -49,6 +49,11 @@ builds:
       branch: main
       commit: 1218c1ed4e6e2a371c5f1873a84d954d391c066a
       version: 1.3.0
+    https://github.com/mattn/mruby-base64.git:
+      url: https://github.com/mattn/mruby-base64.git
+      branch: master
+      commit: 0e613fc86feb993aac59b922e273cef8914f11b0
+      version: 0.0.0
   linux-amd64:
     https://github.com/iij/mruby-env.git:
       url: https://github.com/iij/mruby-env.git
@@ -95,6 +100,11 @@ builds:
       branch: main
       commit: 1218c1ed4e6e2a371c5f1873a84d954d391c066a
       version: 1.3.0
+    https://github.com/mattn/mruby-base64.git:
+      url: https://github.com/mattn/mruby-base64.git
+      branch: master
+      commit: 0e613fc86feb993aac59b922e273cef8914f11b0
+      version: 0.0.0
   linux-arm64:
     https://github.com/iij/mruby-env.git:
       url: https://github.com/iij/mruby-env.git
@@ -141,6 +151,11 @@ builds:
       branch: main
       commit: 1218c1ed4e6e2a371c5f1873a84d954d391c066a
       version: 1.3.0
+    https://github.com/mattn/mruby-base64.git:
+      url: https://github.com/mattn/mruby-base64.git
+      branch: master
+      commit: 0e613fc86feb993aac59b922e273cef8914f11b0
+      version: 0.0.0
   darwin-arm64:
     https://github.com/iij/mruby-env.git:
       url: https://github.com/iij/mruby-env.git
@@ -187,6 +202,11 @@ builds:
       branch: main
       commit: 1218c1ed4e6e2a371c5f1873a84d954d391c066a
       version: 1.3.0
+    https://github.com/mattn/mruby-base64.git:
+      url: https://github.com/mattn/mruby-base64.git
+      branch: master
+      commit: 0e613fc86feb993aac59b922e273cef8914f11b0
+      version: 0.0.0
   windows-amd64:
     https://github.com/iij/mruby-env.git:
       url: https://github.com/iij/mruby-env.git
@@ -233,3 +253,8 @@ builds:
       branch: main
       commit: 1218c1ed4e6e2a371c5f1873a84d954d391c066a
       version: 1.3.0
+    https://github.com/mattn/mruby-base64.git:
+      url: https://github.com/mattn/mruby-base64.git
+      branch: master
+      commit: 0e613fc86feb993aac59b922e273cef8914f11b0
+      version: 0.0.0
