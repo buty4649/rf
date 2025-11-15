@@ -1,5 +1,13 @@
 # Changelog
 
+## [v1.31.0](https://github.com/buty4649/rf/compare/v1.30.0...v1.31.0) - 2025-11-15
+### 🏕 Features
+- Change Array output format from space-separated to newline-separated by @buty4649 in https://github.com/buty4649/rf/pull/352
+- refactor: modularize features into separate files by @buty4649 in https://github.com/buty4649/rf/pull/354
+- feat: add IPv4 pattern substitution support for OnigRegexp by @buty4649 in https://github.com/buty4649/rf/pull/355
+- feat: improve MatchResult output formatting for capture groups by @buty4649 in https://github.com/buty4649/rf/pull/356
+- feat: add to_base64 formatter functionality by @buty4649 in https://github.com/buty4649/rf/pull/357
+
 ## [v1.30.0](https://github.com/buty4649/rf/compare/v1.29.0...v1.30.0) - 2025-11-10
 ### 🏕 Features
 - feat: add -e option to grep mode by @buty4649 in https://github.com/buty4649/rf/pull/346
