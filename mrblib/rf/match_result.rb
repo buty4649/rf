@@ -23,7 +23,9 @@ module Rf
     end
 
     def to_s
-      @match_data.map(&:to_s).join
+      @match_data.map do |m|
+        m.size == 1 ? m[0] : m[1..]
+      end.flatten.join(' ')
     end
 
     class << self
