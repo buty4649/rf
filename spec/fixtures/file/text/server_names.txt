@@ -1,0 +1,4 @@
+| ID                                   | HostName       | Status | Addresses     |
+|--------------------------------------|----------------|--------|---------------|
+| bd686c0e-ef13-4b02-8693-93ba9adb5a19 | testserver-001 | ACTIVE | 192.168.100.1 |
+| d6621e37-a4cc-40a8-bf47-0fbcf8a11970 | testserver-002 | ACTIVE | 10.100.0.1    |
