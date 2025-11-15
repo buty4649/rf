@@ -5,6 +5,7 @@ def gem_config(conf)
   conf.gem core: 'mruby-encoding'
 
   conf.gem mgem: 'mruby-env'
+  conf.gem mgem: 'mruby-base64'
   conf.gem github: 'mrbgems/mruby-tempfile'
   conf.gem github: 'buty4649/mruby-commit-id', branch: 'main'
   conf.gem github: 'buty4649/mruby-yyjson', branch: 'main'

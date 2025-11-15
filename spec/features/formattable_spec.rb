@@ -39,6 +39,21 @@ describe 'Formattable features' do
 
       it_behaves_like 'a successful exec'
     end
+
+    context 'with to_base64' do
+      let(:input) { load_fixture('text/test.txt') }
+      let(:args) { 'to_base64' }
+      let(:expect_output) do
+        <<~OUTPUT
+          MSBmb28=
+          MiBiYXI=
+          MyBiYXo=
+          NCBmb29iYXI=
+        OUTPUT
+      end
+
+      it_behaves_like 'a successful exec'
+    end
   end
 
   describe 'Array formatting methods' do
