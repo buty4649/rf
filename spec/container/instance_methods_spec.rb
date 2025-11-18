@@ -254,4 +254,27 @@ describe 'Container internal methods' do
       end
     end
   end
+
+  describe '#at_exit' do
+    context 'when checking return value' do
+      let(:input) { 'test' }
+      let(:args) { '-q "p at_exit { }"' }
+      let(:expect_output) { "nil\n" }
+
+      it_behaves_like 'a successful exec'
+    end
+
+    context 'when block is executed on exit' do
+      let(:input) { 'test' }
+      let(:args) { '"at_exit { puts \"exit block\" }; puts \"main\""' }
+      let(:expect_output) do
+        <<~OUTPUT
+          main
+          exit block
+        OUTPUT
+      end
+
+      it_behaves_like 'a successful exec'
+    end
+  end
 end
