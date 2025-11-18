@@ -108,6 +108,7 @@ module Rf
 
     def at_exit(&block)
       @__at_exit__ ||= block
+      nil
     end
   end
 end
