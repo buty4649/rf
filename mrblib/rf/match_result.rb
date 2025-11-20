@@ -36,7 +36,7 @@ module Rf
       def from_regexp(record, regexp)
         match_data = []
         s = record.to_s
-        while m = regexp.match(s)
+        while s.length.positive? && m = regexp.match(s)
           match_data << m
           s = m.post_match
         end
