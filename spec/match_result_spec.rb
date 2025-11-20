@@ -23,5 +23,21 @@ describe 'MatchResult' do
 
       it_behaves_like 'a successful exec'
     end
+
+    context 'with empty string and empty matching regexp' do
+      let(:input) { '' }
+      let(:args) { %("//") }
+      let(:expect_output) { '' }
+
+      it_behaves_like 'a successful exec'
+    end
+
+    context 'with empty record and zero-width assertion' do
+      let(:input) { '' }
+      let(:args) { %("/^$/") }
+      let(:expect_output) { '' }
+
+      it_behaves_like 'a successful exec'
+    end
   end
 end
