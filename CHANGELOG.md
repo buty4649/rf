@@ -1,5 +1,10 @@
 # Changelog
 
+## [v1.32.2](https://github.com/buty4649/rf/compare/v1.32.1...v1.32.2) - 2025-11-25
+### 🏕 Features
+- feat: restore checkout action for submodule support by @buty4649 in https://github.com/buty4649/rf/pull/371
+- Fix typo: submodule -> submodules by @buty4649 in https://github.com/buty4649/rf/pull/373
+
 ## [v1.32.1](https://github.com/buty4649/rf/compare/v1.32.0...v1.32.1) - 2025-11-25
 ### 🏕 Features
 - Remove duplicate checkout action by @buty4649 in https://github.com/buty4649/rf/pull/369
