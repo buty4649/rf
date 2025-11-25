@@ -1,3 +1,3 @@
 module Rf
-  VERSION = '1.32.0'
+  VERSION = '1.32.1'
 end

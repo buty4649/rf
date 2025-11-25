@@ -1,5 +1,9 @@
 # Changelog
 
+## [v1.32.1](https://github.com/buty4649/rf/compare/v1.32.0...v1.32.1) - 2025-11-25
+### 🏕 Features
+- Remove duplicate checkout action by @buty4649 in https://github.com/buty4649/rf/pull/369
+
 ## [v1.32.0](https://github.com/buty4649/rf/compare/v1.31.0...v1.32.0) - 2025-11-25
 ### 🏕 Features
 - fix: make at_exit method return nil explicitly by @buty4649 in https://github.com/buty4649/rf/pull/361
