@@ -1,5 +1,16 @@
 # Changelog
 
+## [v1.32.0](https://github.com/buty4649/rf/compare/v1.31.0...v1.32.0) - 2025-11-25
+### 🏕 Features
+- fix: make at_exit method return nil explicitly by @buty4649 in https://github.com/buty4649/rf/pull/361
+- fix: prevent infinite loop when matching empty string with regexp by @buty4649 in https://github.com/buty4649/rf/pull/366
+### 👒 Dependencies
+- build(deps-dev): bump rubocop-rspec from 3.7.0 to 3.8.0 by @dependabot[bot] in https://github.com/buty4649/rf/pull/358
+- build(deps): bump actions/checkout from 5.0.0 to 5.0.1 by @dependabot[bot] in https://github.com/buty4649/rf/pull/359
+- build(deps): bump ruby/setup-ruby from 1.267.0 to 1.268.0 by @dependabot[bot] in https://github.com/buty4649/rf/pull/360
+- build(deps): bump actions/create-github-app-token from 2.1.4 to 2.2.0 by @dependabot[bot] in https://github.com/buty4649/rf/pull/368
+- build(deps): bump actions/checkout from 5.0.1 to 6.0.0 by @dependabot[bot] in https://github.com/buty4649/rf/pull/367
+
 ## [v1.31.0](https://github.com/buty4649/rf/compare/v1.30.0...v1.31.0) - 2025-11-15
 ### 🏕 Features
 - Change Array output format from space-separated to newline-separated by @buty4649 in https://github.com/buty4649/rf/pull/352
