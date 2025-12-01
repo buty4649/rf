@@ -76,19 +76,19 @@ GEM
     rspec-expectations (3.13.5)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.13.0)
-    rspec-mocks (3.13.6)
+    rspec-mocks (3.13.7)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.13.0)
-    rspec-parameterized (2.0.0)
+    rspec-parameterized (2.0.1)
       rspec-parameterized-core (>= 2, < 3)
       rspec-parameterized-table_syntax (>= 2, < 3)
-    rspec-parameterized-core (2.0.0)
+    rspec-parameterized-core (2.0.1)
       parser
       prism
       proc_to_ast (>= 0.2.0)
       rspec (>= 2.13, < 4)
       unparser
-    rspec-parameterized-table_syntax (2.0.0)
+    rspec-parameterized-table_syntax (2.0.1)
       binding_of_caller
       rspec-parameterized-core (>= 2, < 3)
     rspec-support (3.13.6)
@@ -117,10 +117,10 @@ GEM
     unicode-display_width (3.2.0)
       unicode-emoji (~> 4.1)
     unicode-emoji (4.1.0)
-    unparser (0.8.0)
+    unparser (0.8.1)
       diff-lcs (~> 1.6)
       parser (>= 3.3.0)
-      prism (>= 1.4)
+      prism (>= 1.5.1)
 
 PLATFORMS
   arm64-darwin-23
