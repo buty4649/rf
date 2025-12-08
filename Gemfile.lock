@@ -1,8 +1,8 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    aruba (2.3.2)
-      bundler (>= 1.17, < 3.0)
+    aruba (2.3.3)
+      bundler (>= 1.17)
       contracts (>= 0.16.0, < 0.18.0)
       cucumber (>= 8.0, < 11.0)
       rspec-expectations (>= 3.4, < 5.0)
@@ -38,7 +38,7 @@ GEM
     cucumber-html-formatter (21.15.1)
       cucumber-messages (> 19, < 28)
     cucumber-messages (27.2.0)
-    cucumber-tag-expressions (8.0.0)
+    cucumber-tag-expressions (8.1.0)
     debug_inspector (1.2.0)
     diff-lcs (1.6.2)
     ffi (1.17.2-arm64-darwin)
