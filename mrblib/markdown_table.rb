@@ -1,8 +1,8 @@
 class MarkdownTable
   def initialize
     @row = []
-    @col_width = 0
-    @col_count = 0
+    @widths = []
+    @count = 0
 
     return unless block_given?
 
@@ -15,10 +15,10 @@ class MarkdownTable
         else
           [val]
         end
-    @col_count = [@col_count, r.size].max
-    @row << r.map do |v|
+    @count = [@count, r.size].max
+    @row << r.map.with_index do |v, idx|
       s = v.to_s
-      @col_width = [@col_width, s.length].max
+      @widths[idx] = [@widths[idx] || 0, s.length].max
       s
     end
 
@@ -37,13 +37,24 @@ class MarkdownTable
   end
 
   def array_to_row(ary)
-    cols = ary.map { |a| a.ljust(@col_width) }
-    cols += [' ' * @col_width] * (@col_count - cols.size) if @col_count > cols.size
+    cols = ary.map.with_index do |a, idx|
+      a.ljust(@widths[idx])
+    end
+
+    if @count > cols.size
+      cols += (@count - cols.size).times.map do |offset|
+        ' ' * @widths[cols.size + offset]
+      end
+    end
 
     format('| %s |', cols.join(' | '))
   end
 
   def separator
-    format('|%s|', (['-' * (@col_width + 2)] * @col_count).join('|'))
+    cols = @count.times.map do |idx|
+      '-' * (@widths[idx] + 2)
+    end
+
+    "|#{cols.join('|')}|"
   end
 end
