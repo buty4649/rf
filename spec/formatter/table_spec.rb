@@ -6,7 +6,7 @@ describe 'Table formatter' do
       let(:expect_output) do
         <<~TABLE
           | header1 |
-          | ------- |
+          |---------|
           | header2 |
         TABLE
       end
@@ -19,10 +19,10 @@ describe 'Table formatter' do
       let(:args) { 'json -s "_.to_table"' }
       let(:expect_output) do
         <<~TABLE
-          | Name  |  Age  |
-          | ----- | ----- |
-          | Alice |  30   |
-          |  Bob  |  25   |
+          | Name  | Age   |
+          |-------|-------|
+          | Alice | 30    |
+          | Bob   | 25    |
         TABLE
       end
 
@@ -35,9 +35,9 @@ describe 'Table formatter' do
       let(:expect_output) do
         <<~TABLE
           | String  | Number  | Boolean |
-          | ------- | ------- | ------- |
-          |  test   |   123   |  true   |
-          |  hello  |   456   |  false  |
+          |---------|---------|---------|
+          | test    | 123     | true    |
+          | hello   | 456     | false   |
         TABLE
       end
 
@@ -58,7 +58,7 @@ describe 'Table formatter' do
       let(:expect_output) do
         <<~TABLE
           | A | B | C |
-          | - | - | - |
+          |---|---|---|
           | 1 | 2 |   |
           | X |   |   |
         TABLE
@@ -73,7 +73,7 @@ describe 'Table formatter' do
       let(:expect_output) do
         <<~TABLE
           | Header |
-          | ------ |
+          |--------|
           |        |
           | value  |
         TABLE
@@ -89,9 +89,9 @@ describe 'Table formatter' do
       let(:args) { 'json "to_table"' }
       let(:expect_output) do
         <<~TABLE
-          | name  |  age  |
-          | ----- | ----- |
-          | Alice |  30   |
+          | name  | age   |
+          |-------|-------|
+          | Alice | 30    |
         TABLE
       end
 
@@ -104,9 +104,9 @@ describe 'Table formatter' do
       let(:expect_output) do
         <<~TABLE
           | names | ages  |
-          | ----- | ----- |
-          | Alice |  30   |
-          |  Bob  |  25   |
+          |-------|-------|
+          | Alice | 30    |
+          | Bob   | 25    |
         TABLE
       end
 
@@ -118,10 +118,10 @@ describe 'Table formatter' do
       let(:args) { 'json "to_table"' }
       let(:expect_output) do
         <<~TABLE
-          | name  | city  |  age  |
-          | ----- | ----- | ----- |
-          | Alice | Tokyo |  30   |
-          |  Bob  |       |  25   |
+          | name  | city  | age   |
+          |-------|-------|-------|
+          | Alice | Tokyo | 30    |
+          | Bob   |       | 25    |
         TABLE
       end
 

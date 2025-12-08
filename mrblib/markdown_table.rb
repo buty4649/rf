@@ -37,13 +37,13 @@ class MarkdownTable
   end
 
   def array_to_row(ary)
-    cols = ary.map { |a| a.center(@col_width) }
+    cols = ary.map { |a| a.ljust(@col_width) }
     cols += [' ' * @col_width] * (@col_count - cols.size) if @col_count > cols.size
 
     format('| %s |', cols.join(' | '))
   end
 
   def separator
-    format('| %s |', (['-' * @col_width] * @col_count).join(' | '))
+    format('|%s|', (['-' * (@col_width + 2)] * @col_count).join('|'))
   end
 end
