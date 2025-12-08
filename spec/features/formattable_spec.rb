@@ -62,10 +62,10 @@ describe 'Formattable features' do
       let(:args) { 'json -s to_table' }
       let(:expect_output) do
         <<~OUTPUT
-          | Name  |  Age  |
-          | ----- | ----- |
-          | Alice |  30   |
-          |  Bob  |  25   |
+          | Name  | Age |
+          |-------|-----|
+          | Alice | 30  |
+          | Bob   | 25  |
         OUTPUT
       end
 
@@ -103,9 +103,9 @@ describe 'Formattable features' do
       let(:args) { 'json to_table' }
       let(:expect_output) do
         <<~OUTPUT
-          | name  |  age  |
-          | ----- | ----- |
-          | Alice |  30   |
+          | name  | age |
+          |-------|-----|
+          | Alice | 30  |
         OUTPUT
       end
 
