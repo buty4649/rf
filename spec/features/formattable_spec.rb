@@ -111,5 +111,31 @@ describe 'Formattable features' do
 
       it_behaves_like 'a successful exec'
     end
+
+    context 'with to_ssv' do
+      let(:input) { load_fixture('json/table_simple_hash.json') }
+      let(:args) { 'json to_ssv' }
+      let(:expect_output) do
+        <<~OUTPUT
+          name Alice
+          age 30
+        OUTPUT
+      end
+
+      it_behaves_like 'a successful exec'
+    end
+
+    context 'with to_v (alias for to_ssv)' do
+      let(:input) { load_fixture('json/table_simple_hash.json') }
+      let(:args) { 'json to_v' }
+      let(:expect_output) do
+        <<~OUTPUT
+          name Alice
+          age 30
+        OUTPUT
+      end
+
+      it_behaves_like 'a successful exec'
+    end
   end
 end

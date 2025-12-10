@@ -34,6 +34,11 @@ module Rf
         def to_table
           Rf::FormattedString.new(Rf::Formatter::Table.format(self))
         end
+
+        def to_ssv
+          Rf::FormattedString.new(Rf::Formatter::Ssv.format(self))
+        end
+        alias to_v to_ssv
       end
     end
   end
