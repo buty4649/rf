@@ -1,5 +1,18 @@
 # Changelog
 
+## [v1.33.0](https://github.com/buty4649/rf/compare/v1.32.2...v1.33.0) - 2025-12-10
+### 🏕 Features
+- Remove host build workaround after mruby bug fix by @buty4649 in https://github.com/buty4649/rf/pull/375
+- Update mruby to f1fc5c70578e by @buty4649 in https://github.com/buty4649/rf/pull/376
+- Fix: Improve MarkdownTable formatting with left alignment and optimized column widths by @buty4649 in https://github.com/buty4649/rf/pull/378
+- Add Hash support to SSV formatter by @buty4649 in https://github.com/buty4649/rf/pull/384
+### 👒 Dependencies
+- build(deps-dev): bump rspec-parameterized from 2.0.0 to 2.0.1 by @dependabot[bot] in https://github.com/buty4649/rf/pull/374
+- build(deps): bump actions/create-github-app-token from 2.2.0 to 2.2.1 by @dependabot[bot] in https://github.com/buty4649/rf/pull/380
+- build(deps-dev): bump aruba from 2.3.2 to 2.3.3 by @dependabot[bot] in https://github.com/buty4649/rf/pull/381
+- build(deps): bump ruby/setup-ruby from 1.268.0 to 1.269.0 by @dependabot[bot] in https://github.com/buty4649/rf/pull/382
+- build(deps): bump actions/checkout from 6.0.0 to 6.0.1 by @dependabot[bot] in https://github.com/buty4649/rf/pull/379
+
 ## [v1.32.2](https://github.com/buty4649/rf/compare/v1.32.1...v1.32.2) - 2025-11-25
 ### 🏕 Features
 - feat: restore checkout action for submodule support by @buty4649 in https://github.com/buty4649/rf/pull/371
