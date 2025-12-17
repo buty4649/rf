@@ -3,6 +3,7 @@ module Rf
     module Formattable
       def self.enable
         ::Object.prepend Object
+        ::Kernel.prepend Kernel
         ::Array.prepend Array
         ::Hash.prepend Hash
       end
@@ -16,6 +17,12 @@ module Rf
             filter_class = Rf::Formatter.load(type.to_sym)
             Rf::FormattedString.new(filter_class.format(val))
           end
+        end
+      end
+
+      module Kernel
+        def Ssv(*obj) # rubocop: disable Naming/MethodName
+          Rf::FormattedString.new(Rf::Formatter::Ssv.format(obj))
         end
       end
 
