@@ -85,7 +85,11 @@ module Rf
       raise NotFound, file unless File.exist?(file)
       raise NotRegularFile, file unless File.file?(file)
 
-      File.rename(file, "#{file}#{in_place}") if in_place
+      if in_place
+        File.open("#{file}#{in_place}", 'w') do |f| # rubocop: disable Style/FileWrite
+          f.write(File.read(file))
+        end
+      end
 
       dir = File.dirname(file)
       Tempfile.new('.rf', dir)
