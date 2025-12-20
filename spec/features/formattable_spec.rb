@@ -138,4 +138,58 @@ describe 'Formattable features' do
       it_behaves_like 'a successful exec'
     end
   end
+
+  describe 'Kernel#Ssv method' do
+    context 'with single argument' do
+      let(:input) { load_fixture('text/test.txt') }
+      let(:args) { 'Ssv(_)' }
+      let(:expect_output) do
+        <<~OUTPUT
+          1 foo
+          2 bar
+          3 baz
+          4 foobar
+        OUTPUT
+      end
+
+      it_behaves_like 'a successful exec'
+    end
+
+    context 'with multiple arguments' do
+      let(:input) { load_fixture('json/array.json') }
+      let(:args) { 'json -s "Ssv(_, \"extra\", 123)"' }
+      let(:expect_output) do
+        <<~OUTPUT
+          foo bar baz extra 123
+        OUTPUT
+      end
+
+      it_behaves_like 'a successful exec'
+    end
+
+    context 'with hash argument' do
+      let(:input) { load_fixture('json/table_simple_hash.json') }
+      let(:args) { 'json "Ssv(_)"' }
+      let(:expect_output) do
+        <<~OUTPUT
+          name Alice
+          age 30
+        OUTPUT
+      end
+
+      it_behaves_like 'a successful exec'
+    end
+
+    context 'with array argument' do
+      let(:input) { load_fixture('json/array.json') }
+      let(:args) { 'json -s "Ssv(_)"' }
+      let(:expect_output) do
+        <<~OUTPUT
+          foo bar baz
+        OUTPUT
+      end
+
+      it_behaves_like 'a successful exec'
+    end
+  end
 end
