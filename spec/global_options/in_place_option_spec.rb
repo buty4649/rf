@@ -19,9 +19,13 @@ describe 'Behavior with in-place option' do
     end
 
     it_behaves_like 'a successful exec' do
-      let(:file_content) { read_file("foo#{suffix}") }
+      let(:file_content) { read_file('foo') }
 
       it { expect(file_content).to eq "bar\n" }
+
+      it 'creates backup file when suffix is provided' do
+        expect(read_file("foo#{suffix}")).to eq 'foo' unless suffix.empty?
+      end
     end
   end
 
