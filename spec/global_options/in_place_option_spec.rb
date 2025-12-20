@@ -44,4 +44,27 @@ describe 'Behavior with in-place option' do
       it { expect(test2).to eq "bAc\n" }
     end
   end
+
+  describe 'color option is disabled with -i' do
+    before do
+      write_file('testfile', "foo\nbar\nfoo")
+    end
+
+    context 'when -i option is used' do
+      let(:args) { '-i /foo/ testfile' }
+      let(:expect_output) { '' }
+
+      it_behaves_like 'a successful exec' do
+        it 'disables color output automatically' do
+          # The -i option automatically disables color output
+          # File should be modified without ANSI escape sequences
+          expect(read_file('testfile')).to eq("foo\nfoo\n")
+        end
+
+        it 'does not include ANSI escape sequences in the file' do
+          expect(read_file('testfile')).not_to include("\e[")
+        end
+      end
+    end
+  end
 end

@@ -91,13 +91,7 @@ module Rf
 
     no_commands do # rubocop:disable Metrics/BlockLength
       def run(type, argv)
-        t = type == :grep ? :text : type
-        config = Config.from(t, options, argv)
-
-        if type == :grep
-          opt = config.ignore_case ? Regexp::IGNORECASE : nil
-          config.expressions = [Regexp.new(config.expressions.join('|'), opt)]
-        end
+        config = Config.from(type, options, argv)
 
         Runner.run(config)
       rescue Rf::NoExpression

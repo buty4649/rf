@@ -24,22 +24,19 @@ module Rf
     end
 
     def initialize(type, options, argv)
-      @filter = Filter.load(type)
-      @formatter = Formatter.load(type)
+      @type = type
+      t = @type == :grep ? :text : @type
+
+      @filter = Filter.load(t)
+      @formatter = Formatter.load(t)
       @options = options
-      @expressions = options[:expression] || []
+      @argv = argv.dup
+      setup_expressions
+
+      @options[:color] = false if @options[:in_place]
+      @files = @argv.empty? ? %w[-] : @argv
 
       validate
-
-      argv = argv.dup
-
-      @expressions << File.read(script_file) if script_file
-      @expressions << argv.shift if @expressions.empty? && argv.any?
-
-      raise NoExpression if @expressions.empty?
-
-      @files = argv
-      @files << '-' if @files.empty?
     end
 
     def [](key)
@@ -52,6 +49,30 @@ module Rf
 
     def validate
       raise Rf::ConflictOptions, %i[-R -i] if has?(:in_place) && has?(:recursive)
+    end
+
+    private
+
+    def setup_expressions
+      if script_file
+        @expressions = [File.read(script_file)]
+        return
+      end
+
+      expr = @options[:expression]
+
+      if expr
+        @expressions = expr
+      elsif @argv.any?
+        @expressions = [@argv.shift]
+      else
+        raise NoExpression
+      end
+
+      return unless @type == :grep
+
+      opt = @options[:ignore_case] ? Regexp::IGNORECASE : nil
+      @expressions = [Regexp.new(@expressions.join('|'), opt)]
     end
   end
 end
