@@ -3,6 +3,7 @@ require 'shellwords'
 def gem_config(conf)
   conf.gembox 'default'
   conf.gem core: 'mruby-encoding'
+  conf.gem core: 'mruby-strftime'
 
   conf.gem mgem: 'mruby-env'
   conf.gem mgem: 'mruby-base64'
