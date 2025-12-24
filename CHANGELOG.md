@@ -1,5 +1,29 @@
 # Changelog
 
+## [v1.33.0](https://github.com/buty4649/rf/compare/v1.32.2...v1.33.0) - 2025-12-24
+### 🏕 Features
+- Remove host build workaround after mruby bug fix by @buty4649 in https://github.com/buty4649/rf/pull/375
+- Update mruby to f1fc5c70578e by @buty4649 in https://github.com/buty4649/rf/pull/376
+- Fix: Improve MarkdownTable formatting with left alignment and optimized column widths by @buty4649 in https://github.com/buty4649/rf/pull/378
+- Add Hash support to SSV formatter by @buty4649 in https://github.com/buty4649/rf/pull/384
+- Add Kernel#Ssv by @buty4649 in https://github.com/buty4649/rf/pull/393
+- Disable color output with -i option by @buty4649 in https://github.com/buty4649/rf/pull/395
+- Add mruby-strftime by @buty4649 in https://github.com/buty4649/rf/pull/397
+- Update mruby-onig-regexp by @buty4649 in https://github.com/buty4649/rf/pull/400
+- Update mruby-onig-regexp to HEAD commit by @buty4649 in https://github.com/buty4649/rf/pull/401
+### 👒 Dependencies
+- build(deps-dev): bump rspec-parameterized from 2.0.0 to 2.0.1 by @dependabot[bot] in https://github.com/buty4649/rf/pull/374
+- build(deps): bump actions/create-github-app-token from 2.2.0 to 2.2.1 by @dependabot[bot] in https://github.com/buty4649/rf/pull/380
+- build(deps-dev): bump aruba from 2.3.2 to 2.3.3 by @dependabot[bot] in https://github.com/buty4649/rf/pull/381
+- build(deps): bump ruby/setup-ruby from 1.268.0 to 1.269.0 by @dependabot[bot] in https://github.com/buty4649/rf/pull/382
+- build(deps): bump actions/checkout from 6.0.0 to 6.0.1 by @dependabot[bot] in https://github.com/buty4649/rf/pull/379
+- build(deps): bump ruby/setup-ruby from 1.269.0 to 1.270.0 by @dependabot[bot] in https://github.com/buty4649/rf/pull/389
+- build(deps): bump Songmu/tagpr from 1.9.0 to 1.10.0 by @dependabot[bot] in https://github.com/buty4649/rf/pull/386
+- build(deps): bump actions/upload-artifact from 5.0.0 to 6.0.0 by @dependabot[bot] in https://github.com/buty4649/rf/pull/387
+- build(deps): bump actions/download-artifact from 6.0.0 to 7.0.0 by @dependabot[bot] in https://github.com/buty4649/rf/pull/388
+- build(deps): bump ruby/setup-ruby from 1.270.0 to 1.275.0 by @dependabot[bot] in https://github.com/buty4649/rf/pull/399
+- build(deps-dev): bump rubocop from 1.81.7 to 1.82.0 by @dependabot[bot] in https://github.com/buty4649/rf/pull/398
+
 ## [v1.32.2](https://github.com/buty4649/rf/compare/v1.32.1...v1.32.2) - 2025-11-25
 ### 🏕 Features
 - feat: restore checkout action for submodule support by @buty4649 in https://github.com/buty4649/rf/pull/371
