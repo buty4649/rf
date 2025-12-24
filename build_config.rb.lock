@@ -29,11 +29,6 @@ builds:
       branch: main
       commit: 2761ba1648646f6fb30edd46099bacfda564e11b
       version: 1.0.0
-    https://github.com/buty4649/mruby-onig-regexp.git:
-      url: https://github.com/buty4649/mruby-onig-regexp.git
-      branch: master
-      commit: 700dd2e506260292881cdef1481120f085194aa3
-      version: 0.0.0
     https://github.com/buty4649/mruby-tiny-optparse.git:
       url: https://github.com/buty4649/mruby-tiny-optparse.git
       branch: main
@@ -53,6 +48,11 @@ builds:
       url: https://github.com/mattn/mruby-base64.git
       branch: master
       commit: 0e613fc86feb993aac59b922e273cef8914f11b0
+      version: 0.0.0
+    https://github.com/buty4649/mruby-onig-regexp.git:
+      url: https://github.com/buty4649/mruby-onig-regexp.git
+      branch: master
+      commit: db17120e6f7289161bcda63fcfca50faf574332e
       version: 0.0.0
   linux-amd64:
     https://github.com/iij/mruby-env.git:
@@ -80,11 +80,6 @@ builds:
       branch: main
       commit: 2761ba1648646f6fb30edd46099bacfda564e11b
       version: 1.0.0
-    https://github.com/buty4649/mruby-onig-regexp.git:
-      url: https://github.com/buty4649/mruby-onig-regexp.git
-      branch: master
-      commit: 700dd2e506260292881cdef1481120f085194aa3
-      version: 0.0.0
     https://github.com/buty4649/mruby-tiny-optparse.git:
       url: https://github.com/buty4649/mruby-tiny-optparse.git
       branch: main
@@ -104,6 +99,11 @@ builds:
       url: https://github.com/mattn/mruby-base64.git
       branch: master
       commit: 0e613fc86feb993aac59b922e273cef8914f11b0
+      version: 0.0.0
+    https://github.com/buty4649/mruby-onig-regexp.git:
+      url: https://github.com/buty4649/mruby-onig-regexp.git
+      branch: master
+      commit: db17120e6f7289161bcda63fcfca50faf574332e
       version: 0.0.0
   linux-arm64:
     https://github.com/iij/mruby-env.git:
@@ -131,11 +131,6 @@ builds:
       branch: main
       commit: 2761ba1648646f6fb30edd46099bacfda564e11b
       version: 1.0.0
-    https://github.com/buty4649/mruby-onig-regexp.git:
-      url: https://github.com/buty4649/mruby-onig-regexp.git
-      branch: master
-      commit: 700dd2e506260292881cdef1481120f085194aa3
-      version: 0.0.0
     https://github.com/buty4649/mruby-tiny-optparse.git:
       url: https://github.com/buty4649/mruby-tiny-optparse.git
       branch: main
@@ -155,6 +150,11 @@ builds:
       url: https://github.com/mattn/mruby-base64.git
       branch: master
       commit: 0e613fc86feb993aac59b922e273cef8914f11b0
+      version: 0.0.0
+    https://github.com/buty4649/mruby-onig-regexp.git:
+      url: https://github.com/buty4649/mruby-onig-regexp.git
+      branch: master
+      commit: db17120e6f7289161bcda63fcfca50faf574332e
       version: 0.0.0
   darwin-arm64:
     https://github.com/iij/mruby-env.git:
@@ -182,11 +182,6 @@ builds:
       branch: main
       commit: 2761ba1648646f6fb30edd46099bacfda564e11b
       version: 1.0.0
-    https://github.com/buty4649/mruby-onig-regexp.git:
-      url: https://github.com/buty4649/mruby-onig-regexp.git
-      branch: master
-      commit: 700dd2e506260292881cdef1481120f085194aa3
-      version: 0.0.0
     https://github.com/buty4649/mruby-tiny-optparse.git:
       url: https://github.com/buty4649/mruby-tiny-optparse.git
       branch: main
@@ -206,6 +201,11 @@ builds:
       url: https://github.com/mattn/mruby-base64.git
       branch: master
       commit: 0e613fc86feb993aac59b922e273cef8914f11b0
+      version: 0.0.0
+    https://github.com/buty4649/mruby-onig-regexp.git:
+      url: https://github.com/buty4649/mruby-onig-regexp.git
+      branch: master
+      commit: db17120e6f7289161bcda63fcfca50faf574332e
       version: 0.0.0
   windows-amd64:
     https://github.com/iij/mruby-env.git:
@@ -233,11 +233,6 @@ builds:
       branch: main
       commit: 2761ba1648646f6fb30edd46099bacfda564e11b
       version: 1.0.0
-    https://github.com/buty4649/mruby-onig-regexp.git:
-      url: https://github.com/buty4649/mruby-onig-regexp.git
-      branch: master
-      commit: 700dd2e506260292881cdef1481120f085194aa3
-      version: 0.0.0
     https://github.com/buty4649/mruby-tiny-optparse.git:
       url: https://github.com/buty4649/mruby-tiny-optparse.git
       branch: main
@@ -257,4 +252,9 @@ builds:
       url: https://github.com/mattn/mruby-base64.git
       branch: master
       commit: 0e613fc86feb993aac59b922e273cef8914f11b0
+      version: 0.0.0
+    https://github.com/buty4649/mruby-onig-regexp.git:
+      url: https://github.com/buty4649/mruby-onig-regexp.git
+      branch: master
+      commit: db17120e6f7289161bcda63fcfca50faf574332e
       version: 0.0.0
