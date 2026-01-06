@@ -18,8 +18,12 @@ jobs:
         id: generate_token
         uses: actions/create-github-app-token@29824e69f54612133e76f7eaac726eef6c875baf # v2.2.1
         with:
-          app-id: ${{ secrets.WORKFLOW_KICKER_APP_ID }}
+          app-id: ${{ secrets.WORKFLOW_KICKER_APP_ID }
           private-key: ${{ secrets.WORKFLOW_KICKER_PRIVATE_KEY }}
+          owner: buty4649
+          repositories:
+            rf
+            homebrew-tap
           permission-contents: write
           permission-pull-requests: write
           permission-issues: read

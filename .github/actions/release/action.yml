@@ -37,3 +37,7 @@ runs:
         VERSION: ${{ inputs.version }}
       run: |
         gh release create $VERSION --generate-notes release/*.tar.gz release/*.zip release/checksums.txt
+    - name: Run update workflow for homebrew-tap
+      run: gh workflow run update.yml --repo buty4649/homebrew-tap --ref main
+      env:
+        GH_TOKEN: ${{ inputs.github_token }}
