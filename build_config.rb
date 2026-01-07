@@ -87,7 +87,11 @@ if build_targets.include?('darwin-arm64')
     macos_sdk_url = "https://github.com/phracker/MacOSX-SDKs/releases/download/#{version}/MacOSX#{version}.sdk.tar.xz"
     macos_sdk_path = File.join(path, "MacOSX#{version}.sdk")
 
-    unless File.exist?(macos_sdk_path)
+    if File.exist?(macos_sdk_path)
+      _pp 'skip download macos sdk', macos_sdk_path
+    else
+      _pp 'download macos sdk', macos_sdk_path
+      FileUtils.mkdir_p(macos_sdk_path)
       system('wget', macos_sdk_url, exception: true)
       system('tar', 'xf', "MacOSX#{version}.sdk.tar.xz", exception: true)
       system('rm', "MacOSX#{version}.sdk.tar.xz", exception: true)
