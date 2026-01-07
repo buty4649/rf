@@ -18,11 +18,11 @@ end
 def archive_binary_file(targets, version)
   FileUtils.mkdir_p 'release'
   targets.each do |target|
-    ext = '.exe' if target =~ /windows/
+    ext = '.exe' if target.include?('windows')
     src = File.expand_path("build/#{target}/bin/rf#{ext}")
     dest = File.expand_path("release/rf-#{version}-#{target}")
 
-    if target =~ /linux/
+    if target.include?('linux')
       sh "tar -zcf #{dest}.tar.gz -C #{File.dirname(src)} #{File.basename(src)}"
     else
       sh "zip -j #{dest}.zip #{src}"

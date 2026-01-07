@@ -1,8 +1,11 @@
 describe 'ImplicitCalculable features' do
+  let(:comparison_operators) { %i[< <= > >=] }
+  let(:arithmetic_operators) { %w[+ - * /] }
+
   context 'when String is implicity converted' do
     %i[Integer Float].each do |klass|
       where(:case_name, :args, :expect_output) do
-        %i[< <= > >=].map do |mark|
+        comparison_operators.map do |mark|
           left = random_number(klass)
           right = random_number(klass)
           statement = %("#{left}" #{mark} #{right})
@@ -27,7 +30,7 @@ describe 'ImplicitCalculable features' do
   %i[Integer Float].each do |klass|
     context "when #{klass} is implicity converted" do
       where(:case_name, :args, :expect_output) do
-        %w[+ - * /].map do |mark|
+        arithmetic_operators.map do |mark|
           left = random_number(klass)
           statement = %(#{left} #{mark} "1")
           answer = left.__send__(mark, 1)
@@ -47,7 +50,7 @@ describe 'ImplicitCalculable features' do
       end
 
       where(:case_name, :args, :expect_output) do
-        %i[< <= > >=].map do |mark|
+        comparison_operators.map do |mark|
           left = random_number(klass)
           right = random_number(klass)
           statement = %(#{left} #{mark} "#{right}")

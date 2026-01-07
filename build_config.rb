@@ -47,7 +47,7 @@ end
 def build_flags(target, strip)
   flags = %w[-O3]
   flags += ['-target', target] if target
-  flags += %w[-mtune=native -march=native] if target =~ /^x86_64-linux-gnu/
+  flags += %w[-mtune=native -march=native] if /^x86_64-linux-gnu/.match?(target)
   flags << '-s' if strip
   flags
 end
