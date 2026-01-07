@@ -8,6 +8,7 @@ AllCops:
   Exclude:
     - build/**/*
     - mruby/**/*
+    - vendor/**/*
 
 Lint/AssignmentInCondition:
   Enabled: false
