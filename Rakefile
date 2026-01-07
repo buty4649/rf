@@ -12,6 +12,8 @@ end
 def invoke_mruby_task(name)
   rakefile = File.join(__dir__, 'mruby', 'Rakefile')
   verbose = Rake.application.options.silent ? '' : '-v'
+  ENV['MRUBY_BUILD_DIR'] = ENV['MRUBY_BUILD_DIR'] || File.join(__dir__, 'build')
+
   sh "rake -f #{rakefile} -mj1 #{verbose} #{name}"
 end
 
@@ -49,7 +51,6 @@ namespace 'build' do
       elsif target != 'host'
         ENV['MRUBY_BUILD_TARGETS'] = target
       end
-      ENV['MRUBY_BUILD_DIR'] = ENV['MRUBY_BUILD_DIR'] || File.join(__dir__, 'build')
 
       invoke_mruby_task('all')
     end
