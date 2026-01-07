@@ -106,6 +106,10 @@ GEM
     rubocop-ast (1.49.0)
       parser (>= 3.3.7.2)
       prism (~> 1.7)
+    rubocop-performance (1.26.1)
+      lint_roller (~> 1.1)
+      rubocop (>= 1.75.0, < 2.0)
+      rubocop-ast (>= 1.47.1, < 2.0)
     rubocop-rspec (3.8.0)
       lint_roller (~> 1.1)
       rubocop (~> 1.81)
@@ -135,6 +139,7 @@ DEPENDENCIES
   rspec
   rspec-parameterized (>= 1.0.0)
   rubocop
+  rubocop-performance
   rubocop-rspec
 
 RUBY VERSION
