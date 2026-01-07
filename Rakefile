@@ -33,6 +33,8 @@ def archive_binary_file(targets, version)
   end
 end
 
+task default: ['build:host', 'spec']
+
 desc 'Build binary (host)'
 task 'build' do
   Rake::Task['build:host'].invoke
