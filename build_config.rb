@@ -121,23 +121,8 @@ end
 
 if build_targets.include?('windows-amd64')
   MRuby::CrossBuild.new('windows-amd64') do |conf|
-    conf.build_target     = 'x86_64-pc-linux-gnu'
-    conf.host_target      = 'x86_64-w64-mingw32'
-
-    conf.enable_cxx_exception
-    conf.cc.command = "#{conf.host_target}-gcc"
-
-    conf.cxx.command = "#{conf.host_target}-g++"
-    conf.cxx.defines += %w[_WIN32]
-
-    build_cc_defines(conf)
-
-    conf.linker.command = "#{conf.host_target}-g++"
-    conf.linker.flags += %w[-static -O3 -s]
-    conf.linker.libraries += %w[pthread]
-
-    conf.archiver.command = "#{conf.host_target}-ar"
-
+    build_config(conf, 'x86_64-windows-gnu', strip: true)
+    conf.host_target = 'x86_64-w64-mingw32' # required for `for_windows?` used by `mruby-socket` gem
     conf.exts do |exts|
       exts.object = '.obj'
       exts.executable = '.exe'
