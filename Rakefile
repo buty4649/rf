@@ -1,17 +1,6 @@
 require 'shellwords'
 require_relative 'mrblib/rf/version'
 
-IMAGE_NAME = 'buty4649/mruby-build:zig-0.13.0'
-
-def docker_run(cmd: nil, env: nil)
-  env_opts = env&.map { |e| ['-e', e] }
-  cmds = [
-    'docker', 'run', '--rm', '-v', "#{Dir.getwd}:/src".shellescape,
-    env_opts, IMAGE_NAME, cmd&.shellescape
-  ]
-  sh cmds.flatten.compact.join(' ')
-end
-
 def build_targets
   %w[
     linux-amd64 linux-arm64
@@ -20,14 +9,20 @@ def build_targets
   ]
 end
 
+def invoke_mruby_task(name)
+  rakefile = File.join(__dir__, 'mruby', 'Rakefile')
+  verbose = Rake.application.options.silent ? '' : '-v'
+  sh "rake -f #{rakefile} -mj1 #{verbose} #{name}"
+end
+
 def archive_binary_file(targets, version)
   FileUtils.mkdir_p 'release'
   targets.each do |target|
-    ext = '.exe' if target =~ /windows/
+    ext = '.exe' if target.include?('windows')
     src = File.expand_path("build/#{target}/bin/rf#{ext}")
     dest = File.expand_path("release/rf-#{version}-#{target}")
 
-    if target =~ /linux/
+    if target.include?('linux')
       sh "tar -zcf #{dest}.tar.gz -C #{File.dirname(src)} #{File.basename(src)}"
     else
       sh "zip -j #{dest}.zip #{src}"
@@ -38,51 +33,30 @@ def archive_binary_file(targets, version)
   end
 end
 
-task default: :build
-
-desc 'Build the project'
+desc 'Build binary (host)'
 task 'build' do
-  docker_run
+  Rake::Task['build:host'].invoke
 end
 
-namespace :build do
-  desc 'Build the project for all targets'
-  task 'all' do
-    build_targets.each do |target|
-      Rake::Task["build:#{target}"].invoke
-    end
-  end
-
-  build_targets.each do |target|
-    desc "Build the project for #{target}"
+namespace 'build' do
+  (%w[host all] + build_targets).each do |target|
+    desc "Build binary (#{target})"
     task target do
-      env = ["MRUBY_BUILD_TARGETS=#{target}"]
-      docker_run(env:)
+      if target == 'all'
+        ENV['MRUBY_BUILD_TARGETS'] = build_targets.join(',')
+      elsif target != 'host'
+        ENV['MRUBY_BUILD_TARGETS'] = target
+      end
+      ENV['MRUBY_BUILD_DIR'] = ENV['MRUBY_BUILD_DIR'] || File.join(__dir__, 'build')
+
+      invoke_mruby_task('all')
     end
   end
-
-  desc 'Build assets files for all targets'
-  task assets: %w[clean build:all] do
-    archive_binary_file(build_targets, "v#{Rf::VERSION}")
-  end
 end
 
-desc 'Cleanup build cache'
+desc 'Cleanup build directory'
 task 'clean' do
-  docker_run(cmd: 'clean')
-end
-
-desc 'Deep cleanup build cache'
-task 'deep_clean' do
-  env = ["MRUBY_BUILD_TARGETS=#{build_targets.join(',')}"]
-  docker_run(cmd: 'deep_clean', env:)
-end
-
-desc 'Bumpup minor version and release'
-task 'release' do
-  version = Rf::VERSION
-  sh "git tag v#{version}"
-  sh "git push origin v#{version}"
+  invoke_mruby_task('clean')
 end
 
 desc 'Run RSpec with parallel_rspec'

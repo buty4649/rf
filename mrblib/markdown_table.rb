@@ -42,7 +42,7 @@ class MarkdownTable
     end
 
     if @count > cols.size
-      cols += (@count - cols.size).times.map do |offset|
+      cols += Array.new(@count - cols.size) do |offset|
         ' ' * @widths[cols.size + offset]
       end
     end
@@ -51,7 +51,7 @@ class MarkdownTable
   end
 
   def separator
-    cols = @count.times.map do |idx|
+    cols = Array.new(@count) do |idx|
       '-' * (@widths[idx] + 2)
     end
 

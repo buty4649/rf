@@ -52,7 +52,7 @@ builds:
     https://github.com/buty4649/mruby-onig-regexp.git:
       url: https://github.com/buty4649/mruby-onig-regexp.git
       branch: master
-      commit: fa25c297102954af4a7286f905b6b8acb38fd366
+      commit: 61c255d4ee5795f16e90cf079da32d3b2ff19cd5
       version: 0.0.0
   linux-amd64:
     https://github.com/iij/mruby-env.git:
@@ -103,7 +103,7 @@ builds:
     https://github.com/buty4649/mruby-onig-regexp.git:
       url: https://github.com/buty4649/mruby-onig-regexp.git
       branch: master
-      commit: fa25c297102954af4a7286f905b6b8acb38fd366
+      commit: 61c255d4ee5795f16e90cf079da32d3b2ff19cd5
       version: 0.0.0
   linux-arm64:
     https://github.com/iij/mruby-env.git:
@@ -154,7 +154,7 @@ builds:
     https://github.com/buty4649/mruby-onig-regexp.git:
       url: https://github.com/buty4649/mruby-onig-regexp.git
       branch: master
-      commit: fa25c297102954af4a7286f905b6b8acb38fd366
+      commit: 61c255d4ee5795f16e90cf079da32d3b2ff19cd5
       version: 0.0.0
   darwin-arm64:
     https://github.com/iij/mruby-env.git:
@@ -205,7 +205,7 @@ builds:
     https://github.com/buty4649/mruby-onig-regexp.git:
       url: https://github.com/buty4649/mruby-onig-regexp.git
       branch: master
-      commit: fa25c297102954af4a7286f905b6b8acb38fd366
+      commit: 61c255d4ee5795f16e90cf079da32d3b2ff19cd5
       version: 0.0.0
   windows-amd64:
     https://github.com/iij/mruby-env.git:
@@ -256,5 +256,5 @@ builds:
     https://github.com/buty4649/mruby-onig-regexp.git:
       url: https://github.com/buty4649/mruby-onig-regexp.git
       branch: master
-      commit: fa25c297102954af4a7286f905b6b8acb38fd366
+      commit: 61c255d4ee5795f16e90cf079da32d3b2ff19cd5
       version: 0.0.0

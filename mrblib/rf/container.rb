@@ -99,7 +99,7 @@ module Rf
       # check for _0, _1, _2, _3, ...
       if sym == :_0
         _
-      elsif s =~ /\A_[1-9]\d*\z/
+      elsif /\A_[1-9]\d*\z/.match?(s)
         $F[s[1..].to_i - 1]
       else
         _.__send__(sym, *, &)

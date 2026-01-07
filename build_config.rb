@@ -47,7 +47,7 @@ end
 def build_flags(target, strip)
   flags = %w[-O3]
   flags += ['-target', target] if target
-  flags += %w[-mtune=native -march=native] if target == 'x86_64-linux-musl'
+  flags += %w[-mtune=native -march=native] if /^x86_64-linux-gnu/.match?(target)
   flags << '-s' if strip
   flags
 end
@@ -81,8 +81,28 @@ build_targets = ENV['MRUBY_BUILD_TARGETS']&.split(',') || []
 end
 
 if build_targets.include?('darwin-arm64')
+  # https://github.com/itamae-kitchen/mitamae/blob/master/build_config.rb#L13-L19
+  def download_macos_sdk(path)
+    version = '11.3'
+    macos_sdk_url = "https://github.com/phracker/MacOSX-SDKs/releases/download/#{version}/MacOSX#{version}.sdk.tar.xz"
+    macos_sdk_path = File.join(path, "MacOSX#{version}.sdk")
+
+    if File.exist?(macos_sdk_path)
+      _pp 'skip download macos sdk', macos_sdk_path
+    else
+      _pp 'download macos sdk', macos_sdk_path
+      FileUtils.mkdir_p(macos_sdk_path)
+      system('wget', macos_sdk_url, exception: true)
+      system('tar', 'xf', "MacOSX#{version}.sdk.tar.xz", exception: true)
+      system('rm', "MacOSX#{version}.sdk.tar.xz", exception: true)
+      system('mv', "MacOSX#{version}.sdk", path, exception: true)
+    end
+
+    macos_sdk_path
+  end
+
   MRuby::CrossBuild.new('darwin-arm64') do |conf|
-    macos_sdk = ENV.fetch('MACOSX_SDK_PATH').shellescape
+    macos_sdk = download_macos_sdk(conf.build_dir)
 
     build_config(conf, 'aarch64-macos', strip: true)
     cc_flags = ['-Wno-overriding-option', '-mmacosx-version-min=11.1',
@@ -105,23 +125,8 @@ end
 
 if build_targets.include?('windows-amd64')
   MRuby::CrossBuild.new('windows-amd64') do |conf|
-    conf.build_target     = 'x86_64-pc-linux-gnu'
-    conf.host_target      = 'x86_64-w64-mingw32'
-
-    conf.enable_cxx_exception
-    conf.cc.command = "#{conf.host_target}-gcc"
-
-    conf.cxx.command = "#{conf.host_target}-g++"
-    conf.cxx.defines += %w[_WIN32]
-
-    build_cc_defines(conf)
-
-    conf.linker.command = "#{conf.host_target}-g++"
-    conf.linker.flags += %w[-static -O3 -s]
-    conf.linker.libraries += %w[pthread]
-
-    conf.archiver.command = "#{conf.host_target}-ar"
-
+    build_config(conf, 'x86_64-windows-gnu', strip: true)
+    conf.host_target = 'x86_64-w64-mingw32' # required for `for_windows?` used by `mruby-socket` gem
     conf.exts do |exts|
       exts.object = '.obj'
       exts.executable = '.exe'
