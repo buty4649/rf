@@ -47,7 +47,7 @@ end
 def build_flags(target, strip)
   flags = %w[-O3]
   flags += ['-target', target] if target
-  flags += %w[-mtune=native -march=native] if target == 'x86_64-linux-musl'
+  flags += %w[-mtune=native -march=native] if target =~ /^x86_64-linux-gnu/
   flags << '-s' if strip
   flags
 end
@@ -81,8 +81,24 @@ build_targets = ENV['MRUBY_BUILD_TARGETS']&.split(',') || []
 end
 
 if build_targets.include?('darwin-arm64')
+  # https://github.com/itamae-kitchen/mitamae/blob/master/build_config.rb#L13-L19
+  def download_macos_sdk(path)
+    version = '11.3'
+    macos_sdk_url = "https://github.com/phracker/MacOSX-SDKs/releases/download/#{version}/MacOSX#{version}.sdk.tar.xz"
+    macos_sdk_path = File.join(path, "MacOSX#{version}.sdk")
+
+    unless File.exist?(macos_sdk_path)
+      system('wget', macos_sdk_url, exception: true)
+      system('tar', 'xf', "MacOSX#{version}.sdk.tar.xz", exception: true)
+      system('rm', "MacOSX#{version}.sdk.tar.xz", exception: true)
+      system('mv', "MacOSX#{version}.sdk", path, exception: true)
+    end
+
+    macos_sdk_path
+  end
+
   MRuby::CrossBuild.new('darwin-arm64') do |conf|
-    macos_sdk = ENV.fetch('MACOSX_SDK_PATH').shellescape
+    macos_sdk = download_macos_sdk(conf.build_dir)
 
     build_config(conf, 'aarch64-macos', strip: true)
     cc_flags = ['-Wno-overriding-option', '-mmacosx-version-min=11.1',
