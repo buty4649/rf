@@ -25,17 +25,23 @@ describe 'MatchResult' do
     end
 
     context 'with empty string and empty matching regexp' do
-      let(:input) { '' }
-      let(:args) { %("//") }
+      let(:args) { %("//" testfile) }
       let(:expect_output) { '' }
+
+      before do
+        write_file 'testfile', ''
+      end
 
       it_behaves_like 'a successful exec'
     end
 
     context 'with empty record and zero-width assertion' do
-      let(:input) { '' }
-      let(:args) { %("/^$/") }
+      let(:args) { %("/^$/" testfile) }
       let(:expect_output) { '' }
+
+      before do
+        write_file 'testfile', ''
+      end
 
       it_behaves_like 'a successful exec'
     end

@@ -36,9 +36,13 @@ module Rf
       def from_regexp(record, regexp)
         match_data = []
         s = record.to_s
-        while s.length.positive? && m = regexp.match(s)
+        while m = regexp.match(s)
           match_data << m
+          break if s == m.post_match
+
           s = m.post_match
+
+          break if s.empty?
         end
         new(record, match_data, false) if match_data.any?
       end
