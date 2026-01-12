@@ -116,14 +116,14 @@ Commands:
   help       show this message
 
 Options:
-  -F, --filed-separator string
+  -F, --field-separator string
       --[no-]color                  [no] colorized output (default: --color in TTY)
   -g, --grep                        Interpret command as a regex pattern for searching (like grep)
       --include-filename string     searches for files matching a regex pattern
   -i, --in-place[=SUFFIX]           edit files in place (makes backup if SUFFIX supplied)
   -R, --recursive                   read all files under each directory recursively
   -f, --file string                 executed the contents of program_file
-  -s, --slurp                       read all reacords into an array
+  -s, --slurp                       read all records into an array
   -q, --quiet                       suppress automatic printing
   -H, --with-filename               print filename with output lines
       --with-record-number          print record number with output lines

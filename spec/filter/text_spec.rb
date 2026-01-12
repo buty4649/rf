@@ -138,7 +138,7 @@ describe 'Text filter' do
       it_behaves_like 'a successful exec'
     end
 
-    describe 'Output only the second filed' do
+    describe 'Output only the second field' do
       let(:args) { 'text _2' }
       let(:expect_output) do
         <<~OUTPUT
@@ -255,7 +255,7 @@ describe 'Text filter' do
   end
 
   context 'when change the field separator' do
-    describe 'Output only the second filed' do
+    describe 'Output only the second field' do
       let(:input) do
         <<~INPUT
           1,foo
