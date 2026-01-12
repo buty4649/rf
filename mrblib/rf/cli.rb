@@ -21,8 +21,8 @@ module Rf
                       desc: 'edit files in place (makes backup if SUFFIX supplied)'
     option :script_file, type: :string, aliases: :f, display_name: 'file',
                          desc: 'executed the contents of program_file'
-    option :slurp, type: :flag, aliases: :s, desc: 'read all reacords into an array'
-    option :filed_separator, aliases: :F
+    option :slurp, type: :flag, aliases: :s, desc: 'read all records into an array'
+    option :field_separator, aliases: :F
     desc 'text', 'use Text filter'
     order 0
     def text(*argv)
@@ -41,7 +41,7 @@ module Rf
                       desc: 'edit files in place (makes backup if SUFFIX supplied)'
     option :script_file, type: :string, aliases: :f, display_name: 'file',
                          desc: 'executed the contents of program_file'
-    option :slurp, type: :flag, aliases: :s, desc: 'read all reacords into an array'
+    option :slurp, type: :flag, aliases: :s, desc: 'read all records into an array'
     option :raw?, aliases: :r, display_name: 'raw-output', type: :flag,
                   desc: 'output raw strings without JSON encoding'
     option :minify?, display_name: 'minify', type: :flag,
@@ -56,7 +56,7 @@ module Rf
                       desc: 'edit files in place (makes backup if SUFFIX supplied)'
     option :script_file, type: :string, aliases: :f, display_name: 'file',
                          desc: 'executed the contents of program_file'
-    option :slurp, type: :flag, aliases: :s, desc: 'read all reacords into an array'
+    option :slurp, type: :flag, aliases: :s, desc: 'read all records into an array'
     option :raw?, aliases: :r, display_name: 'raw-output', type: :flag,
                   desc: 'output raw strings without YAML encoding'
     option :doc?, display_name: 'doc', type: :boolean,

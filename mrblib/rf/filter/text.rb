@@ -5,7 +5,7 @@ module Rf
         super
 
         @io = io
-        fs = Config.current[:filed_separator]
+        fs = Config.current[:field_separator]
         $; = Regexp.new(fs) if fs
       end
 
