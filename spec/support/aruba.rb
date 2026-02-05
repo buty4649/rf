@@ -14,7 +14,7 @@ def rf_path
     ../../build/bin/rf
     ../../build/bin/rf.exe
   ].map { |path| File.expand_path(path, __dir__) }
-    .find { |path| File.exist?(path) }
+   .find { |path| File.exist?(path) }
 end
 
 def run_rf(args, input = nil)
