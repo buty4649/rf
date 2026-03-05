@@ -74,7 +74,7 @@ module Rf
       if file == '-'
         $stdin
       else
-        File.open(file, 'r')
+        File.open(file, 'r') # rubocop:disable Style/FileOpen
       end
     rescue Errno::ENOENT
       raise NotFound, file
@@ -90,7 +90,7 @@ module Rf
         raise NotFound, file unless File.exist?(file)
         raise NotRegularFile, file unless File.file?(file)
 
-        File.open("#{file}#{in_place}", 'w')
+        File.open("#{file}#{in_place}", 'w') # rubocop:disable Style/FileOpen
       end
     end
 
