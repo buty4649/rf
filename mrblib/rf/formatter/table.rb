@@ -36,7 +36,7 @@ module Rf
         end
 
         def max_row_count(array)
-          array.select { |v| v.is_a?(Array) }.map(&:size).max || 1
+          array.grep(Array).map(&:size).max || 1
         end
 
         def array_to_table(val)
