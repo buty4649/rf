@@ -10,7 +10,7 @@ jobs:
     steps:
     - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
     - name: Set up Ruby
-      uses: ruby/setup-ruby@12fd324f1d0b43274fdc8130f6980590a667c455 # v1.312.0
+      uses: ruby/setup-ruby@89f90524b88a01fe6e0b732220432cc6142926af # v1.313.0
       with:
         bundler-cache: true
     - name: Run rubocop
@@ -24,7 +24,7 @@ jobs:
       with:
         submodules: true
     - name: Set up Ruby
-      uses: ruby/setup-ruby@12fd324f1d0b43274fdc8130f6980590a667c455 # v1.312.0
+      uses: ruby/setup-ruby@89f90524b88a01fe6e0b732220432cc6142926af # v1.313.0
       with:
         bundler-cache: true
     - uses: mlugg/setup-zig@d1434d08867e3ee9daa34448df10607b98908d29 # v2.2.1
@@ -78,7 +78,7 @@ jobs:
         name: rf-${{ github.sha }}-${{ matrix.os-arch }}
         path: build/bin
     - name: Set up Ruby
-      uses: ruby/setup-ruby@12fd324f1d0b43274fdc8130f6980590a667c455 # v1.312.0
+      uses: ruby/setup-ruby@89f90524b88a01fe6e0b732220432cc6142926af # v1.313.0
       with:
         bundler-cache: true
     - name: Install dependencies
