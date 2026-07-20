@@ -35,7 +35,7 @@ jobs:
           token: ${{ steps.generate_token.outputs.token }}
           submodules: true
 
-      - uses: Songmu/tagpr@555e72cee68c09d43dc2337dc9ba890955b630da # v1.19.0
+      - uses: Songmu/tagpr@d1b8138b7a31075141b6cd64103de9485ced7ac9 # v1.20.1
         id: tagpr
         env:
           GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
