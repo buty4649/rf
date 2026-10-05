@@ -51,7 +51,6 @@ module Rf
         if in_place
           write_file = write_open(filename, in_place)
           $output = write_file
-          tempfile = write_file if in_place.empty?
         end
 
         records = filter.new(input)
@@ -60,11 +59,11 @@ module Rf
         binary_match = apply_expressions(records)
         warn_binary_match(filename) if binary_match
 
-        next unless tempfile
+        next if $output == $stdout
 
-        tempfile.close
+        $output.close
         input.close
-        File.rename(tempfile.path, filename)
+        File.rename($output.path, filename)
       end
     end
 
@@ -83,15 +82,17 @@ module Rf
     end
 
     def write_open(file, in_place)
-      if in_place.empty?
-        dir = File.dirname(file)
-        Tempfile.new('.rf', dir)
-      else
-        raise NotFound, file unless File.exist?(file)
-        raise NotRegularFile, file unless File.file?(file)
+      raise NotFound, file unless File.exist?(file)
+      raise NotRegularFile, file unless File.file?(file)
 
-        File.open("#{file}#{in_place}", 'w')
+      if in_place
+        File.open("#{file}#{in_place}", 'w') do |f| # rubocop: disable Style/FileWrite
+          f.write(File.read(file))
+        end
       end
+
+      dir = File.dirname(file)
+      Tempfile.new('.rf', dir)
     end
 
     def split(val)
